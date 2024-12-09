@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Selection of Similar Map Projections</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="tabs">
+        <button class="tab-button" onclick="openTab('tab-find')">Find Similar and Compare</button>
+        <button class="tab-button" onclick="openTab('tab-pair')">Pairwise Compare</button>
+        <button class="tab-button" onclick="openTab('tab-recmd')">Recommended List </button>
+        <button class="tab-button" onclick="openTab('tab-group')">Parameters and Series</button>
+        <button class="tab-button" onclick="openTab('tab-full')">Full List</button>
+        <button class="tab-button" onclick="openTab('tab-rdme')">Readme</button>
+    </div>
+    <div id="canvasContainer">
+        <canvas id="canvas"></canvas>
+    </div>
+    <div class="container">
+        <aside id="tab-find" class="sidebar tab-content">
+            <div class="search-bar">
+                <h4>Click on a node on the right or Select a map projection from the drop-down box</h4>
+                <input type="text" placeholder="Search..." id="search-box-single-map-projection" oninput="showSuggestions()">
+                <ul id="suggestionsList" style="border: 1px solid #ccc; display: none; list-style-type: none; padding: 0;"></ul>
+                <img id="img-1" src="blank.png" width="100%" onerror="this.src='maperr.png'"></img>
+            </div>
+            <div class="info-panel">
+                <h5>It's 10 Nearest Neighbors are</h5>
+                <ul id="category-list">
+                </ul>
+                <img id="img-2" src="blank.png" width="100%" onerror="this.src='maperr.png'"></img>
+            </div>
+            <!-- <div class="info-panel">
+                <h3>Nearest Neighbors in 2D space</h3>
+                <ul id="category-list-2d">
+                </ul>
+            </div> -->
+            <div class="tab-switch">
+                <button data-tab="compare">Compare them</button>
+            </div>
+        </aside>
+
+        <aside id="tab-pair" class="sidebar tab-content">
+            <div class="search-bar">
+                <h3>Select one map projection</h3>
+                <input type="text" placeholder="Search..." id="search-box-single-map-projection" oninput="showSuggestions()">
+                <ul id="suggestionsList" style="border: 1px solid #ccc; display: none; list-style-type: none; padding: 0;"></ul>
+            </div>
+            <div class="search-bar">
+                <h3>Select another map projection</h3>
+                <input type="text" placeholder="Search..." id="search-box-single-map-projection" oninput="showSuggestions()">
+                <ul id="suggestionsList" style="border: 1px solid #ccc; display: none; list-style-type: none; padding: 0;"></ul>
+            </div>
+        </aside>
+
+        <aside id="tab-recmd" class="sidebar tab-content">
+            <div class="listContainer">
+                <select id="tableSelect">
+                    <option value="pairs">Similar Pairs</option>
+                    <option value="triplets">Similar Triplets</option>
+                    <option value="quadruplets">Similar Quadruplets</option>
+                    <option value="distinct">Distinct Ones</option>
+                </select>
+                <button>Compare them</button>
+            </div>
+            <table id="sim_list">
+                <thead>
+                    <tr id="tableHeaders">
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </aside>
+
+        <aside id="tab-group" class="sidebar tab-content">
+            <ul>
+                <li>Baranyi Series</li>
+                <li>Cabot with Parameters</li>
+                <li>Canters Polyconic Series</li>
+                <li>Canters Pseudocylindric Series</li>
+                <li>Eckert Series</li>
+                <li>Frančula Series</li>
+                <li>Györffy Series</li>
+                <li>Hufnagel Series</li>
+                <li>McBryde-Thomas Series</li>
+                <li>Putniņš Series</li>
+                <li>Wagner Series (excluding variants)</li>
+            </ul>
+        </aside>
+
+        <aside id="tab-full" class="sidebar tab-content">
+
+        </aside>
+
+        <aside id="tab-rdme" class="sidebar tab-content">
+            <p>Welcome to the <b>Interactive Selection of Similar Map Projections</b> website, abbreviated as <b><i>simimp</i></b>. The original website URL (<a href="https://simimap.github.io/simimap/">https://simimap.github.io/simimap/</a>) currently returns a 404 error and is unavailable. The new URL is <a href="https://simimp.github.io/">https://simimp.github.io/</a>, and we will do our best to ensure its availability.</p>
+
+            <p>We do not collect any personal information, and GitHub does not provide us with any of your private data. Please feel free to use the site with confidence.</p>
+                
+            <p>You can explore and use various features by clicking the tabs at the top. This website is still a prototype, and we are committed to continuously improving existing features, promptly fixing any bugs, and adding new functionalities as soon as possible. Thank you for your understanding and support!</p>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <select id="dataset-selector">
+                    <option>Select Dataset</option>
+                </select>
+                <div class="zoom-buttons">
+                    <!-- <button id="zoom-in">Zoom In</button> -->
+                    <!-- <button id="zoom-out">Zoom Out</button> -->
+                    <button id="reset-zoom">Reset Zoom</button>
+                </div>
+            </div>
+            <div class="map-container">
+                <svg id="interactive-map"></svg>
+            </div>
+            <div class="legend">
+                <label>
+                    <input type="checkbox" id="line-1" checked>
+                    Bonne
+                </label>
+                <label>
+                    <input type="checkbox" id="line-2" checked>
+                    Bottomley
+                </label>
+                <label>
+                    <input type="checkbox" id="line-3" checked>
+                    Cabot
+                </label>
+                <label>
+                    <input type="checkbox" id="line-4" checked>
+                    Cylindrical Equal-qrea
+                </label>
+                <label>
+                    <input type="checkbox" id="line-5" checked>
+                    Cylindrical Stereographic
+                </label>
+                <label>
+                    <input type="checkbox" id="line-6" checked>
+                    Equirectangular
+                </label>
+                <label>
+                    <input type="checkbox" id="line-7" checked>
+                    Foucaut Sinusoidal
+                </label>
+                <label>
+                    <input type="checkbox" id="line-8" checked>
+                    Foucaut Sinusoidal [rescaled version]
+                </label>
+            </div>
+            <div class="legend">
+                <label>
+                    <input type="checkbox" id="line-9" checked>
+                    Hill Eucyclic
+                </label>
+                <label>
+                    <input type="checkbox" id="line-10" checked>
+                    Lambert-Lagrange
+                </label>
+                <label>
+                    <input type="checkbox" id="line-11" checked>
+                    Loximuthal
+                </label>
+                <label>
+                    <input type="checkbox" id="line-12" checked>
+                    Tobler G1
+                </label>
+                <label>
+                    <input type="checkbox" id="line-13" checked>
+                    Urmayev Sinusoidal
+                </label>
+                <label>
+                    <input type="checkbox" id="line-14" checked>
+                    Wagner III
+                </label>
+                <label>
+                    <input type="checkbox" id="line-15" checked>
+                    Winkel I
+                </label>
+                <button onclick="toggleSelectAll(true)">Select All</button>
+                <button onclick="toggleSelectAll(false)">De-select All</button>
+            </div>
+        </main>
+    </div>
+    <script src="d3.v7.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

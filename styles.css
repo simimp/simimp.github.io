@@ -1,0 +1,204 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.tabs {
+    display: flex;
+    background-color: #f1f1f1;
+    border-bottom: 2px solid #ccc;
+    justify-content: center;
+    width: 100%;
+}
+
+.tab-button {
+    background-color: #ddd;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+}
+
+.tab-button:hover {
+    background-color: #ccc;
+}
+
+.tab-button.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+    padding: 20px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.sidebar {
+    width: 15%;
+    background: #f7f7f7;
+    padding: 20px;
+    /* display: flex; */
+    flex-direction: column;
+    gap: 20px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.info-panel {
+    overflow-y: auto;
+}
+
+.info-panel h4 {
+    margin-top: 20px;
+}
+
+.info-panel h5 {
+    margin-top: 20px;
+}
+
+.tab-switch button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    background: #ddd;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.tab-switch button.active {
+    background: #555;
+    color: white;
+}
+
+.main-content {
+    width: 85%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.map-container {
+    flex-grow: 1;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    position: relative;
+}
+
+#interactive-map {
+    width: 100%;
+    height: 100%;
+}
+
+.legend {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.legend label {
+    font-size: 14px;
+}
+
+.highlight {
+    background-color: yellow;
+    color: red;
+}
+
+svg circle.highlight {
+    stroke: red;
+    stroke-width: 3px;
+    fill: yellow;
+}
+
+#suggestionsList {
+    max-height: 400px;
+    overflow-y: auto;
+    position: relative;
+    background-color: white;
+    border: 1px solid #ccc;
+    width: 260px;
+    top: -10px;
+}
+
+#suggestionsList li {
+    padding: 8px;
+    cursor: pointer;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+}
+
+#canvasContainer {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    bottom: 10%;
+    /* width: 100%; */
+    /* height: 100%; */
+    z-index: 9999;
+    display: none;
+}
+
+.listContainer {
+    display: flex;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.zoom-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+select {
+    margin-right: 5px;
+}
+
+table {
+    /* position: absolute; */
+    z-index: 10;
+    width: 280px;
+    height: 400px;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: white;
+    overflow-y: auto;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}

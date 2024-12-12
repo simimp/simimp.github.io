@@ -10,7 +10,7 @@
     <div class="tabs">
         <button class="tab-button" onclick="openTab('tab-find')">Find Similar and Compare</button>
         <button class="tab-button" onclick="openTab('tab-pair')">Pairwise Compare</button>
-        <button class="tab-button" onclick="openTab('tab-recmd')">Recommended List </button>
+        <button class="tab-button" onclick="openTab('tab-recmd')">Recommended List</button>
         <button class="tab-button" onclick="openTab('tab-group')">Parameters and Series</button>
         <button class="tab-button" onclick="openTab('tab-full')">Full List</button>
         <button class="tab-button" onclick="openTab('tab-rdme')">Readme</button>
@@ -22,14 +22,14 @@
         <aside id="tab-find" class="sidebar tab-content">
             <div class="search-bar">
                 <h4>Click on a node on the right or Select a map projection from the drop-down box</h4>
-                <input type="text" placeholder="Search..." id="search-box-single-map-projection" oninput="showSuggestions()">
+                <input type="text" placeholder="Search..." id="search-box-single-map-projection" oninput="showSuggestions('search-box-single-map-projection', 'suggestionsList')">
                 <ul id="suggestionsList" style="border: 1px solid #ccc; display: none; list-style-type: none; padding: 0;"></ul>
                 <img id="img-1" src="blank.png" width="100%" onerror="this.src='maperr.png'"></img>
             </div>
             <div class="info-panel">
-                <h5>It's 10 Nearest Neighbors are</h5>
-                <ul id="category-list">
-                </ul>
+                <!-- <h5>It's 10 Nearest Neighbors are</h5> -->
+                <div id="category-container">
+                </div>
                 <img id="img-2" src="blank.png" width="100%" onerror="this.src='maperr.png'"></img>
             </div>
             <!-- <div class="info-panel">
@@ -38,20 +38,20 @@
                 </ul>
             </div> -->
             <div class="tab-switch">
-                <button data-tab="compare">Compare them</button>
+                <button data-tab="compare" disabled>Compare them</button>
             </div>
         </aside>
 
         <aside id="tab-pair" class="sidebar tab-content">
             <div class="search-bar">
                 <h3>Select one map projection</h3>
-                <input type="text" placeholder="Search..." id="search-box-single-map-projection" oninput="showSuggestions()">
-                <ul id="suggestionsList" style="border: 1px solid #ccc; display: none; list-style-type: none; padding: 0;"></ul>
+                <input type="text" placeholder="Search..." id="search-box-projection-1" oninput="showSuggestions('search-box-projection-1', 'suggestions-list-1')">
+                <ul id="suggestions-list-1" style="border: 1px solid #ccc; display: none; list-style-type: none; padding: 0;"></ul>
             </div>
             <div class="search-bar">
-                <h3>Select another map projection</h3>
-                <input type="text" placeholder="Search..." id="search-box-single-map-projection" oninput="showSuggestions()">
-                <ul id="suggestionsList" style="border: 1px solid #ccc; display: none; list-style-type: none; padding: 0;"></ul>
+                <h3>Select another map projection to compare</h3>
+                <input type="text" placeholder="Search..." id="search-box-projection-2" oninput="showSuggestions('search-box-projection-2', 'suggestions-list-2')">
+                <ul id="suggestions-list-2" style="border: 1px solid #ccc; display: none; list-style-type: none; padding: 0;"></ul>
             </div>
         </aside>
 
@@ -63,7 +63,7 @@
                     <option value="quadruplets">Similar Quadruplets</option>
                     <option value="distinct">Distinct Ones</option>
                 </select>
-                <button>Compare them</button>
+                <button data-tab="compare-recmd" disabled>Compare selected cells</button>
             </div>
             <table id="sim_list">
                 <thead>
@@ -92,22 +92,97 @@
         </aside>
 
         <aside id="tab-full" class="sidebar tab-content">
-
+            <table id="myTable">
+                <thead>
+                  <tr>
+                    <th data-column="0">Name</th>
+                    <th data-column="1">Areal Distortion</th>
+                    <th data-column="2">Angular Distortion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
         </aside>
 
         <aside id="tab-rdme" class="sidebar tab-content">
-            <p>Welcome to the <b>Interactive Selection of Similar Map Projections</b> website, abbreviated as <b><i>simimp</i></b>. The original website URL (<a href="https://simimap.github.io/simimap/">https://simimap.github.io/simimap/</a>) currently returns a 404 error and is unavailable. The new URL is <a href="https://simimp.github.io/">https://simimp.github.io/</a>, and we will do our best to ensure its availability.</p>
+            Global parameters:
+            <div>
+                <label for="slider-similar">
+                    Similar Threshold:
+                </label>
+                <input type="range" id="slider-similar" min="0.5" max="2" step="0.01" value="1">
+                <span id="value-similar">1</span>
+            </div>
+            
+            <div>
+                <label for="slider-moderate">
+                    Moderate Threshold:
+                </label>
+                <input type="range" id="slider-moderate" min="1" max="5.0" step="0.01" value="2">
+                <span id="value-moderate">2</span>
+            </div>
+
+            <p>Welcome to the <b>Interactive Selection of Similar Map Projections</b> website, abbreviated as <b><i>simimp</i></b>. The original website URL (https://simimap.github.io/simimap/) currently returns a 404 error and is unavailable. The new URL is <a href="https://simimp.github.io/">https://simimp.github.io/</a>, and we will do our best to ensure its availability.</p>
 
             <p>We do not collect any personal information, and GitHub does not provide us with any of your private data. Please feel free to use the site with confidence.</p>
                 
             <p>You can explore and use various features by clicking the tabs at the top. This website is still a prototype, and we are committed to continuously improving existing features, promptly fixing any bugs, and adding new functionalities as soon as possible. Thank you for your understanding and support!</p>
+
+            <p>Known bug: After clicking the "Compare" button, it may only display one projection instead of two. Please click anywhere on the page and then click the "Compare" button again to resolve this issue. We apologize, as this bug has not been fully resolved yet.</p>
+
+            <h5>Instructions:</h5>
+
+            <p>It is recommended to use a higher desktop resolution (currently tested at 2560×1600) and press F11 to enter full-screen mode. Other resolutions are yet to be tested; we appreciate your understanding.</p>
+
+            <ol>
+                <li>When you click on any node in the graph, the interface will automatically switch to the first tab (<i>Find Similar and Compare</i>). On this page, you can either select a map projection from the drop-down list or choose a node directly from the graph. The 10 map projections closest to the selected projection will be displayed. You can then select one from the list and click the "Compare" button to initiate the comparison (see the figure below).<img src="screenshots/find_compare.png" width="100%"></img></li>
+                <li>On the <i>Pairwise Compare</i> page, you can compare any two projections (this feature is still under development).</li>
+                <li>The <i>Recommended List</i> page provides several lists of similar and dissimilar projections. You can click on two projections in the recommended tables and then click the "Compare" button to initiate the comparison (see the figure below). When you click on the distance value in the last column, the entire row (except for the last column) will be highlighted. However, if more than two projections are highlighted, comparison will not be possible.<img src="screenshots/recmd.png" width="100%"></img></li>
+                <li>You can select other datasets from the drop-down list on the right side below the tabs (see the figure below), switch the x/y axes, and use color to render the nodes (color rendering is still under development). Alternatively, if the graph is outside the display area, you can click the "Reset Zoom" button.<img src="screenshots/changedataset.png" width="100%"></img></li>
+                <li>You can also click the different radios at the bottom right of the page to hide certain polylines.</li>
+            </ol>
         </aside>
 
         <main class="main-content">
             <div class="header">
-                <select id="dataset-selector">
-                    <option>Select Dataset</option>
+                <select title="Select Dataset" id="dataset-selector">
+                    <option>Improved Distance Matrix + Global Distortions + DR (SMACOF + Isomap)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (MDS + Isomap)</option>
+                    <option>Original (Tobler, 1986) Distance Matrix + DR (SMACOF + Isomap)</option>
+                    <option>Global Distortions (Global Areal Distortion + Global Angular Distortion)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (SMACOF)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (MDS)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (Isomap)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (PCA)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (k-PCA, cosine func.)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (k-PCA, RBF)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (LLE, std.)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (LLE, LTSA)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (Fast ICA)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (SE)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (t-SNE)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (UMAP)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (PHATE)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (ivis)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (AE, 2-lys)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (AE, 5-lys)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (SMACOF + PCA)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (SMACOF + Fast ICA)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (SMACOF + AE, 4-lys)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (SMACOF + AE, 5-lys)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (SMACOF + LLE, std.)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (SMACOF + SE)</option>
+                    <option>Improved Distance Matrix + Global Distortions + DR (node2vec + Isomap)</option>
                 </select>
+                <label>
+                    <input type="checkbox" id="swap-coord">
+                    Swap X/Y coords.
+                </label>
+                <label>
+                    <input title="Colors are defined by global distortions" type="checkbox" id="swap-coord">
+                    <span title="Colors are defined by global distortions">Render nodes by colors</span>
+                </label>
                 <div class="zoom-buttons">
                     <!-- <button id="zoom-in">Zoom In</button> -->
                     <!-- <button id="zoom-out">Zoom Out</button> -->
@@ -118,6 +193,7 @@
                 <svg id="interactive-map"></svg>
             </div>
             <div class="legend">
+                &sect; <b>Equal-qrea</b>: 
                 <label>
                     <input type="checkbox" id="line-1" checked>
                     Bonne
@@ -127,12 +203,36 @@
                     Bottomley
                 </label>
                 <label>
-                    <input type="checkbox" id="line-3" checked>
-                    Cabot
-                </label>
-                <label>
                     <input type="checkbox" id="line-4" checked>
                     Cylindrical Equal-qrea
+                </label>
+                <label>
+                    <input type="checkbox" id="line-7" checked>
+                    Foucaut Sinusoidal
+                </label>
+                <label>
+                    <input type="checkbox" id="line-9" checked>
+                    Hill Eucyclic
+                </label>
+                <label>
+                    <input type="checkbox" id="line-12" checked>
+                    Tobler G1
+                </label>
+                <label>
+                    <input type="checkbox" id="line-13" checked>
+                    Urmayev Sinusoidal
+                </label>
+                &sect; <b>Conformal</b>: 
+                <label>
+                    <input type="checkbox" id="line-10" checked>
+                    Lambert-Lagrange
+                </label>
+            </div>
+            <div class="legend">
+                &sect; <b>Compromise</b>: 
+                <label>
+                    <input type="checkbox" id="line-3" checked>
+                    Cabot
                 </label>
                 <label>
                     <input type="checkbox" id="line-5" checked>
@@ -143,34 +243,13 @@
                     Equirectangular
                 </label>
                 <label>
-                    <input type="checkbox" id="line-7" checked>
-                    Foucaut Sinusoidal
-                </label>
-                <label>
                     <input type="checkbox" id="line-8" checked>
                     Foucaut Sinusoidal [rescaled version]
                 </label>
-            </div>
-            <div class="legend">
-                <label>
-                    <input type="checkbox" id="line-9" checked>
-                    Hill Eucyclic
-                </label>
-                <label>
-                    <input type="checkbox" id="line-10" checked>
-                    Lambert-Lagrange
-                </label>
+                
                 <label>
                     <input type="checkbox" id="line-11" checked>
                     Loximuthal
-                </label>
-                <label>
-                    <input type="checkbox" id="line-12" checked>
-                    Tobler G1
-                </label>
-                <label>
-                    <input type="checkbox" id="line-13" checked>
-                    Urmayev Sinusoidal
                 </label>
                 <label>
                     <input type="checkbox" id="line-14" checked>

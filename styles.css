@@ -202,3 +202,11 @@ th, td {
     padding: 8px;
     text-align: left;
 }
+
+.asc::after {
+    content: '▲';
+}
+  
+  .desc::after {
+    content: '▼';
+}

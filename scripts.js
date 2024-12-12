@@ -1,351 +1,32 @@
-// test dataset
-const dataset = [
-    { x: 2.521267620753787631e-01, y: -2.825621036188037394e-01, category: "arden", size: 5 },
-    { x: -4.752825730298945728e-01, y: 5.528386062533365841e-01, category: "bertin1953", size: 5 },
-    { x: -2.064298267053520375e-01, y: -4.981213018970287454e-02, category: "bonne +lat_1=10", size: 5 },
-    { x: -2.823075452246114336e-01, y: 8.794354036487606052e-02, category: "bonne +lat_1=20", size: 5 },
-    { x: -3.494727430608204344e-01, y: 1.912541877197089235e-01, category: "bonne +lat_1=30", size: 5 },
-    { x: -3.984471523240142310e-01, y: 2.546541251617904233e-01, category: "bonne +lat_1=40", size: 5 },
-    { x: -4.357184635750495638e-01, y: 2.874581673985618924e-01, category: "bonne +lat_1=50", size: 5 },
-    { x: -4.577154885436013898e-01, y: 3.036289357073564954e-01, category: "bonne +lat_1=60", size: 5 },
-    { x: -4.696134851510303521e-01, y: 3.099954269294240561e-01, category: "bonne +lat_1=70", size: 5 },
-    { x: -4.733728389948851367e-01, y: 3.127998844644943599e-01, category: "bonne +lat_1=80", size: 5 },
-    { x: -4.737545665935548600e-01, y: 3.134459722375961821e-01, category: "bonne +lat_1=90", size: 5 },
-    { x: -1.526013199805835718e-01, y: -1.838170867292924227e-01, category: "bottomley=10", size: 5 },
-    { x: -1.938344906572216919e-01, y: -1.275432443901791668e-01, category: "bottomley=20", size: 5 },
-    { x: -2.583670045054986542e-01, y: -4.494255391655010978e-02, category: "bottomley=30", size: 5 },
-    { x: -3.141171918789593676e-01, y: 5.122278390193191200e-02, category: "bottomley=40", size: 5 },
-    { x: -3.647107346202628775e-01, y: 1.439770507317608139e-01, category: "bottomley=50", size: 5 },
-    { x: -4.052116957996126922e-01, y: 2.246634773670872498e-01, category: "bottomley=60", size: 5 },
-    { x: -4.408921338700498294e-01, y: 2.746299120625048662e-01, category: "bottomley=70", size: 5 },
-    { x: -4.663145312360358896e-01, y: 3.027166887523571326e-01, category: "bottomley=80", size: 5 },
-    { x: -4.264580167808272870e-01, y: -4.588569354435402259e-01, category: "name", size: 5 },
-    { x: -2.374066938138564842e-01, y: -3.913643159432710350e-01, category: "name", size: 5 },
-    { x: 4.710124852233462667e-01, y: -3.484000913099986052e-01, category: "name", size: 5 },
-    { x: 8.061202914186383905e-01, y: -4.375689350743783290e-01, category: "name", size: 5 },
-    { x: 2.021694758388926649e-01, y: -3.515791922723546792e-01, category: "name", size: 5 },
-    { x: 2.344507480612302297e-01, y: -3.394454628526251128e-01, category: "name", size: 5 },
-    { x: 6.335055653384645824e-01, y: -3.856676182659439789e-01, category: "name", size: 5 },
-    { x: 1.094365847572323913e-01, y: -2.590720475811981727e-01, category: "name", size: 5 },
-    { x: 9.218780155946759702e-02, y: -2.610505739398545355e-01, category: "name", size: 5 },
-    { x: 2.376186050265849392e-02, y: -2.867269944271193527e-01, category: "name", size: 5 },
-    { x: -8.934286907407396061e-02, y: -2.608105330548664558e-01, category: "name", size: 5 },
-    { x: -1.851365529309054736e-01, y: -2.523244593448451534e-01, category: "name", size: 5 },
-    { x: -3.372736995302035856e-01, y: -3.219754337828741875e-01, category: "name", size: 5 },
-    { x: -5.475994411908389203e-01, y: -5.127561359352947878e-01, category: "name", size: 5 },
-    { x: 2.362004397788378673e-01, y: -2.663746425747305357e-01, category: "name", size: 5 },
-    { x: 2.167222113250951709e-01, y: -2.587408477127056683e-01, category: "name", size: 5 },
-    { x: 1.574020924880251693e-01, y: -2.607426327466400018e-01, category: "name", size: 5 },
-    { x: 5.078894611717921226e-02, y: -3.248628974199532227e-01, category: "name", size: 5 },
-    { x: -6.306507570331065793e-02, y: -3.868616980343581035e-01, category: "name", size: 5 },
-    { x: -1.946237485790431876e-01, y: -4.983641819431980924e-01, category: "name", size: 5 },
-    { x: -3.418023045389156911e-01, y: -6.239806053725920343e-01, category: "name", size: 5 },
-    { x: -5.244341860504768693e-01, y: -8.022360865985193046e-01, category: "name", size: 5 },
-    { x: 1.892551245189988407e-01, y: -2.345739909610956575e-01, category: "name", size: 5 },
-    { x: 1.719651436421310020e-01, y: -2.371553634154375256e-01, category: "name", size: 5 },
-    { x: 1.207291429112821168e-01, y: -2.477096457651560835e-01, category: "name", size: 5 },
-    { x: 2.218937141857624251e-02, y: -2.738219886311668017e-01, category: "name", size: 5 },
-    { x: -8.573912339081879441e-02, y: -3.554270569699204962e-01, category: "name", size: 5 },
-    { x: -2.214665517347966794e-01, y: -4.524886067309250581e-01, category: "name", size: 5 },
-    { x: -3.773473564318160500e-01, y: -5.581450952718003400e-01, category: "name", size: 5 },
-    { x: -5.731273495223375702e-01, y: -7.101436939888403632e-01, category: "name", size: 5 },
-    { x: 5.975408901237458936e-01, y: -4.390930888030625256e-01, category: "name", size: 5 },
-    { x: 1.248403981332283363e-01, y: -3.465176603466215699e-01, category: "name", size: 5 },
-    { x: -1.389054605342506798e-01, y: 8.357153559748196070e-01, category: "name", size: 5 },
-    { x: 2.776081795403406716e-02, y: 1.310958240072652714e-01, category: "name", size: 5 },
-    { x: -9.518706668125642700e-02, y: 4.707267159837424941e-01, category: "name", size: 5 },
-    { x: -1.327496494626083656e-01, y: 8.425280785071880274e-01, category: "name", size: 5 },
-    { x: 5.187437632613944860e-02, y: 1.380061453709924280e-01, category: "name", size: 5 },
-    { x: -4.854710092866620919e-02, y: 4.864580250695964558e-01, category: "name", size: 5 },
-    { x: -1.878782849063456162e-01, y: -2.056665322306889809e-01, category: "name", size: 5 },
-    { x: 1.099209704534565013e-02, y: -2.679164384810754918e-01, category: "name", size: 5 },
-    { x: -5.466173515022698659e-02, y: -2.549834829871341357e-01, category: "name", size: 5 },
-    { x: -8.957922062122891660e-02, y: -2.324580210430419180e-01, category: "name", size: 5 },
-    { x: -1.178435462471923989e-01, y: -2.120549475852290255e-01, category: "name", size: 5 },
-    { x: 2.390615043317011468e-01, y: -3.163341256687500769e-01, category: "name", size: 5 },
-    { x: 1.069005666982508762e-01, y: -2.894774667066438711e-01, category: "name", size: 5 },
-    { x: 1.171540043390673080e-02, y: -2.742723167889468128e-01, category: "name", size: 5 },
-    { x: -4.706643340374339068e-02, y: -2.547299356968306672e-01, category: "name", size: 5 },
-    { x: -1.069482761173417007e-01, y: -2.177424250148095597e-01, category: "name", size: 5 },
-    { x: 2.002252234314764179e-01, y: -3.046833731094513720e-01, category: "name", size: 5 },
-    { x: 5.504777036430863468e-02, y: -2.988427960669127748e-01, category: "name", size: 5 },
-    { x: 4.754999679567776250e-01, y: -6.181414244431902016e-01, category: "name", size: 5 },
-    { x: -3.830552906349471431e-02, y: -5.318328596633519201e-01, category: "name", size: 5 },
-    { x: -2.836358618685390631e-01, y: -6.600763345577513874e-01, category: "name", size: 5 },
-    { x: 5.686693898102024303e-02, y: -2.486567934171234340e-01, category: "name", size: 5 },
-    { x: 5.305219868474120304e-02, y: -2.459283858889622643e-01, category: "name", size: 5 },
-    { x: 3.768162060996305129e-02, y: -2.455666541872587594e-01, category: "name", size: 5 },
-    { x: 6.641979289096600070e-03, y: -2.450686060178404180e-01, category: "name", size: 5 },
-    { x: -3.084235373523225299e-02, y: -2.484965372028951069e-01, category: "name", size: 5 },
-    { x: -6.710873043444287589e-02, y: -2.626914153355629500e-01, category: "name", size: 5 },
-    { x: -1.463130515760174832e-01, y: -3.546147505667027744e-01, category: "name", size: 5 },
-    { x: -2.378376406464096648e-01, y: -4.265475208135178775e-01, category: "name", size: 5 },
-    { x: -3.660564784469737543e-01, y: -5.325495615148583273e-01, category: "name", size: 5 },
-    { x: -4.691538685661867381e-01, y: -6.093943288127690039e-01, category: "name", size: 5 },
-    { x: -6.350224686472942803e-01, y: -7.690388806430521473e-01, category: "name", size: 5 },
-    { x: 3.535585520202871868e-01, y: -3.532016875862198368e-01, category: "name", size: 5 },
-    { x: -1.344532581264438198e-01, y: 8.561563134218070914e-01, category: "name", size: 5 },
-    { x: -4.452604367133650154e-02, y: 5.263419544356311430e-01, category: "name", size: 5 },
-    { x: 5.744665372663371183e-02, y: 1.432687255426048356e-01, category: "name", size: 5 },
-    { x: -1.406952505701741796e-01, y: 8.692734297145519040e-01, category: "name", size: 5 },
-    { x: -4.083709396792856161e-02, y: 5.745360821423031172e-01, category: "name", size: 5 },
-    { x: 5.659812975689448855e-02, y: 1.466924505696616254e-01, category: "name", size: 5 },
-    { x: 6.785219264480479850e-02, y: -2.599285984262157401e-01, category: "name", size: 5 },
-    { x: 1.996780661724983919e-02, y: -2.764824115030314333e-01, category: "name", size: 5 },
-    { x: -1.248964246340975581e-01, y: -2.414195524828870454e-01, category: "name", size: 5 },
-    { x: -3.207915171845518998e-01, y: -3.030767338367481578e-01, category: "name", size: 5 },
-    { x: -8.061202914186383905e-01, y: -6.380115092256158915e-01, category: "name", size: 5 },
-    { x: 1.525603791331653358e-02, y: -2.702838853144114983e-01, category: "name", size: 5 },
-    { x: -1.457204022876168459e-02, y: -2.724460156191234050e-01, category: "name", size: 5 },
-    { x: -1.023826584879193868e-01, y: -2.434439882237096064e-01, category: "name", size: 5 },
-    { x: -2.410629096068683808e-01, y: -2.353468140077512594e-01, category: "name", size: 5 },
-    { x: -5.912796297557831871e-01, y: -5.355179635180760123e-01, category: "name", size: 5 },
-    { x: -4.499463884486876175e-02, y: -2.638195727111082300e-01, category: "name", size: 5 },
-    { x: -5.946209153820136706e-02, y: -2.613047589593872067e-01, category: "name", size: 5 },
-    { x: -9.724999517127008719e-02, y: -2.459591768944986434e-01, category: "name", size: 5 },
-    { x: -1.910797909066639377e-01, y: -2.148697714873738507e-01, category: "name", size: 5 },
-    { x: -4.415293182510475201e-01, y: -4.082486178321730330e-01, category: "name", size: 5 },
-    { x: -9.179284819373756399e-02, y: -2.395414283343966222e-01, category: "name", size: 5 },
-    { x: -9.569338446544162213e-02, y: -2.405409365323852855e-01, category: "name", size: 5 },
-    { x: -1.134462936865385796e-01, y: -2.339158876642188911e-01, category: "name", size: 5 },
-    { x: -1.622854619864489978e-01, y: -2.233625221927790783e-01, category: "name", size: 5 },
-    { x: -3.116813477736980476e-01, y: -2.853372162072300711e-01, category: "name", size: 5 },
-    { x: 1.657709691585118605e-02, y: -2.686389507048704273e-01, category: "name", size: 5 },
-    { x: -4.786994722641180200e-02, y: -2.674871692938081136e-01, category: "name", size: 5 },
-    { x: -2.237491834370998189e-01, y: -2.169357172803513256e-01, category: "name", size: 5 },
-    { x: -5.258656242069043030e-01, y: -4.827127638928500053e-01, category: "name", size: 5 },
-    { x: -4.995944195411916589e-02, y: -2.574544433868977134e-01, category: "name", size: 5 },
-    { x: -8.533986663343884338e-02, y: -2.472361424495295168e-01, category: "name", size: 5 },
-    { x: -2.459112075420155641e-01, y: -2.276726818155780929e-01, category: "name", size: 5 },
-    { x: -4.942308172030085989e-01, y: -4.509267352871888512e-01, category: "name", size: 5 },
-    { x: -8.690962537189494963e-02, y: -2.354399032978526929e-01, category: "name", size: 5 },
-    { x: -1.143990382646244974e-01, y: -2.276653917187038134e-01, category: "name", size: 5 },
-    { x: -2.494646257097777875e-01, y: -2.352704076382107212e-01, category: "name", size: 5 },
-    { x: -4.495157055481695529e-01, y: -4.079707564662968799e-01, category: "name", size: 5 },
-    { x: -1.163738709064306986e-01, y: -2.132049180081641016e-01, category: "name", size: 5 },
-    { x: -1.365804420906431282e-01, y: -2.110893618952138784e-01, category: "name", size: 5 },
-    { x: -2.317454474089759575e-01, y: -2.213351027096401857e-01, category: "name", size: 5 },
-    { x: -3.820270246459742669e-01, y: -3.455462869896673839e-01, category: "name", size: 5 },
-    { x: -1.349898012767958289e-02, y: 1.000000000000000000e+00, category: "name", size: 5 },
-    { x: -1.573336987792051112e-03, y: 5.514742618087482562e-01, category: "name", size: 5 },
-    { x: 7.592329184404866815e-02, y: 1.486849424681619958e-01, category: "name", size: 5 },
-    { x: -2.281411331433891299e-01, y: -2.421450414725079270e-01, category: "name", size: 5 },
-    { x: -1.151721637956844013e-01, y: -2.141372483531422954e-01, category: "name", size: 5 },
-    { x: -8.475265646596397140e-02, y: -2.375853665715051966e-01, category: "name", size: 5 },
-    { x: -4.631986034719337564e-02, y: -2.592828094922252635e-01, category: "name", size: 5 },
-    { x: 2.047636268352404088e-02, y: -2.692063133197584168e-01, category: "name", size: 5 },
-    { x: 1.024963047173259589e-01, y: -2.581566098883295579e-01, category: "name", size: 5 },
-    { x: 1.054155041280877558e-01, y: -2.559462660769644682e-01, category: "name", size: 5 },
-    { x: 1.084488903957638861e-01, y: -2.541319321991541980e-01, category: "name", size: 5 },
-    { x: 3.863158338476868625e-02, y: -2.587113081993476227e-01, category: "name", size: 5 },
-    { x: 8.218517264543190315e-02, y: -2.773054801085597099e-01, category: "name", size: 5 },
-    { x: 1.023737159720665701e-01, y: -2.998031561773412124e-01, category: "name", size: 5 },
-    { x: -8.170508530757580878e-02, y: -2.716849935340315270e-01, category: "name", size: 5 },
-    { x: 6.121759598977194461e-02, y: -4.123317235823651394e-01, category: "name", size: 5 },
-    { x: 1.863257178589811103e-01, y: -4.921418000823816197e-01, category: "name", size: 5 },
-    { x: -6.929462525493468306e-02, y: -2.665982883441980755e-01, category: "name", size: 5 },
-    { x: -7.911837650513930953e-02, y: -2.624698012721632390e-01, category: "name", size: 5 },
-    { x: -1.025468396759986467e-01, y: -2.508126543841248113e-01, category: "name", size: 5 },
-    { x: -1.278289793836531185e-01, y: -2.329790153810366027e-01, category: "name", size: 5 },
-    { x: -1.690870273559150760e-01, y: -2.136409369505130051e-01, category: "name", size: 5 },
-    { x: -2.671837724714802853e-01, y: -2.178949734912616343e-01, category: "name", size: 5 },
-    { x: -1.404993292922259718e-01, y: 8.855900945394554746e-01, category: "name", size: 5 },
-    { x: -2.656207828200984888e-02, y: 6.292780170040388477e-01, category: "name", size: 5 },
-    { x: 7.073844079894520132e-02, y: 1.545442055217798316e-01, category: "name", size: 5 },
-    { x: 4.103443619223312577e-02, y: -2.514965009327738699e-01, category: "name", size: 5 },
-    { x: 3.151473290365214286e-02, y: -2.535845757716466142e-01, category: "name", size: 5 },
-    { x: 2.164441826065011121e-03, y: -2.699067679960150956e-01, category: "name", size: 5 },
-    { x: -4.586317726481081714e-02, y: -2.842129065598805182e-01, category: "name", size: 5 },
-    { x: -1.063080579238272483e-01, y: -3.160960189415077393e-01, category: "name", size: 5 },
-    { x: -1.871006969995018254e-01, y: -3.761338174570509896e-01, category: "name", size: 5 },
-    { x: -3.032361740108674431e-01, y: -4.444665970745479422e-01, category: "name", size: 5 },
-    { x: -4.525518466215324720e-01, y: -5.638893358834839997e-01, category: "name", size: 5 },
-    { x: 3.070379073224527300e-02, y: -2.553793936029892242e-01, category: "name", size: 5 },
-    { x: 2.112145682273836034e-02, y: -2.588534373249137266e-01, category: "name", size: 5 },
-    { x: -8.116119493013163044e-03, y: -2.693090281318686330e-01, category: "name", size: 5 },
-    { x: -5.268939535737726665e-02, y: -2.828890560022302436e-01, category: "name", size: 5 },
-    { x: -1.105761171818571142e-01, y: -3.033854958488118037e-01, category: "name", size: 5 },
-    { x: -1.769425059518612287e-01, y: -3.346765757051232137e-01, category: "name", size: 5 },
-    { x: -2.683958498200473830e-01, y: -3.693367408718738476e-01, category: "name", size: 5 },
-    { x: -3.454302015043361762e-01, y: -4.325668968446394480e-01, category: "name", size: 5 },
-    { x: -4.426769989883819201e-01, y: -5.158628650196963594e-01, category: "name", size: 5 },
-    { x: -5.356349993443283442e-01, y: -6.346350261386178859e-01, category: "name", size: 5 },
-    { x: -6.620809156165707865e-02, y: -2.868251376031483169e-01, category: "name", size: 5 },
-    { x: -1.369139012890306928e-01, y: -3.395275989145815076e-01, category: "name", size: 5 },
-    { x: 8.548622869485877906e-02, y: -2.493496649007665988e-01, category: "name", size: 5 },
-    { x: 2.242044755297700753e-02, y: -2.595903018751652969e-01, category: "name", size: 5 },
-    { x: -3.944583095552829932e-01, y: -7.905208124604408138e-01, category: "name", size: 5 },
-    { x: -4.431262702472974491e-01, y: -1.397294313417501987e-01, category: "name", size: 5 },
-    { x: -1.604191379075206036e-01, y: -2.898742698762031278e-01, category: "name", size: 5 },
-    { x: 9.508700244149015379e-02, y: -3.591524650977235833e-01, category: "name", size: 5 },
-    { x: 1.847579025216755655e-01, y: -2.866648184366438201e-01, category: "name", size: 5 },
-    { x: 1.459749662398315273e-01, y: -2.512236774015706997e-01, category: "name", size: 5 },
-    { x: 1.705929705257513973e-01, y: -2.826643243236042213e-01, category: "name", size: 5 },
-    { x: 1.564291193679874237e-01, y: -2.819146291973849694e-01, category: "name", size: 5 },
-    { x: -5.103657192771615669e-02, y: -2.905917380794856841e-01, category: "name", size: 5 },
-    { x: 1.458669624136275100e-01, y: -2.817419143118183866e-01, category: "name", size: 5 },
-    { x: 1.619285549711362293e-01, y: -2.761909306208352177e-01, category: "name", size: 5 },
-    { x: 1.679581553893385593e-01, y: -2.902921271496587963e-01, category: "name", size: 5 },
-    { x: -9.163018301577552371e-02, y: -3.096728381692031018e-01, category: "name", size: 5 },
-    { x: -4.848802034402062144e-01, y: 5.475070772956684984e-01, category: "name", size: 5 },
-    { x: -1.581869841491138073e-01, y: -2.139345297556778380e-01, category: "name", size: 5 },
-    { x: 3.384938299397802774e-01, y: -3.413066107346550693e-01, category: "name", size: 5 },
-    { x: -4.044709997428821979e-01, y: -5.854558305268047214e-01, category: "name", size: 5 },
-    { x: -8.319792410216564349e-02, y: -2.396090900265981372e-01, category: "name", size: 5 },
-    { x: -1.880866199084280099e-01, y: -2.152819281714735133e-01, category: "name", size: 5 },
-    { x: -1.262732020425541002e-01, y: -2.612347360549056585e-01, category: "name", size: 5 },
-    { x: -1.446145574140468293e-01, y: -3.510956245557587119e-01, category: "name", size: 5 },
-    { x: -1.282653175165442416e-01, y: -3.391360627891658597e-01, category: "name", size: 5 },
-    { x: -1.238369789319492265e-01, y: -3.383667729158329474e-01, category: "name", size: 5 },
-    { x: -3.889305844365276155e-02, y: -3.014907458388615957e-01, category: "name", size: 5 },
-    { x: 2.101796507644915213e-02, y: -3.026347764834929066e-01, category: "name", size: 5 },
-    { x: -4.146232148247097626e-02, y: -2.810080297805052085e-01, category: "name", size: 5 },
-    { x: -1.597442744538001280e-01, y: -2.096327847569299241e-01, category: "name", size: 5 },
-    { x: -1.090640475838391410e-01, y: -2.716980214058807297e-01, category: "name", size: 5 },
-    { x: -1.121544089420254409e-01, y: -3.479481391364231957e-01, category: "name", size: 5 },
-    { x: -1.327711526012474996e-01, y: -3.307155048319926349e-01, category: "name", size: 5 },
-    { x: -1.297154569119256529e-01, y: -3.313674339523152712e-01, category: "name", size: 5 },
-    { x: -1.259156654250485063e-01, y: -2.805341618464758380e-01, category: "name", size: 5 },
-    { x: -1.700431044830910121e-01, y: -2.416239801716477675e-01, category: "name", size: 5 },
-    { x: -1.807598723818993891e-01, y: -2.106497719609173869e-01, category: "name", size: 5 },
-    { x: -1.827243508406678485e-01, y: -2.137232342719066480e-01, category: "name", size: 5 },
-    { x: 2.324707080450659769e-01, y: -2.599613896831961535e-01, category: "name", size: 5 },
-    { x: -1.445223206316159636e-01, y: -2.052448157630679670e-01, category: "name", size: 5 },
-    { x: -1.919805300554839889e-01, y: -2.146217078438533710e-01, category: "name", size: 5 },
-    { x: 1.200530325661530728e-02, y: -2.642798620812998323e-01, category: "name", size: 5 },
-    { x: -1.479735272797151335e-01, y: -3.035337447495090046e-01, category: "name", size: 5 },
-    { x: -2.462989986296740819e-01, y: -2.350222127980173825e-01, category: "name", size: 5 },
-    { x: -7.247889326052736614e-02, y: -3.217137588435300399e-01, category: "name", size: 5 },
-    { x: -1.788006850055494645e-01, y: -2.133723673418866928e-01, category: "name", size: 5 },
-    { x: -1.014425534216397695e-01, y: -2.996536221313532700e-01, category: "name", size: 5 },
-    { x: -2.015248583244233505e-01, y: -2.152511630625775219e-01, category: "name", size: 5 },
-    { x: -1.207944776568015133e-01, y: -2.157783867216340745e-01, category: "name", size: 5 },
-    { x: -1.689012258528369559e-01, y: -2.136190395728032598e-01, category: "name", size: 5 },
-    { x: -7.096997989465103629e-02, y: -2.627135232665450681e-01, category: "name", size: 5 },
-    { x: -1.046941940482164490e-01, y: -3.641884039425021813e-01, category: "name", size: 5 },
-    { x: -1.318501907187971112e-01, y: -2.125789070105971179e-01, category: "name", size: 5 },
-    { x: -1.309765708140663287e-01, y: -3.499250351039274731e-01, category: "name", size: 5 },
-    { x: -5.055086203260663602e-01, y: -7.276153979018713525e-01, category: "name", size: 5 },
-    { x: -3.214317951398409923e-01, y: -4.665687406924456937e-01, category: "name", size: 5 },
-    { x: -2.865483156511517970e-01, y: -4.464702285401810355e-01, category: "name", size: 5 },
-    { x: -2.687119139859605044e-01, y: -2.394575063193684628e-01, category: "name", size: 5 },
-    { x: -1.151141672715579878e-01, y: -3.195636678403355191e-01, category: "name", size: 5 },
-    { x: -1.240858137894039759e-01, y: -3.551289923273203142e-01, category: "name", size: 5 },
-    { x: -1.332552765320742516e-01, y: -3.605824365010832366e-01, category: "name", size: 5 },
-    { x: -2.152297352563339317e-01, y: -2.139191903322406052e-01, category: "name", size: 5 },
-    { x: -1.411156549663317161e-01, y: -4.488371111311851847e-01, category: "name", size: 5 },
-    { x: -5.403957486582111613e-01, y: -1.000000000000000000e+00, category: "name", size: 5 },
-    { x: -1.779337974442743997e-01, y: -3.086774240936894786e-01, category: "name", size: 5 },
-    { x: -1.279335884339157792e-01, y: -3.431971343957456178e-01, category: "name", size: 5 },
-    { x: -1.825440621996836654e-01, y: -3.215113124600473826e-01, category: "name", size: 5 },
-    { x: -1.508778520197038286e-01, y: -3.508304245877347238e-01, category: "name", size: 5 },
-    { x: -7.144084782595339078e-02, y: -3.512327804434468570e-01, category: "name", size: 5 },
-    { x: -1.232357148234349831e-01, y: -2.189616475759487146e-01, category: "name", size: 5 },
-    { x: -5.362429048799133291e-01, y: -7.936386209527688251e-01, category: "name", size: 5 },
-    { x: -7.224482111800293316e-01, y: -9.146235259854689215e-01, category: "name", size: 5 },
-    { x: -5.859165215394308568e-01, y: -8.091594870389641203e-01, category: "name", size: 5 },
-    { x: 3.256852716844771400e-02, y: -3.096020271653453504e-01, category: "name", size: 5 },
-    { x: -1.474917661349538500e-01, y: -3.749432325566833812e-01, category: "name", size: 5 },
-    { x: -1.341134618054186101e-01, y: -3.666621089242965148e-01, category: "name", size: 5 },
-    { x: -1.548926616547104951e-01, y: -3.937606484290115949e-01, category: "name", size: 5 },
-    { x: -1.479295649195710993e-01, y: -3.771207286975648554e-01, category: "name", size: 5 },
-    { x: -1.305745510573397272e-01, y: -3.734277439236072249e-01, category: "name", size: 5 },
-    { x: -1.687458242932295960e-01, y: -2.051634720641690723e-01, category: "name", size: 5 },
-    { x: -1.704166339061560231e-01, y: -2.054472748268045823e-01, category: "name", size: 5 },
-    { x: -1.758375026531557861e-01, y: -2.117217306908205643e-01, category: "name", size: 5 },
-    { x: -2.729493434026175613e-02, y: -2.537313063438861871e-01, category: "name", size: 5 },
-    { x: -4.541874731456111980e-01, y: 6.932590581476425484e-01, category: "name", size: 5 },
-    { x: -3.280306122014686743e-01, y: 4.608953683647161181e-01, category: "name", size: 5 },
-    { x: -3.150245551438273783e-01, y: 3.507482733276867659e-01, category: "name", size: 5 },
-    { x: -3.095267845540180529e-01, y: 2.743817793623879453e-01, category: "name", size: 5 },
-    { x: -3.131247715847273461e-01, y: 2.177201383554601133e-01, category: "name", size: 5 },
-    { x: -3.158223223969781057e-01, y: 1.736118971484472695e-01, category: "name", size: 5 },
-    { x: -2.799320821708094487e-01, y: 3.841722011874004750e-02, category: "name", size: 5 },
-    { x: -2.586188526442371183e-01, y: -2.789751759254899266e-02, category: "name", size: 5 },
-    { x: -2.450380183193852091e-01, y: -6.720453385049418582e-02, category: "name", size: 5 },
-    { x: -2.353524257333868830e-01, y: -9.247266028355227707e-02, category: "name", size: 5 },
-    { x: -2.287363902838626117e-01, y: -1.106620003225219362e-01, category: "name", size: 5 },
-    { x: -9.355866562518644347e-02, y: -3.025627140167614915e-01, category: "name", size: 5 },
-    { x: -1.690400836383455507e-01, y: -2.153903363562926776e-01, category: "name", size: 5 },
-    { x: -1.594283782552983197e-01, y: -2.116216609306390550e-01, category: "name", size: 5 },
-    { x: -1.682788955979569456e-01, y: -2.143865234750409465e-01, category: "name", size: 5 },
-    { x: -1.774033970981616637e-01, y: -2.136541019564813793e-01, category: "name", size: 5 },
-    { x: -1.728560551868678630e-01, y: -2.138313834103826583e-01, category: "name", size: 5 },
-    { x: -1.746307491579069948e-01, y: -2.140062419080039913e-01, category: "name", size: 5 },
-    { x: -1.794989193861065147e-01, y: -2.126906235543147838e-01, category: "name", size: 5 },
-    { x: -1.642318452351231306e-01, y: -2.141027164869715449e-01, category: "name", size: 5 },
-    { x: -7.752109701550646825e-02, y: -2.572598982555162062e-01, category: "name", size: 5 },
-    { x: -1.534044711803037586e-01, y: -2.189098944552885229e-01, category: "name", size: 5 },
-    { x: -7.542640890807439380e-02, y: -3.053087934934181069e-01, category: "name", size: 5 },
-    { x: 2.599329868524232756e-01, y: -3.016917756135508721e-01, category: "name", size: 5 },
-    { x: -1.277784089809852475e-02, y: -3.870575191873352194e-01, category: "name", size: 5 },
-    { x: 6.271165077676410515e-02, y: -3.136685077045382464e-01, category: "name", size: 5 },
-    { x: -2.435817355103186976e-02, y: -3.833786872435110960e-01, category: "name", size: 5 },
-    { x: -6.067778734341022773e-02, y: -2.548684685208372214e-01, category: "name", size: 5 },
-    { x: -1.359441278011558341e-01, y: -2.189693621230377474e-01, category: "name", size: 5 },
-    { x: -1.006317579776099258e-01, y: -2.276514558931453935e-01, category: "name", size: 5 },
-    { x: -1.231957501601209648e-01, y: -2.230371287963706095e-01, category: "name", size: 5 },
-    { x: -1.345584132505511787e-01, y: -2.102494330878528217e-01, category: "name", size: 5 },
-    { x: -1.779160019682523020e-01, y: -2.194744264327043171e-01, category: "name", size: 5 },
-    { x: -2.576601198573099660e-01, y: -3.198932791232981243e-01, category: "name", size: 5 },
-    { x: -2.041550062008743449e-01, y: -2.218870703864219696e-01, category: "name", size: 5 },
-    { x: -1.334848534155631539e-01, y: -2.294575976346189261e-01, category: "name", size: 5 },
-    { x: -1.178055116447724870e-01, y: -2.386927171195258879e-01, category: "name", size: 5 },
-    { x: 2.611678978202237600e-01, y: -2.852188635409456108e-01, category: "name", size: 5 },
-    { x: 2.333843181230449426e-01, y: -2.654808856355118651e-01, category: "name", size: 5 },
-    { x: 2.050271083561897578e-01, y: -2.377661696779714839e-01, category: "name", size: 5 },
-    { x: -1.788586941095723359e-01, y: -2.142292330428808844e-01, category: "name", size: 5 },
-    { x: -8.311800196433816179e-02, y: -2.904635079643951290e-01, category: "name", size: 5 },
-    { x: -1.176827498046508769e-01, y: -2.979689279957238313e-01, category: "name", size: 5 },
-    { x: -9.603848978625650901e-03, y: -2.688649263999504102e-01, category: "name", size: 5 },
-    { x: -3.885531653095863902e-02, y: -2.655507381078594520e-01, category: "name", size: 5 },
-    { x: 7.329454220158582167e-02, y: -2.501303381458690467e-01, category: "name", size: 5 },
-    { x: 5.799172326572221703e-02, y: -2.548797310632026081e-01, category: "name", size: 5 },
-    { x: 2.257030243194905195e-01, y: -2.480121039701304042e-01, category: "name", size: 5 },
-    { x: 1.715795798515198367e-01, y: -2.306257624116568872e-01, category: "name", size: 5 },
-    { x: -3.733445464181077700e-01, y: 1.462581480693692093e-01, category: "name", size: 5 },
-    { x: -1.134522362721550603e-01, y: -2.447608492446228245e-01, category: "name", size: 5 },
-    { x: -1.547761801311591245e-01, y: -2.155710492731240935e-01, category: "name", size: 5 },
-    { x: -1.277375424323017317e-01, y: -2.127702308450385438e-01, category: "name", size: 5 },
-    { x: 2.005587524565533020e-02, y: -2.620358690496015219e-01, category: "name", size: 5 },
-    { x: -1.945867606555036211e-01, y: -2.135532893420333256e-01, category: "name", size: 5 },
-    { x: -1.436211959365332191e-01, y: -1.944968165930895942e-01, category: "name", size: 5 },
-    { x: 3.612892404962764203e-02, y: -2.584930656236557045e-01, category: "name", size: 5 },
-    { x: -1.408742262499489417e-01, y: -1.960649866979543576e-01, category: "name", size: 5 },
-    { x: -2.072904157317204676e-01, y: -2.160576173592092530e-01, category: "name", size: 5 },
-    { x: -1.096309272924478329e-01, y: -2.167652875581559391e-01, category: "name", size: 5 },
-    { x: -1.842800842117080506e-01, y: -5.578363067657832186e-01, category: "name", size: 5 },
-    { x: -3.255714568367070183e-01, y: -6.521353039793222894e-01, category: "name", size: 5 },
-    { x: -1.172126312392735015e-01, y: -2.961376218484006451e-01, category: "name", size: 5 },
-    { x: -1.531515785949925101e-01, y: -2.150710920589499198e-01, category: "name", size: 5 },
-    { x: -1.393731980769676859e-01, y: -1.993887395738541679e-01, category: "name", size: 5 },
-    { x: -2.268438468255865592e-01, y: -2.188072021065819994e-01, category: "name", size: 5 },
-    { x: -3.041331092471626363e-01, y: -2.726297884404231819e-01, category: "name", size: 5 },
-    { x: -5.840894422576053957e-01, y: 1.613233149633175323e-02, category: "name", size: 5 },
-    { x: -1.926988627421837297e-01, y: -2.021033042025075499e-01, category: "name", size: 5 },
-    { x: -1.205163157478145175e-01, y: -4.315726139098707836e-01, category: "name", size: 5 },
-    { x: 2.629592741423126823e-01, y: -2.856390004460515053e-01, category: "name", size: 5 },
-    { x: 2.924318963340909461e-01, y: -3.118569991174449108e-01, category: "name", size: 5 },
-    { x: 2.575610383125347402e-01, y: -2.814140956371909974e-01, category: "name", size: 5 },
-    { x: 3.258087460075785868e-01, y: -3.300065242625936923e-01, category: "name", size: 5 },
-    { x: -1.973169351266138571e-01, y: -2.135074762236820467e-01, category: "name", size: 5 },
-    { x: -9.570861691997578635e-02, y: -2.720816763850173459e-01, category: "name", size: 5 },
-    { x: -1.861080041288240006e-01, y: -2.139704446057196785e-01, category: "name", size: 5 },
-    { x: 4.861930467200192840e-02, y: -2.632037073689394990e-01, category: "name", size: 5 },
-    { x: -8.477641800439905673e-02, y: -3.098901439906082134e-01, category: "name", size: 5 },
-    { x: -8.929774346408148045e-02, y: -2.742623661752314757e-01, category: "name", size: 5 },
-    { x: 7.327296658099791138e-02, y: -2.475068063772559723e-01, category: "name", size: 5 },
-    { x: -1.965010170043821613e-01, y: -2.122780869893936551e-01, category: "name", size: 5 },
-    { x: -9.097452317716281378e-02, y: -2.794563415268581652e-01, category: "name", size: 5 },
-    { x: -6.831050999890553310e-02, y: -2.903956956725752825e-01, category: "name", size: 5 },
-    { x: -2.236444868867351055e-01, y: -2.149661747040668702e-01, category: "name", size: 5 },
-    { x: -1.052314047217933757e-01, y: -2.792848625706945143e-01, category: "name", size: 5 },
-    { x: -2.383583921834202535e-01, y: -2.090691366650749838e-01, category: "name", size: 5 },
-    { x: -4.895779099469647622e-01, y: -5.981290273086392606e-01, category: "name", size: 5 },
-    { x: -1.073298781914782118e-01, y: -3.330262564191638353e-01, category: "name", size: 5 },
-    { x: -1.669316794790089986e-01, y: -3.375580684830514766e-01, category: "name", size: 5 },
-    { x: -1.382411972781861786e-01, y: -3.363649776278426762e-01, category: "name", size: 5 },
-];
+const datasetFiles = {
+    "Improved Distance Matrix + Global Distortions + DR (SMACOF + Isomap)": "smacof_isomap.json",
+    "Original (Tobler, 1986) Distance Matrix + DR (SMACOF + Isomap)": "tobler_smacof_isomap.json",
+    "Global Distortions (Global Areal Distortion + Global Angular Distortion)": "global_distortions.json",
+    "Improved Distance Matrix + Global Distortions + DR (PCA)": "pca.json",
+    "Improved Distance Matrix + Global Distortions + DR (k-PCA, cosine func.)": "kpca_cos.json",
+    "Improved Distance Matrix + Global Distortions + DR (k-PCA, RBF)": "kpca_rbf.json",
+    "Improved Distance Matrix + Global Distortions + DR (LLE, std.)": "lle_std.json",
+    "Improved Distance Matrix + Global Distortions + DR (LLE, LTSA)": "lle_ltsa.json",
+    "Improved Distance Matrix + Global Distortions + DR (MDS)": "mds.json",
+    "Improved Distance Matrix + Global Distortions + DR (SMACOF)": "smacof.json",
+    "Improved Distance Matrix + Global Distortions + DR (Fast ICA)": "fastica.json",
+    "Improved Distance Matrix + Global Distortions + DR (Isomap)": "isomap.json",
+    "Improved Distance Matrix + Global Distortions + DR (SE)": "se.json",
+    "Improved Distance Matrix + Global Distortions + DR (t-SNE)": "tsne.json",
+    "Improved Distance Matrix + Global Distortions + DR (UMAP)": "umap.json",
+    "Improved Distance Matrix + Global Distortions + DR (PHATE)": "phate.json",
+    "Improved Distance Matrix + Global Distortions + DR (ivis)": "ivis.json",
+    "Improved Distance Matrix + Global Distortions + DR (AE, 2-lys)": "ae2.json",
+    "Improved Distance Matrix + Global Distortions + DR (AE, 5-lys)": "ae5.json",
+    "Improved Distance Matrix + Global Distortions + DR (SMACOF + PCA)": "smacof_pca.json",
+    "Improved Distance Matrix + Global Distortions + DR (SMACOF + Fast ICA)": "smacof_fastica.json",
+    "Improved Distance Matrix + Global Distortions + DR (SMACOF + AE, 4-lys)": "smacof_ae4.json",
+    "Improved Distance Matrix + Global Distortions + DR (SMACOF + AE, 5-lys)": "smacof_ae5.json",
+    "Improved Distance Matrix + Global Distortions + DR (SMACOF + LLE, std.)": "smacof_lle_std.json",
+    "Improved Distance Matrix + Global Distortions + DR (SMACOF + SE)": "smacof_se.json",
+    "Improved Distance Matrix + Global Distortions + DR (MDS + Isomap)": "mds_isomap.json",
+    "Improved Distance Matrix + Global Distortions + DR (node2vec + Isomap)": "node2vec_isomap.json",
+};
 
 let ycoords = Array(345).fill(350);
 ycoords[2] = 350;   // "Bonne [φ1=10◦N]",
@@ -398,706 +79,63 @@ ymax[18] = 491;
 ymin[306] = -307;  // "Putniņš P3",
 ymax[306] = 307;  // "Putniņš P3",
 
-// full list of map projections
-mpname = [
-"Arden-Close",
-"Bertin 1953",
-"Bonne [φ1=10◦N]",
-"Bonne [φ1=20◦N]",
-"Bonne [φ1=30◦N]",
-"Bonne [φ1=40◦N]",
-"Bonne [φ1=50◦N]",
-"Bonne [φ1=60◦N]",
-"Bonne [φ1=70◦N]",
-"Bonne [φ1=80◦N]",
-"Bonne [φ1=90◦N]",
-"Bottomley [φ1=10◦N]",
-"Bottomley [φ1=20◦N]",
-"Bottomley [φ1=30◦N]",
-"Bottomley [φ1=40◦N]",
-"Bottomley [φ1=50◦N]",
-"Bottomley [φ1=60◦N]",
-"Bottomley [φ1=70◦N]",
-"Bottomley [φ1=80◦N]",
-"Cabot [aspect ratio=0.8]",
-"Cabot [aspect ratio=1.0]",
-"Cabot [aspect ratio=1.6]",
-"Cabot [aspect ratio=2.0]",
-"Cabot [aspect ratio=1.27]",
-"Cabot [aspect ratio=1.33]",
-"Cabot [aspect ratio=1.8]",
-"Cylindrical Equal-qrea [φts=0◦]",
-"Cylindrical Equal-qrea [φts=10◦]",
-"Cylindrical Equal-qrea [φts=20◦]",
-"Cylindrical Equal-qrea [φts=30◦]",
-"Cylindrical Equal-qrea [φts=40◦]",
-"Cylindrical Equal-qrea [φts=50◦]",
-"Cylindrical Equal-qrea [φts=60◦]",
-"Cylindrical Stereographic [φts=0◦]",
-"Cylindrical Stereographic [φts=10◦]",
-"Cylindrical Stereographic [φts=20◦]",
-"Cylindrical Stereographic [φts=30◦]",
-"Cylindrical Stereographic [φts=40◦]",
-"Cylindrical Stereographic [φts=50◦]",
-"Cylindrical Stereographic [φts=60◦]",
-"Cylindrical Stereographic [φts=70◦]",
-"Equirectangular [φts=0◦]",
-"Equirectangular [φts=10◦]",
-"Equirectangular [φts=20◦]",
-"Equirectangular [φts=30◦]",
-"Equirectangular [φts=40◦]",
-"Equirectangular [φts=50◦]",
-"Equirectangular [φts=60◦]",
-"Equirectangular [φts=70◦]",
-"Central Cylindrical",
-"Collignon",
-"Equidistant Conic [φ1 = 30◦, φ2 = 60◦N]",
-"Equidistant Conic [φ1 = 0◦, φ2 = 30◦N]",
-"Equidistant Conic [φ1 = 0◦, φ2 = 60◦N]",
-"Euler [φ1 = 30◦, φ2 = 60◦N]",
-"Euler [φ1 = 0◦, φ2 = 30◦N]",
-"Euler [φ1 = 0◦, φ2 = 60◦N]",
-"Foucaut Stereographic [PROJ version]",
-"Foucaut Sinusoidal [α=0.2]",
-"Foucaut Sinusoidal [α=0.4]",
-"Foucaut Sinusoidal [α=0.6]",
-"Foucaut Sinusoidal [α=0.8]",
-"Foucaut Sinusoidal [rescaled version, α=0]",
-"Foucaut Sinusoidal [rescaled version, α=0.2]",
-"Foucaut Sinusoidal [rescaled version, α=0.4]",
-"Foucaut Sinusoidal [rescaled version, α=0.6]",
-"Foucaut Sinusoidal [rescaled version, α=0.8]",
-"Larrivée",
-"Laskowski",
-"Lambert-Lagrange [W=1.2]",
-"Lambert-Lagrange [W=1.5]",
-"Lambert-Lagrange [W=2.0]",
-"Loximuthal [φ1 = 0◦]",
-"Loximuthal [φ1 = 10◦]",
-"Loximuthal [φ1 = 20◦]",
-"Loximuthal [φ1 = 30◦]",
-"Loximuthal [φ1 = 40◦]",
-"Loximuthal [φ1 = 50◦]",
-"Loximuthal [φ1 = 60◦]",
-"Loximuthal [φ1 = 70◦]",
-"Loximuthal [φ1 = 80◦]",
-"Loximuthal [φ1 = 85◦]",
-"Loximuthal [φ1 = 89◦]",
-"Mercator",
-"Murdoch I [φ1 = 30◦, φ2 = 60◦N]",
-"Murdoch I [φ1 = 0◦, φ2 = 30◦N]",
-"Murdoch I [φ1 = 0◦, φ2 = 60◦N]",
-"Murdoch III [φ1 = 30◦, φ2 = 60◦N]",
-"Murdoch III [φ1 = 0◦, φ2 = 30◦N]",
-"Murdoch III [φ1 = 0◦, φ2 = 60◦N]",
-"Sinucyli [α=0.2, φts=0◦]",
-"Sinucyli [α=0.2, φts=20◦]",
-"Sinucyli [α=0.2, φts=40◦]",
-"Sinucyli [α=0.2, φts=60◦]",
-"Sinucyli [α=0.2, φts=80◦]",
-"Sinucyli [α=0.4, φts=0◦]",
-"Sinucyli [α=0.4, φts=20◦]",
-"Sinucyli [α=0.4, φts=40◦]",
-"Sinucyli [α=0.4, φts=60◦]",
-"Sinucyli [α=0.4, φts=80◦]",
-"Sinucyli [α=0.6, φts=0◦]",
-"Sinucyli [α=0.6, φts=20◦]",
-"Sinucyli [α=0.6, φts=40◦]",
-"Sinucyli [α=0.6, φts=60◦]",
-"Sinucyli [α=0.6, φts=80◦]",
-"Sinucyli [α=0.8, φts=0◦]",
-"Sinucyli [α=0.8, φts=20◦]",
-"Sinucyli [α=0.8, φts=40◦]",
-"Sinucyli [α=0.8, φts=60◦]",
-"Sinucyli [α=0.8, φts=80◦]",
-"Sinucyli [reverse homotopy version, α=0.2, φts=0◦]",
-"Sinucyli [reverse homotopy version, α=0.2, φts=20◦]",
-"Sinucyli [reverse homotopy version, α=0.2, φts=40◦]",
-"Sinucyli [reverse homotopy version, α=0.2, φts=60◦]",
-"Sinucyli [reverse homotopy version, α=0.4, φts=0◦]",
-"Sinucyli [reverse homotopy version, α=0.4, φts=20◦]",
-"Sinucyli [reverse homotopy version, α=0.4, φts=40◦]",
-"Sinucyli [reverse homotopy version, α=0.4, φts=60◦]",
-"Sinucyli [reverse homotopy version, α=0.6, φts=0◦]",
-"Sinucyli [reverse homotopy version, α=0.6, φts=20◦]",
-"Sinucyli [reverse homotopy version, α=0.6, φts=40◦]",
-"Sinucyli [reverse homotopy version, α=0.6, φts=60◦]",
-"Sinucyli [reverse homotopy version, α=0.8, φts=0◦]",
-"Sinucyli [reverse homotopy version, α=0.8, φts=20◦]",
-"Sinucyli [reverse homotopy version, α=0.8, φts=40◦]",
-"Sinucyli [reverse homotopy version, α=0.8, φts=60◦]",
-"Tissot [φ1 = 30◦, φ2 = 60◦N]",
-"Tissot [φ1 = 0◦, φ2 = 30◦N]",
-"Tissot [φ1 = 0◦, φ2 = 60◦N]",
-"Tobler-Mercator",
-"Tobler G1 [α=0.2]",
-"Tobler G1 [α=0.4]",
-"Tobler G1 [α=0.6]",
-"Tobler G1 [α=0.8]",
-"Urmaev V [n=0.2, α=1.0, q=0.5]",
-"Urmaev V [n=0.2, α=1.0, q=2.0]",
-"Urmaev V [n=0.2, α=1.0, q=3.5]",
-"Urmaev V [n=0.6, α=1.0, q=0.5]",
-"Urmaev V [n=0.6, α=1.0, q=2.0]",
-"Urmaev V [n=0.6, α=1.0, q=3.5]",
-"Urmaev V [n=1.0, α=1.0, q=0.5]",
-"Urmaev V [n=1.0, α=1.0, q=2.0]",
-"Urmaev V [n=1.0, α=1.0, q=3.5]",
-"Urmaev Flat-Polar Sinusoidal [n=0.0]",
-"Urmaev Flat-Polar Sinusoidal [n=0.2]",
-"Urmaev Flat-Polar Sinusoidal [n=0.4]",
-"Urmaev Flat-Polar Sinusoidal [n=0.6]",
-"Urmaev Flat-Polar Sinusoidal [n=0.8]",
-"Urmaev Flat-Polar Sinusoidal [n=1.0]",
-"Vitkovsky I [φ1 = 30◦, φ2 = 60◦N]",
-"Vitkovsky I [φ1 = 0◦, φ2 = 30◦N]",
-"Vitkovsky I [φ1 = 0◦, φ2 = 60◦N]",
-"Wagner III [φts=0◦]",
-"Wagner III [φts=10◦]",
-"Wagner III [φts=20◦]",
-"Wagner III [φts=30◦]",
-"Wagner III [φts=40◦]",
-"Wagner III [φts=50◦]",
-"Wagner III [φts=60◦]",
-"Wagner III [φts=70◦]",
-"Winkel I [φts=0◦]",
-"Winkel I [φts=10◦]",
-"Winkel I [φts=20◦]",
-"Winkel I [φts=30◦]",
-"Winkel I [φts=40◦]",
-"Winkel I [φts=50◦]",
-"Winkel I [φts=60◦]",
-"Winkel I [φts=70◦]",
-"Winkel I [φts=80◦]",
-"Winkel I [φts=90◦]",
-"Aitoff",
-"American Polyconic",
-"Apian I",
-"Apian II",
-"August Epicycloidal",
-"Lambert Azimuthal Equal-Area",
-"Azimuthal Equidistant",
-"Bacon Globular",
-"Baker Dinomic",
-"Baranyi I",
-"Baranyi II",
-"Baranyi III",
-"Baranyi IV",
-"Baranyi V",
-"Baranyi VI",
-"Baranyi VII",
-"Bartholomew",
-"Bertin-Rivière",
-"Boggs Eumorphic",
-"Braun Perspective",
-"Briesemeister",
-"Bromley",
-"Canters Polyconic W07",
-"Canters Polyconic W08",
-"Canters Polyconic W09",
-"Canters Polyconic W12",
-"Canters Polyconic W13",
-"Canters Polyconic W14",
-"Canters Polyconic W20",
-"Canters Polyconic W21",
-"Canters Pseudocylindric W01",
-"Canters Pseudocylindric W02",
-"Canters Pseudocylindric W06",
-"Canters Pseudocylindric W15",
-"Canters Pseudocylindric W16",
-"Canters Pseudocylindric W17",
-"Canters Pseudocylindric W19",
-"Canters Pseudocylindric W33",
-"Canters Pseudocylindric W34",
-"Compact Miller",
-"Craster Parabolic",
-"Deakin Minimum-Error",
-"Denoyer Semi-Elliptical",
-"Eckert I",
-"Eckert II",
-"Eckert III",
-"Eckert IV",
-"Eckert V",
-"Eckert VI",
-"Eckert-Greifendorff",
-"Equal Earth",
-"Érdi-Krausz",
-"Fahey",
-"Foucaut Stereographic [G.Projector version]",
-"Fournier I Globular",
-"Fournier II",
-"Frančula II",
-"Frančula IV",
-"Frančula V",
-"Frančula VII",
-"Frančula XI",
-"Frančula XIII",
-"Frančula XIV",
-"Gall-Bomford Pseudocylindrical",
-"Gilbert Two-World",
-"Ginzburg IV",
-"Ginzburg IX",
-"Ginzburg V",
-"Ginzburg VI",
-"Ginzburg VIII",
-"Goode Homolosine",
-"Gott Equal-Area Elliptical",
-"Gott-Mugnolo Azimuthal",
-"Gott-Mugnolo Elliptical",
-"Gott-Wagner",
-"Györffy A",
-"Györffy B",
-"Györffy D",
-"Györffy E",
-"Györffy F",
-"Hammer",
-"Hatano Asymmetric",
-"Hatano Symmetric",
-"HEALPix [Rescaled, H=1]",
-"Hill Eucyclic [K=0,0]",
-"Hill Eucyclic [K=0.2]",
-"Hill Eucyclic [K=0.4]",
-"Hill Eucyclic [K=0.6]",
-"Hill Eucyclic [K=0.8]",
-"Hill Eucyclic [K=1.0]",
-"Hill Eucyclic [K=2.0]",
-"Hill Eucyclic [K=3.0]",
-"Hill Eucyclic [K=4.0]",
-"Hill Eucyclic [K=5.0]",
-"Hill Eucyclic [K=6.0]",
-"Hölzel",
-"Hufnagel II",
-"Hufnagel III",
-"Hufnagel IV",
-"Hufnagel IX",
-"Hufnagel V",
-"Hufnagel VII",
-"Hufnagel X",
-"Hufnagel XI",
-"Hufnagel XII",
-"Kavraisky V",
-"Kavraisky VII",
-"Kharchenko-Shabanova",
-"Maurer SNo. 159 Full Globular",
-"Maurer SNo. 160 Apparent Globular",
-"Maurer SNo. 187 All-Globular",
-"Mayr",
-"McBryde P3",
-"McBryde Q3",
-"McBryde S2",
-"McBryde S3",
-"McBryde-Thomas Flat-Polar Parabolic",
-"McBryde-Thomas Flat-Polar Quartic",
-"McBryde-Thomas Flat-Polar Sinusoidal",
-"McBryde-Thomas I",
-"McBryde-Thomas II",
-"Miller Cylindrical I",
-"Miller Cylindrical II",
-"Miller Perspective Compromise",
-"Mollweide",
-"Natural Earth I",
-"Natural Earth II",
-"Nell",
-"Nell-Hammer",
-"Ortelius Oval",
-"Oxford Atlas - Polyconic",
-"Patterson Cylindrical",
-"Pavlov",
-"Philbrick Sinu-Mollweide",
-"Putniņš P1",
-"Putniņš P2",
-"Putniņš P3",
-"Putniņš P3'",
-"Putniņš P4'",
-"Putniņš P5",
-"Putniņš P5'",
-"Putniņš P6",
-"Putniņš P6'",
-"Quartic-Authalic",
-"Raisz Armadillo [tilt angle=0◦]",
-"Raisz Half Ellipsoidal [tilt angle=0◦]",
-"Robinson",
-"Siemon IV",
-"Sinusoidal",
-"Snyder Minimum-Error Flat Pole",
-"Snyder Minimum-Error Pointed Pole",
-"Stabius-Werner III",
-"Strebe Equal-Area",
-"Times Atlas",
-"Tobler Cylindrical I",
-"Tobler Cylindrical II",
-"Urmayev Cylindrical II",
-"Urmayev Cylindrical III",
-"Wagner I",
-"Wagner II",
-"Wagner IV",
-"Wagner IX",
-"Wagner IX [compressed version]",
-"Wagner V [G.Projector version]",
-"Wagner VI",
-"Wagner VII",
-"Wagner VIII",
-"Wagner VIII [Böhm variant 1]",
-"Wagner VIII [Böhm variant 2]",
-"Wagner VIII [Böhm variant 3]",
-"Wagner VIII [Böhm variant 4]",
-"Wiechel [additional rotation=-45◦]",
-"Winkel II",
-"Winkel Tripel",
-"Winkel-Snyder",]
+mpname = []
 
-distortion = 
-[[0.393289445, 0.139756167], 
-[0.123182914, 0.387457526], 
-[0, 0.475184058], 
-[0, 0.485264298], 
-[0, 0.499655538], 
-[0, 0.515523881], 
-[0, 0.530078128], 
-[0, 0.541202355], 
-[0, 0.54792444], 
-[0, 0.550657067], 
-[0, 0.550929005], 
-[0, 0.462814825], 
-[0, 0.444253183], 
-[0, 0.433599018], 
-[0, 0.443493165], 
-[0, 0.470346399], 
-[0, 0.501833402], 
-[0, 0.528339814], 
-[0, 0.545290465], 
-[0.168202513, 0.394361563], 
-[0.232717196, 0.306569375], 
-[0.435984154, 0.21811824], 
-[0.541556139, 0.255023491], 
-[0.330875303, 0.237235852], 
-[0.351360098, 0.228827225], 
-[0.49137849, 0.231572503], 
-[0, 0.521240462], 
-[0, 0.512377657], 
-[0, 0.487223529], 
-[0, 0.451780708], 
-[0, 0.423273078], 
-[0, 0.442472329], 
-[0, 0.571626014], 
-[0.351017402, 0.171915829], 
-[0.344126488, 0.169885203], 
-[0.324727181, 0.163983913], 
-[0.29803707, 0.155144013], 
-[0.278434333, 0.146608575], 
-[0.296868269, 0.148207679], 
-[0.391448545, 0.182348528], 
-[0.590711979, 0.2844749], 
-[0.260620231, 0.260620231], 
-[0.256188829, 0.256188829], 
-[0.243611764, 0.243611764], 
-[0.225890354, 0.225890354], 
-[0.211636539, 0.211636539], 
-[0.221236164, 0.221236164], 
-[0.285813007, 0.285813007], 
-[0.43713249, 0.43713249], 
-[0.781860693, 0.260620231], 
-[0, 0.7350514], 
-[0.344084513, 0.344084513], 
-[0.264664538, 0.264664538], 
-[0.279039615, 0.279039615], 
-[0.346596287, 0.346596287], 
-[0.269105622, 0.269105622], 
-[0.290368403, 0.290368403], 
-[0, 0.549386087], 
-[0, 0.44485507], 
-[0, 0.435162084], 
-[0, 0.440868727], 
-[0, 0.454030199], 
-[0.225791353, 0.429073336], 
-[0.171741303, 0.372252556], 
-[0.12296826, 0.382559951], 
-[0.078532849, 0.407617666], 
-[0.037726155, 0.438475415], 
-[0.359406944, 0.119335755], 
-[0.217834961, 0.250648944], 
-[0.837242486, 0], 
-[0.462817388, 0], 
-[0.433679429, 0], 
-[0.177118984, 0.268226085], 
-[0.175982818, 0.267979188], 
-[0.172707649, 0.267346876], 
-[0.167739636, 0.26665721], 
-[0.162161945, 0.266595953], 
-[0.158509216, 0.268556327], 
-[0.162488387, 0.275468394], 
-[0.186156102, 0.29409989], 
-[0.256865854, 0.344664326], 
-[0.338640213, 0.407024712], 
-[0.512816856, 0.552796024], 
-[0.521240462, 0], 
-[0.349348, 0.349348], 
-[0.298812471, 0.298812471], 
-[0.270906659, 0.270906659], 
-[0.351319292, 0.351319292], 
-[0.303726847, 0.303726847], 
-[0.271220412, 0.271220412], 
-[0, 0.481602417], 
-[0, 0.463077038], 
-[0, 0.415613848], 
-[0, 0.410235831], 
-[0, 0.784148799], 
-[0, 0.446834034], 
-[0, 0.434644409], 
-[0, 0.40130262], 
-[0, 0.374257726], 
-[0, 0.583154775], 
-[0, 0.422221178], 
-[0, 0.415000653], 
-[0, 0.393899801], 
-[0, 0.365315315], 
-[0, 0.444521075], 
-[0, 0.417725176], 
-[0, 0.414558674], 
-[0, 0.404699094], 
-[0, 0.386519226], 
-[0, 0.37424716], 
-[0, 0.444975723], 
-[0, 0.414929803], 
-[0, 0.362735077], 
-[0, 0.513085326], 
-[0, 0.432738056], 
-[0, 0.408176049], 
-[0, 0.364755232], 
-[0, 0.479749418], 
-[0, 0.437854482], 
-[0, 0.419367842], 
-[0, 0.384065958], 
-[0, 0.4524739], 
-[0, 0.451891908], 
-[0, 0.440030992], 
-[0, 0.413679377], 
-[0, 0.431064734], 
-[0.40643937, 0.40643937], 
-[0.314950558, 0.314950558], 
-[0.27440604, 0.27440604], 
-[0, 0.764273517], 
-[0, 0.449989019], 
-[0, 0.435263887], 
-[0, 0.430561444], 
-[0, 0.444695215], 
-[0.004483167, 0.513439257], 
-[0.01756099, 0.513288721], 
-[0.030119715, 0.51357615], 
-[0.041442835, 0.435524864], 
-[0.140832705, 0.451095249], 
-[0.217378751, 0.481209432], 
-[0.134206747, 0.428464662], 
-[0.357634939, 0.471547335], 
-[0.492538984, 0.555074088], 
-[0, 0.456643542], 
-[0, 0.449251512], 
-[0, 0.427776784], 
-[0, 0.395982353], 
-[0, 0.369438564], 
-[0, 0.439665131], 
-[0.354972309, 0.354972309], 
-[0.31732925, 0.31732925], 
-[0.274576259, 0.274576259], 
-[0.176490453, 0.26923065], 
-[0.174190618, 0.26715861], 
-[0.167567257, 0.261104734], 
-[0.157851171, 0.251766816], 
-[0.148923185, 0.241259351], 
-[0.151557483, 0.235652551], 
-[0.188090962, 0.25118331], 
-[0.291563163, 0.3253858], 
-[0.171915829, 0.274376608], 
-[0.169073487, 0.273432276], 
-[0.160869569, 0.271009433], 
-[0.148529868, 0.268426718], 
-[0.135144906, 0.268149977], 
-[0.127621278, 0.274056159], 
-[0.137498206, 0.291429376], 
-[0.174648125, 0.326481639], 
-[0.242067229, 0.386207242], 
-[0.34657359, 0.483314508], 
-[0.11971911, 0.350956554], 
-[0.372811615, 0.393616199], 
-[0.227154021, 0.277600613], 
-[0.146604293, 0.301664671], 
-[0.569336401, 0], 
-[0, 0.707274881], 
-[0.432414875, 0.432339127], 
-[0.295882571, 0.45678719], 
-[0.295373211, 0.285573592], 
-[0.273162503, 0.195124517], 
-[0.308732461, 0.201499765], 
-[0.232024982, 0.270895573], 
-[0.153825503, 0.256452848], 
-[0.229901914, 0.288739923], 
-[0.264732005, 0.259657761], 
-[0.207145989, 0.290916962], 
-[0.132622706, 0.24175966], 
-[0.123182914, 0.387457526], 
-[0, 0.425799517], 
-[0.502814553, 0.042748074], 
-[0.346494927, 0.396468874], 
-[0, 0.427786015], 
-[0, 0.402145199], 
-[0.090232729, 0.32555635], 
-[0.164935097, 0.198968203], 
-[0.118844918, 0.23528071], 
-[0.152103253, 0.208143605], 
-[0.161229047, 0.219397001], 
-[0.226068148, 0.303250875], 
-[0.13230194, 0.328686284], 
-[0, 0.376876882], 
-[0.090239022, 0.301793281], 
-[0.176837063, 0.204209262], 
-[0.127156583, 0.25428979], 
-[0.126259434, 0.247964025], 
-[0.081717602, 0.306010559], 
-[0.072347022, 0.376303801], 
-[0, 0.364022245], 
-[0, 0.361688242], 
-[0.336414644, 0.191954354], 
-[0, 0.450557922], 
-[0, 0.3679165], 
-[0.157947935, 0.303512576], 
-[0.148227252, 0.31178673], 
-[0, 0.409219968], 
-[0.178529657, 0.244845846], 
-[0, 0.358543867], 
-[0.148817832, 0.27434916], 
-[0, 0.373855778], 
-[0, 0.435516579], 
-[0, 0.364082375], 
-[0.06324488, 0.3625467], 
-[0.207858183, 0.194236711], 
-[0, 0.592027127], 
-[0.320314019, 0.617806501], 
-[0.541624248, 0.549155819], 
-[0.202450174, 0.254532143], 
-[0.17674832, 0.220993563], 
-[0, 0.346925967], 
-[0.141453519, 0.243255725], 
-[0.173244962, 0.205553131], 
-[0.163875976, 0.194397279], 
-[0, 0.343050648], 
-[0.263721622, 0.137446579], 
-[0.963166848, 0.550387361], 
-[0.134857363, 0.274445548], 
-[0.172375848, 0.205389193], 
-[0.118541827, 0.25077609], 
-[0.175256768, 0.210681075], 
-[0.235660355, 0.221216813], 
-[0, 0.432828487], 
-[0.588075212, 0.435907812], 
-[0.731232804, 0.608861557], 
-[0.588044385, 0.455618474], 
-[0.214318231, 0.202205102], 
-[0.159477834, 0.221335377], 
-[0.170712103, 0.204612911], 
-[0.179372837, 0.183378001], 
-[0.164498928, 0.179523147], 
-[0.171637095, 0.174507663], 
-[0, 0.41146564], 
-[0, 0.373464327], 
-[0, 0.367814281], 
-[0, 0.484504049], 
-[0, 0.551853489], 
-[0, 0.463564585], 
-[0, 0.434315019], 
-[0, 0.417510366], 
-[0, 0.406163234], 
-[0, 0.398117751], 
-[0, 0.378435102], 
-[0, 0.370846966], 
-[0, 0.367073503], 
-[0, 0.364879646], 
-[0, 0.363515049], 
-[0.14666251, 0.250656254], 
-[0, 0.370660781], 
-[0, 0.360259918], 
-[0, 0.363506286], 
-[0, 0.357333977], 
-[0, 0.359589793], 
-[0, 0.359376186], 
-[0, 0.362349006], 
-[0, 0.366061204], 
-[0, 0.423518624], 
-[0, 0.38666423], 
-[0.161454145, 0.227139714], 
-[0.421563423, 0.09649533], 
-[0.293860894, 0.370890208], 
-[0.263378399, 0.242115614], 
-[0.272852194, 0.307228612], 
-[0, 0.420608448], 
-[0, 0.421910585], 
-[0, 0.425243383], 
-[0, 0.433939745], 
-[0, 0.444674145], 
-[0, 0.394791267], 
-[0, 0.392311518], 
-[0, 0.399958182], 
-[0, 0.393350368], 
-[0, 0.374185095], 
-[0.3931205, 0.130574739], 
-[0.34597117, 0.176467983], 
-[0.292962841, 0.228345963], 
-[0, 0.385514921], 
-[0.121185075, 0.263635717], 
-[0.102995664, 0.273354294], 
-[0, 0.435738319], 
-[0, 0.418333547], 
-[0.213049129, 0.275708139], 
-[0.179200916, 0.250099462], 
-[0.321488218, 0.214139779], 
-[0.183567362, 0.338011135], 
-[0, 0.409818932], 
-[0.058666286, 0.384055264], 
-[0, 0.424479244], 
-[0.024697874, 0.434105491], 
-[0.168158204, 0.26584804], 
-[0, 0.367744675], 
-[0.010404371, 0.488247909], 
-[0.175636574, 0.278399902], 
-[0, 0.483182397], 
-[0, 0.377035399], 
-[0, 0.447596014], 
-[0.568829512, 0.662826123], 
-[0.652986398, 0.871516533], 
-[0.109305077, 0.274644309], 
-[0, 0.425862023], 
-[0, 0.471411317], 
-[0, 0.36032286], 
-[0, 0.36257187], 
-[0, 0.562095589], 
-[0, 0.362275203], 
-[0.25614591, 0.139964883], 
-[0.390454641, 0.139479989], 
-[0.440494844, 0.094502023], 
-[0.384309102, 0.142089443], 
-[0.484534198, 0.088554599], 
-[0, 0.370088955], 
-[0.090214207, 0.310518345], 
-[0, 0.361631699], 
-[0.184346893, 0.250303804], 
-[0.152056055, 0.228935059], 
-[0.090221808, 0.301985312], 
-[0.19160638, 0.256074462], 
-[0, 0.350213525], 
-[0.090232124, 0.29004112], 
-[0.105838819, 0.274012625], 
-[0, 0.370941861], 
-[0.090238119, 0.293805762], 
-[0, 0.416352197], 
-[0.604891117, 0.802386414], 
-[0.163359345, 0.214385817], 
-[0.115404338, 0.247265605], 
-[0.114102893, 0.258842531],]
+fileName = "./listofmap.json"
 
-for (obj in dataset) {
-    dataset[obj].category = mpname[obj];
-    dataset[obj].area = distortion[obj][0] == 0 ? 0 : distortion[obj][0].toFixed(5);
-    dataset[obj].angu = distortion[obj][1] == 0 ? 0 : distortion[obj][1].toFixed(5);
+d3.json(fileName)
+    .then((data) => {
+        mpname = data;
+    })
+    .catch((error) => {
+        console.error("Error loading dataset file:", fileName, error);
+    });
+
+distortions = []
+
+fileName = "./dataset/global_distortions.json"
+
+d3.json(fileName)
+    .then((data) => {
+        distortions = data;
+        updateTable();
+        updateFullTable();
+    })
+    .catch((error) => {
+        console.error("Error loading dataset file:", fileName, error);
+    });
+
+// for (obj in dataset) {
+//     dataset[obj].category = mpname[obj];
+//     dataset[obj].area = distortion[obj][0] == 0 ? 0 : distortion[obj][0].toFixed(5);
+//     dataset[obj].angu = distortion[obj][1] == 0 ? 0 : distortion[obj][1].toFixed(5);
+//     }
+
+
+let thresholdSimilar = 1;
+let thresholdModerate = 2;
+
+const sliderSimilar = document.getElementById("slider-similar");
+const sliderModerate = document.getElementById("slider-moderate");
+const valueSimilar = document.getElementById("value-similar");
+const valueModerate = document.getElementById("value-moderate");
+
+function updateThresholds() {
+    if (parseFloat(sliderSimilar.value) >= parseFloat(sliderModerate.value)) {
+        sliderModerate.value = (parseFloat(sliderSimilar.value) + 0.2).toFixed(2);
     }
+
+    valueSimilar.textContent = sliderSimilar.value;
+    valueModerate.textContent = sliderModerate.value;
+
+    thresholdSimilar = parseFloat(sliderSimilar.value);
+    thresholdModerate = parseFloat(sliderModerate.value);
+
+    // displaySortedCommands(local_commands, dists);
+}
+
+sliderSimilar.addEventListener("input", updateThresholds);
+sliderModerate.addEventListener("input", updateThresholds);
 
 const svg = d3.select("#interactive-map");
 const width = svg.node().getBoundingClientRect().width;
@@ -1119,21 +157,8 @@ svg.call(zoom);
 const g = svg.append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-const xScale = d3.scaleLinear().domain([-1, 1]).range([0, plotWidth]);
-const yScale = d3.scaleLinear().domain([-1, 1]).range([plotHeight, 0]);
-
-g.append("g")
-    .attr("class", "grid")
-    .call(d3.axisBottom(xScale).tickSize(plotHeight).tickFormat(""))
-    .attr("transform", `translate(0,${plotHeight})`)
-    .selectAll("line")
-    .style("stroke", "#ddd");
-
-g.append("g")
-    .attr("class", "grid")
-    .call(d3.axisLeft(yScale).tickSize(-plotWidth).tickFormat(""))
-    .selectAll("line")
-    .style("stroke", "#ddd");
+xScale = d3.scaleLinear().domain([-1, 1]).range([0, plotWidth]);
+yScale = d3.scaleLinear().domain([-1, 1]).range([plotHeight, 0]);
 
 function padDynamicZero(num) {
     let numStr = String(num);
@@ -1141,75 +166,210 @@ function padDynamicZero(num) {
     return numStr.padStart(length, '0');
 }
 
-g.selectAll("circle")
-    .data(dataset)
-    .enter()
-    .append("circle")
-    .attr("cx", (d) => xScale(d.x))
-    .attr("cy", (d) => yScale(d.y))
-    .attr("r", (d) => d.size)
-    .attr("name", (d) => d.category)
-    .attr("data-area", (d) => d.area)
-    .attr("data-angu", (d) => d.angu)
-    .style("fill", "gray")
-    .style("opacity", 0.7)
-    .on("click", (event, d) => {
+function updateVisualization(data) {
+    let circles = g.selectAll("circle").data(data);
 
-        document.getElementById("search-box-single-map-projection").value = d.category;
+    zoomToFit(svg, data, plotWidth, plotHeight);
 
-        index = commands.indexOf(d.category);
-
-        const img = document.getElementById("img-1");
-        img.src = "map/" + padDynamicZero(index + 1) + ".png"
-
-        const sortedCommands = reorderCommands(commands, distanceMatrix, index);
-        displaySortedCommands(sortedCommands.cmd.slice(1, 11), sortedCommands.dist.slice(1, 11))
-        // console.log(index)
-
-        g.selectAll("circle")
+    circles
+        .attr("cx", (d) => xScale(d.x))
+        .attr("cy", (d) => yScale(d.y))
+        .attr("r", 5)
         .style("fill", "gray")
-        .style("stroke-width", "0px")
+        .style("opacity", 0.7);
+
+    circles
+        .enter()
+        .append("circle")
+        .attr("cx", (d) => xScale(d.x))
+        .attr("cy", (d) => yScale(d.y))
+        .attr("r", 5)
+        .style("fill", "gray")
         .style("opacity", 0.7)
+        .attr("name", (d) => d.category)
+        .attr("data-area", (d) => d.area)
+        .attr("data-angu", (d) => d.angu)
+        .on("click", (event, d) => {
 
-        d3.select(event.target)
-            .style("fill", "dodgerblue")
-            .style("stroke", "black")
-            .style("stroke-width", "2px")
-            .style("opacity", 1)
+            openTab("tab-find")
 
-        // alert(`Category: ${d.category}`);
-        svg.selectAll(".tooltip-group").remove();
+            document.getElementById("search-box-single-map-projection").value = d.category;
 
-        const tooltipGroup = d3.select("g").append("g")
-            .attr("class", "tooltip-group");
+            index = mpname.indexOf(d.category);
 
-        tooltipGroup.append("rect")
+            const img = document.getElementById("img-1");
+            img.src = "map/" + padDynamicZero(index + 1) + ".png"
+
+            const img2 = document.getElementById("img-2");
+            img2.style.display = "none"
+            updateButtonState();
+
+            const sortedCommands = reorderCommands(mpname, distanceMatrix, index);
+            displaySortedCommands(sortedCommands.cmd.slice(1, 11), sortedCommands.dist.slice(1, 11))
+            // console.log(index)
+
+            g.selectAll("circle")
+            .style("fill", "gray")
+            .style("stroke-width", "0px")
+            .style("opacity", 0.7)
+
+            d3.select(event.target)
+                .style("fill", "dodgerblue")
+                .style("stroke", "black")
+                .style("stroke-width", "2px")
+                .style("opacity", 1)
+
+            // alert(`Category: ${d.category}`);
+            svg.selectAll(".tooltip-group").remove();
+
+            const tooltipGroup = d3.select("g").append("g")
+                .attr("class", "tooltip-group");
+
+            const textElement = tooltipGroup.append("text")
+                .attr("x", xScale(d.x) + d.size + 15)
+                .attr("y", yScale(d.y) - 10)
+                .attr("fill", "red")
+                .style("font-size", "12px")
+                .text(`${d.category}`);
+            tooltipGroup.append("text")
+                .attr("x", xScale(d.x) + d.size + 15)
+                .attr("y", yScale(d.y) + 5)
+                .attr("fill", "black")
+                .style("font-size", "12px")
+                .text(`E_A: ${d.area}`);
+            tooltipGroup.append("text")
+                .attr("x", xScale(d.x) + d.size + 15)
+                .attr("y", yScale(d.y) + 20)
+                .attr("fill", "black")
+                .style("font-size", "12px")
+                .text(`E∠: ${d.angu}`);
+
+            const textWidth = Math.max(textElement.node().getComputedTextLength(), 75);
+
+            const rectWidth = textWidth + 10;
+
+            tooltipGroup.append("rect")
             .attr("x", xScale(d.x) + d.size + 10)
             .attr("y", yScale(d.y) - 30)
-            .attr("width", 120)
+            .attr("width", rectWidth)
             .attr("height", 60)
             .attr("rx", 5)
             .attr("fill", "rgba(0, 0, 0, 0.3)");
 
-        tooltipGroup.append("text")
-            .attr("x", xScale(d.x) + d.size + 15)
-            .attr("y", yScale(d.y) - 10)
+        });
+
+    circles.exit().remove();
+}
+
+dataset = [];
+
+function loadDataset(datasetName) {
+    const fileName = "dataset/" + datasetFiles[datasetName];
+    if (!fileName) {
+        console.error("Dataset file not found for:", datasetName);
+        return;
+    }
+
+    // Default scales for most datasets
+    const xScaleDefault = d3.scaleLinear().domain([-1, 1]).range([0, plotWidth]);
+    const yScaleDefault = d3.scaleLinear().domain([-1, 1]).range([plotHeight, 0]);
+
+    // Special scales for "global_distortions.json"
+    const xScaleSpecial = d3.scaleLinear().domain([0, 1]).range([0, plotWidth]);
+    const yScaleSpecial = d3.scaleLinear().domain([0, 1]).range([plotHeight, 0]);
+
+    d3.select("g").selectAll("g").remove();
+
+    g.append("g")
+        .attr("class", "grid")
+        .call(d3.axisBottom(xScale).tickSize(plotHeight).tickFormat(""))
+        .attr("transform", `translate(0,${plotHeight})`)
+        .selectAll("line")
+        .style("stroke", "#ddd");
+
+    g.append("g")
+        .attr("class", "grid")
+        .call(d3.axisLeft(yScale).tickSize(-plotWidth).tickFormat(""))
+        .selectAll("line")
+        .style("stroke", "#ddd");
+
+    // Determine scales based on dataset
+    xScale = datasetFiles[datasetName] === "global_distortions.json" ? xScaleSpecial : xScaleDefault;
+    yScale = datasetFiles[datasetName] === "global_distortions.json" ? yScaleSpecial : yScaleDefault;
+
+    // Get swap-coord checkbox state
+    const swapCoords = document.getElementById("swap-coord").checked;
+
+    // // Define scales
+    // xScale = d3.scaleLinear().domain([0, 1]).range([0, width]);
+    // yScale = d3.scaleLinear().domain([0, 1]).range([height, 0]);
+
+    // Add axes
+    const xAxis = d3.axisBottom(xScale).ticks(10);
+    const yAxis = d3.axisLeft(yScale).ticks(10);
+
+    if (datasetFiles[datasetName] == "global_distortions.json") {
+        // Add axes to SVG
+        svg.select("g").append("g")
+            .attr("transform", `translate(0, ${height})`)
+            .call(xAxis)
+            .append("text")
+            .attr("x", width / 2)
+            .attr("y", 40)
             .attr("fill", "black")
-            .style("font-size", "12px")
-            .text(`${d.category}`);
-        tooltipGroup.append("text")
-            .attr("x", xScale(d.x) + d.size + 15)
-            .attr("y", yScale(d.y) + 5)
+            .style("text-anchor", "middle")
+            .text(swapCoords ? "E∠" : "E_A");
+
+        svg.select("g").append("g")
+            .call(yAxis)
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -height / 2)
+            .attr("y", -40)
             .attr("fill", "black")
-            .style("font-size", "12px")
-            .text(`E_A: ${d.area}`);
-        tooltipGroup.append("text")
-            .attr("x", xScale(d.x) + d.size + 15)
-            .attr("y", yScale(d.y) + 20)
-            .attr("fill", "black")
-            .style("font-size", "12px")
-            .text(`E∠: ${d.angu}`);
-    });
+            .style("text-anchor", "middle")
+            .text(swapCoords ? "E_A" : "E∠");
+    }
+
+    d3.json(fileName)
+        .then((data) => {
+            dataset = [];
+            for (obj in data) {
+                dd = {}
+                dd.x = swapCoords ? data[obj][0] : data[obj][1];
+                dd.y = swapCoords ? data[obj][1] : data[obj][0];
+                dd.size = 5;
+                dd.area = distortions[obj][0] == 0 ? 0 : distortions[obj][0].toFixed(5);
+                dd.angu = distortions[obj][1] == 0 ? 0 : distortions[obj][1].toFixed(5);
+                dd.category = mpname[obj];
+
+                dataset.push({...dd});
+
+                // dataset[obj].area = distortion[obj][0] == 0 ? 0 : distortion[obj][0].toFixed(5);
+                // dataset[obj].angu = distortion[obj][1] == 0 ? 0 : distortion[obj][1].toFixed(5);
+            }
+            updateVisualization(dataset);
+            updateLines();
+            svg.selectAll(".tooltip-group").remove();
+        })
+        .catch((error) => {
+            console.error("Error loading dataset file:", fileName, error);
+        });
+}
+
+const initialDataset = "Improved Distance Matrix + Global Distortions + DR (SMACOF + Isomap)";
+loadDataset(initialDataset);
+
+document.getElementById("dataset-selector").addEventListener("change", (event) => {
+    const selectedDataset = event.target.value;
+    loadDataset(selectedDataset);
+});
+
+const checkbox = document.getElementById('swap-coord');
+checkbox.addEventListener('change', function() {
+    const selectedDataset = document.getElementById("dataset-selector").value;
+    loadDataset(selectedDataset);
+});
 
 svg.on("click", function (event) {
     if (event.target.tagName === "svg") {
@@ -1236,20 +396,24 @@ const polylines = [
     [160, 161, 162, 163, 164, 165, 166, 167, 168, 169], // wink1
 ];
 
-const lineElements = polylines.map((linePoints, index) => {
-    const line = g.append("path")
-        .data([linePoints])
-        .attr("d", d => {
-            const lineGenerator = d3.line()
-                .x(i => xScale(dataset[i].x))
-                .y(i => yScale(dataset[i].y));
-            return lineGenerator(d);
-        })
-        .attr("fill", "none")
-        .attr("stroke", "black")
-        .attr("class", `line-${index + 1}`); 
-    return line;
-});
+function updateLines() {
+    g.selectAll("path").remove();
+
+    const lineElements = polylines.map((linePoints, index) => {
+        const line = g.append("path")
+            .data([linePoints])
+            .attr("d", d => {
+                const lineGenerator = d3.line()
+                    .x(i => xScale(dataset[i].x))
+                    .y(i => yScale(dataset[i].y));
+                return lineGenerator(d);
+            })
+            .attr("fill", "none")
+            .attr("stroke", "black")
+            .attr("class", `line-${index + 1}`); 
+        return line;
+    });
+}
 
 function toggleLineVisibility(lineIndex, isVisible) {
     const line = svg.select(`.line-${lineIndex}`);
@@ -1282,9 +446,33 @@ function initializeLinesVisibility() {
 
 initializeLinesVisibility();
 
+function zoomToFit(svg, circles, plotWidth, plotHeight) {
+    let xMin = d3.min(circles, d => xScale(d.x) - d.size) - 80;
+    let xMax = d3.max(circles, d => xScale(d.x) + d.size) + 80;
+    let yMin = d3.min(circles, d => yScale(d.y) - d.size) - 80;
+    let yMax = d3.max(circles, d => yScale(d.y) + d.size) + 80;
+
+    const width = xMax - xMin;
+    const height = yMax - yMin;
+
+    const k = Math.min(plotWidth / width, plotHeight / height);
+
+    const translateX = plotWidth / 2 - k * (xMin + width / 2);
+    const translateY = plotHeight / 2 - k * (yMin + height / 2);
+
+    const transform = d3.zoomIdentity.translate(translateX, translateY).scale(k);
+
+    svg.transition().duration(300).call(zoom.transform, transform);
+}
+
 // Reset Zoom
 document.getElementById("reset-zoom").addEventListener("click", function() {
     svg.transition().duration(200).call(zoom.transform, d3.zoomIdentity);
+
+    // let circles = g.selectAll("circle").data(data);
+
+    // zoomToFit(svg, data, plotWidth, plotHeight);
+
 });
 
 document.querySelectorAll('li').forEach(item => {
@@ -1672,13 +860,13 @@ imgmissing = [
 143,
 ]
 
-const commands = [
+// const commands = [
 
-];
+// ];
 
-for (obj in dataset) {
-    commands.push(dataset[obj].category);
-    }
+// for (obj in dataset) {
+//     commands.push(dataset[obj].category);
+//     }
 
 const tableData = {
 pairs: {
@@ -1861,11 +1049,73 @@ distinct:{
 }
 }
 
+function updateFullTable() {
+    const table = document.getElementById('tab-full');
+    const tableBody = table.getElementsByTagName('tbody')[0];
+
+    for (let i = 0; i < mpname.length; i++) {
+        const row = tableBody.insertRow();
+        const cell1 = row.insertCell(0);
+        const cell2 = row.insertCell(1);
+        const cell3 = row.insertCell(2);
+        cell1.textContent = mpname[i];
+        cell2.textContent = distortions[i][0] == 0 ? 0 : distortions[i][0].toFixed(5);
+        cell3.textContent = distortions[i][1] == 0 ? 0 : distortions[i][1].toFixed(5);
+    }
+
+    tableBody.addEventListener('click', (event) => {
+        const clickedCell = event.target;
+        if (clickedCell.cellIndex === 0) {
+          const firstColumnCells = tableBody.querySelectorAll('tr td:first-child');
+          firstColumnCells.forEach(cell => cell.classList.remove('highlight'));
+          clickedCell.classList.add('highlight');
+        }
+      });
+
+      const thead = table.querySelector('thead');
+
+        thead.addEventListener('click', (event) => {
+        const target = event.target;
+        if (target.tagName === 'TH') {
+            const columnIndex = target.dataset.column;
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+
+            let sortOrder = 'asc';
+            if (target.classList.contains('desc')) {
+            sortOrder = 'desc';
+            target.classList.remove('desc');
+            } else {
+            target.classList.add('asc');
+            }
+
+            rows.sort((a, b) => {
+            const cellA = a.cells[columnIndex].textContent;
+            const cellB = b.cells[columnIndex].textContent;
+            if (sortOrder === 'asc') {
+                return cellA.localeCompare(cellB);
+            } else {
+                return cellB.localeCompare(cellA);
+            }
+            });
+
+            tbody.append(...rows);
+
+            const allTh = thead.querySelectorAll('th');
+            allTh.forEach(th => {
+            if (th !== target) {
+                th.classList.remove('asc', 'desc');
+            }
+            });
+        }
+        });
+}
+
 const tableSelect = document.getElementById('tableSelect');
 const tableHeaders = document.getElementById('tableHeaders');
 const simListTableBody = document.getElementById('sim_list').querySelector('tbody');
 
-let highlightedCells = []; 
+let highlightedCells = [];
 
 function updateTable() {
     const selectedValue = tableSelect.value;
@@ -1901,55 +1151,74 @@ function updateTable() {
         });
         simListTableBody.appendChild(tr);
     });
+
+    highlightedCells = [];
+    updateCompareRecmdButtonState();
+}
+
+function updateCompareRecmdButtonState() {
+    const compareButton = document.querySelector('button[data-tab="compare-recmd"]');
+    if (highlightedCells.length === 2) {
+        compareButton.disabled = false;
+    } else {
+        compareButton.disabled = true;
+    }
 }
 
 function handleCellClick(cell, rowIndex, colIndex, totalColumns) {
     if (colIndex === totalColumns - 1) {
-        handleLastColumnClick(cell, rowIndex, colIndex);
+        handleLastColumnClick(rowIndex, totalColumns);
     } else {
         handleFirstNMinusOneColumnsClick(cell);
     }
+
+    updateCompareRecmdButtonState();
 }
 
 function handleFirstNMinusOneColumnsClick(cell) {
-    if (highlightedCells.length < 2) {
-        if (!cell.classList.contains('highlight')) {
-            cell.classList.add('highlight');
-            highlightedCells.push(cell);
-        } else {
-            cell.classList.remove('highlight');
-            highlightedCells = highlightedCells.filter(item => item !== cell);
-        }
+    if (highlightedCells.includes(cell)) {
+        highlightedCells = highlightedCells.filter((highlightedCell) => highlightedCell !== cell);
+        cell.classList.remove('highlight');
     } else {
-        const firstHighlighted = highlightedCells[0];
-        firstHighlighted.classList.remove('highlight');
-        highlightedCells.shift(); 
-
-        cell.classList.add('highlight');
+        if (highlightedCells.length === 2) {
+            const firstCell = highlightedCells.shift();
+            firstCell.classList.remove('highlight');
+        }
         highlightedCells.push(cell);
+        cell.classList.add('highlight');
     }
 }
 
-function handleLastColumnClick(cell, rowIndex, colIndex) {
-    const n = simListTableBody.rows[0].cells.length; 
+function handleLastColumnClick(rowIndex, totalColumns) {
     const cellsToHighlight = [];
-    
-    for (let i = 0; i < n - 1; i++) {
-        const td = simListTableBody.rows[rowIndex].cells[i]; 
-        cellsToHighlight.push(td);
+    for (let i = 0; i < totalColumns - 1; i++) {
+        const cell = simListTableBody.rows[rowIndex].cells[i];
+        cellsToHighlight.push(cell);
     }
 
     const allCells = simListTableBody.querySelectorAll('td');
-    allCells.forEach(td => td.classList.remove('highlight'));
+    allCells.forEach((cell) => cell.classList.remove('highlight'));
 
-    cellsToHighlight.forEach(td => td.classList.add('highlight'));
+    cellsToHighlight.forEach((cell) => cell.classList.add('highlight'));
 
     highlightedCells = cellsToHighlight;
+
 }
 
 tableSelect.addEventListener('change', updateTable);
 
-updateTable();
+document.querySelector('[data-tab="compare-recmd"]').addEventListener('click', function() {
+    if (highlightedCells.length === 2) {
+        const cellContents = highlightedCells.map(cell => cell.textContent);
+
+        img1id = mpname.indexOf(cellContents[0]);
+        img2id = mpname.indexOf(cellContents[1]);
+
+        compareOverlap(img1id + 1, img2id + 1)
+    }
+});
+
+// updateTable();
 
 function reorderCommands(commands, matrix, index) {
     const row = matrix[index];
@@ -1964,44 +1233,65 @@ function reorderCommands(commands, matrix, index) {
     return {cmd: sortedCommands, dist: sortedDistances};
 }
 
-lastselect = ""
+let lastselect = "";
 
 function displaySortedCommands(local_commands, dists) {
-    const categoryList = document.getElementById("category-list");
-    
-    categoryList.innerHTML = '';
+    const container = document.getElementById("category-container");
+    container.innerHTML = '';
 
-    i = 0
+    const createCategory = (title) => {
+        const section = document.createElement("div");
+        const heading = document.createElement("h5");
+        heading.textContent = title;
+        const list = document.createElement("ul");
 
-    local_commands.forEach(command => {
+        section.appendChild(heading);
+        section.appendChild(list);
+        container.appendChild(section);
+
+        return { heading, list };
+    };
+
+    const similar = createCategory("Similar Neighbors");
+    const moderate = createCategory("Moderate Similar Neighbors");
+    const notSimilar = createCategory("Not Very Similar Neighbors");
+
+    let similarCount = 0, moderateCount = 0, notSimilarCount = 0;
+
+    local_commands.forEach((command, i) => {
         const listItem = document.createElement("li");
-        listItem.setAttribute("title", dists[i]);
-        listItem.textContent = command;
+        listItem.textContent = `${command} (d=${dists[i].toFixed(5)})`;
 
-        i++;
+        if (dists[i] < thresholdSimilar) {
+            similar.list.appendChild(listItem);
+            similarCount++;
+        } else if (dists[i] >= thresholdSimilar && dists[i] < thresholdModerate) {
+            moderate.list.appendChild(listItem);
+            moderateCount++;
+        } else {
+            notSimilar.list.appendChild(listItem);
+            notSimilarCount++;
+        }
 
-        listItem.addEventListener("click", function() {
-            const allItems = categoryList.getElementsByTagName("li");
-            for (let item of allItems) {
-                item.classList.remove("highlight");
-            }
+        listItem.addEventListener("click", function () {
+            document.querySelectorAll("li").forEach(item => item.classList.remove("highlight"));
 
-            if (lastselect != "") {
+            if (lastselect) {
                 svg.select(`circle[name="${lastselect}"]`)
                     .style("fill", "gray")
                     .style("stroke-width", "0px")
-                    .style("opacity", 0.7)
+                    .style("opacity", 0.7);
             }
 
-            // svg.selectAll("circle").classed("highlight", false);
-
-            index = commands.indexOf(this.innerText);
+            const index = mpname.indexOf(this.innerText.split(" (")[0]);
             const img = document.getElementById("img-2");
-            img.src = "map/" + padDynamicZero(index + 1) + ".png"
+            img.style.display = "flex";
+            updateButtonState();
+            img.src = "map/" + padDynamicZero(index + 1) + ".png";
 
-            listItem.classList.add("highlight");
+            this.classList.add("highlight");
 
-            svg.select(`circle[name="${this.innerText}"]`).transition()
+            svg.select(`circle[name="${this.innerText.split(" (")[0]}"]`).transition()
                 .duration(500)
                 .style("fill", "dodgerblue")
                 .style("stroke", "black")
@@ -2017,26 +1307,38 @@ function displaySortedCommands(local_commands, dists) {
                 .style("opacity", 1)
                 .attr("r", 5);
 
-            lastselect = this.innerText
+            lastselect = this.innerText.split(" (")[0];
         });
-
-        categoryList.appendChild(listItem);
     });
+
+    if (similarCount > 0) {
+        similar.heading.textContent = `Similar Neighbors (${similarCount})`;
+    } else {
+        similar.heading.parentElement.remove();
+    }
+
+    if (moderateCount > 0) {
+        moderate.heading.textContent = `Moderate Similar Neighbors (${moderateCount})`;
+    } else {
+        moderate.heading.parentElement.remove();
+    }
+
+    if (notSimilarCount > 0) {
+        notSimilar.heading.textContent = `Not Very Similar Neighbors (${notSimilarCount})`;
+    } else {
+        notSimilar.heading.parentElement.remove();
+    }
 }
 
-function showSuggestions() {
-    const input = document.getElementById("search-box-single-map-projection").value.toLowerCase();
-    const suggestionsList = document.getElementById("suggestionsList");
+function showSuggestions(inputId, suggestionsListId) {
+    const input = document.getElementById(inputId).value.toLowerCase();
+    const suggestionsList = document.getElementById(suggestionsListId);
 
     suggestionsList.innerHTML = '';
 
-    // Filter suggestions based on input
-    const suggestions = input === '' ? [...commands] : commands.filter(command => command.toLowerCase().startsWith(input));
+    const suggestions = input === '' ? [...mpname] : mpname.filter(command => command.toLowerCase().startsWith(input));
 
     if (suggestions.length > 0) {
-        // Sort only the local suggestions array
-        // suggestions.sort();
-
         suggestionsList.style.display = 'block';
 
         suggestions.forEach(suggestion => {
@@ -2047,7 +1349,7 @@ function showSuggestions() {
 
             listItem.onclick = function() {
                 onSuggestionClick(suggestion);
-                document.getElementById("search-box-single-map-projection").value = suggestion;
+                document.getElementById(inputId).value = suggestion;
                 suggestionsList.style.display = 'none';
             };
 
@@ -2058,8 +1360,28 @@ function showSuggestions() {
     }
 }
 
+document.getElementById("search-box-projection-1").addEventListener('focus', function() {
+    showSuggestions('search-box-projection-1', 'suggestions-list-1');
+});
+document.getElementById("search-box-projection-1").addEventListener('blur', function() {
+    setTimeout(function() {
+        document.getElementById('suggestions-list-1').style.display = 'none';
+    }, 100);
+});
+
+document.getElementById("search-box-projection-2").addEventListener('focus', function() {
+    showSuggestions('search-box-projection-2', 'suggestions-list-2');
+});
+document.getElementById("search-box-projection-2").addEventListener('blur', function() {
+    setTimeout(function() {
+        document.getElementById('suggestions-list-2').style.display = 'none';
+    }, 100);
+});
+
 // document.addEventListener('DOMContentLoaded', showSuggestions);
-document.getElementById("search-box-single-map-projection").addEventListener('focus', showSuggestions);
+document.getElementById("search-box-single-map-projection").addEventListener('focus', function() {
+    showSuggestions('search-box-single-map-projection', 'suggestionsList');
+});
 document.getElementById("search-box-single-map-projection").addEventListener('blur', function() {
     setTimeout(function() {
         if (!suggestionsList.contains(document.activeElement)) {
@@ -2080,8 +1402,8 @@ function onSuggestionClick(selectedSuggestion) {
     
     g.selectAll("circle")
         .filter(function () {
-            index = commands.indexOf(selectedSuggestion);
-            const sortedCommands = reorderCommands(commands, distanceMatrix, index);
+            index = mpname.indexOf(selectedSuggestion);
+            const sortedCommands = reorderCommands(mpname, distanceMatrix, index);
             displaySortedCommands(sortedCommands.cmd.slice(1, 11), sortedCommands.dist.slice(1, 11))
             // console.log(sortedCommands)
 
@@ -2110,6 +1432,27 @@ function onSuggestionClick(selectedSuggestion) {
 }
     
 function openTab(tabId) {
+
+    newWidth = 250
+
+    if (tabId == "tab-recmd"){
+        const selectedValue = tableSelect.value;
+
+        columns = tableData[selectedValue].rows[0].length;
+        newWidth = Math.min(columns * 100, 500);
+    }
+
+    if (tabId == "tab-full"){
+        newWidth = 400
+    }
+
+    if (tabId == "tab-rdme"){
+        newWidth = 1000
+    }
+
+    const sidebar = document.getElementById(tabId);
+    sidebar.style.width = `${newWidth}px`;
+
     const allTabs = document.querySelectorAll('.tab-content');
     allTabs.forEach(tab => {
         tab.classList.remove('active');
@@ -2128,6 +1471,7 @@ function openTab(tabId) {
 }
 
 openTab('tab-rdme');
+// openTab('tab-find');
 
 function calculateCanvasSize(pageWidth, pageHeight, padding) {
     const availableWidth = pageWidth - 2 * padding;
@@ -2189,7 +1533,28 @@ function drawImage(img, originX, originY, minY, maxY) {
     ctx.drawImage(img, drawX, drawY, scaledWidth, scaledHeight);
 };
 
-document.querySelector('[data-tab="compare"]').addEventListener('click', function () {
+const compareButton = document.querySelector('[data-tab="compare"]');
+
+function updateButtonState() {
+    const img1 = document.getElementById('img-1');
+    const img2 = document.getElementById('img-2');
+
+    const img2Visible = img2.style.display !== 'none';
+    const img1Valid = img1.src.indexOf('maperr.png') === -1;
+    const img2Valid = img2.src.indexOf('maperr.png') === -1;
+
+    compareButton.disabled = !(img2Visible && img1Valid && img2Valid);
+}
+
+const img1 = document.getElementById('img-1');
+const img2 = document.getElementById('img-2');
+
+img1.addEventListener("load", updateButtonState);
+img1.addEventListener("error", updateButtonState);
+img2.addEventListener("load", updateButtonState);
+img2.addEventListener("error", updateButtonState);
+
+function compareOverlap(img1id, img2id) {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
@@ -2198,14 +1563,11 @@ document.querySelector('[data-tab="compare"]').addEventListener('click', functio
     const img1 = new Image();
     const img2 = new Image();
 
-    const thumb1 = document.getElementById("img-1");
-    const thumb2 = document.getElementById("img-2");
+    img1.src = "blue/" + padDynamicZero(img1id) + ".png";
+    img2.src = "orange/" + padDynamicZero(img2id) + ".png";
 
-    img1.src = "blue/" + thumb1.src.slice(thumb1.src.length - 7);
-    img2.src = "orange/" + thumb2.src.slice(thumb2.src.length - 7);
-
-    img1id = parseInt(thumb1.src.slice(thumb1.src.length - 7));
-    img2id = parseInt(thumb2.src.slice(thumb2.src.length - 7));
+    // img1id = parseInt(thumb1.src.slice(thumb1.src.length - 7));
+    // img2id = parseInt(thumb2.src.slice(thumb2.src.length - 7));
 
     img1.onload = () => {
         resizeCanvas();
@@ -2239,6 +1601,17 @@ document.querySelector('[data-tab="compare"]').addEventListener('click', functio
     img1.onerror = () => {
         console.error("Failed to load img1:", img1.src);
     };
+}
+
+document.querySelector('[data-tab="compare"]').addEventListener('click', function () {
+    const thumb1 = document.getElementById("img-1");
+    const thumb2 = document.getElementById("img-2");
+
+    img1id = parseInt(thumb1.src.slice(thumb1.src.length - 7));
+    img2id = parseInt(thumb2.src.slice(thumb2.src.length - 7));
+
+    compareOverlap(img1id, img2id);
+
 });
 
 document.addEventListener('keydown', function(event) {

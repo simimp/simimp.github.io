@@ -28,6 +28,7 @@ const datasetFiles = {
     "Improved Distance Matrix + Global Distortions + DR (node2vec + Isomap)": "node2vec_isomap.json",
 };
 
+let xcoords = Array(345).fill(700);
 let ycoords = Array(345).fill(350);
 ycoords[2] = 350;   // "Bonne [φ1=10◦N]",
 ycoords[3] = 376;   // "Bonne [φ1=20◦N]",
@@ -47,6 +48,20 @@ ycoords[15] = 393;   // "Bottomley [φ1=50◦N]",
 ycoords[16] = 410;   // "Bottomley [φ1=60◦N]",
 ycoords[17] = 421;   // "Bottomley [φ1=70◦N]",
 ycoords[18] = 427;   // "Bottomley [φ1=80◦N]",
+
+xcoords[187] = 635;    // "Bertin-Rivière",
+ycoords[187] = 519;    // "Bertin-Rivière",
+ycoords[254] = 543;    // "Hill Eucyclic [K=0,0]",
+ycoords[255] = 497;    // "Hill Eucyclic [K=0.2]",
+ycoords[256] = 477;    // "Hill Eucyclic [K=0.4]",
+ycoords[257] = 462;    // "Hill Eucyclic [K=0.6]",
+ycoords[258] = 451;    // "Hill Eucyclic [K=0.8]",
+ycoords[259] = 441;    // "Hill Eucyclic [K=1.0]",
+ycoords[260] = 413;    // "Hill Eucyclic [K=2.0]",
+ycoords[261] = 398;    // "Hill Eucyclic [K=3.0]",
+ycoords[262] = 388;    // "Hill Eucyclic [K=4.0]",
+ycoords[263] = 382;    // "Hill Eucyclic [K=5.0]",
+ycoords[264] = 378;    // "Hill Eucyclic [K=6.0]",
 
 let ymin = Array(345).fill(-314);
 let ymax = Array(345).fill(314);
@@ -191,22 +206,37 @@ function updateVisualization(data) {
         .attr("data-angu", (d) => d.angu)
         .on("click", (event, d) => {
 
-            openTab("tab-find")
+            activeButton = document.querySelectorAll('.tab-button.active');
+            if (activeButton[0].innerText == "Readme") {
+                openTab("tab-find")
+            }
 
-            document.getElementById("search-box-single-map-projection").value = d.category;
+            activeButton = document.querySelectorAll('.tab-button.active');
+            if (activeButton[0].innerText == "Find Similar and Compare") {
+                document.getElementById("search-box-single-map-projection").value = d.category;
+            } else if (activeButton[0].innerText == "Pairwise Compare") {
+                document.getElementById("search-box-projection-1").value = d.category;
+            }
 
             index = mpname.indexOf(d.category);
 
-            const img = document.getElementById("img-1");
-            img.src = "map/" + padDynamicZero(index + 1) + ".png"
+            activeButton = document.querySelectorAll('.tab-button.active');
+            if (activeButton[0].innerText == "Find Similar and Compare") {
+                const img = document.getElementById("img-1");
+                img.src = "map/" + padDynamicZero(index + 1) + ".png"
 
-            const img2 = document.getElementById("img-2");
-            img2.style.display = "none"
-            updateButtonState();
+                const img2 = document.getElementById("img-2");
+                img2.style.display = "none"
+                updateButtonState();
 
-            const sortedCommands = reorderCommands(mpname, distanceMatrix, index);
-            displaySortedCommands(sortedCommands.cmd.slice(1, 11), sortedCommands.dist.slice(1, 11))
-            // console.log(index)
+                const sortedCommands = reorderCommands(mpname, distanceMatrix, index);
+                displaySortedCommands(sortedCommands.cmd.slice(1, 11), sortedCommands.dist.slice(1, 11))
+                // console.log(index)
+            }
+            else if (activeButton[0].innerText == "Pairwise Compare") {
+                const img = document.getElementById("img-3");
+                img.src = "map/" + padDynamicZero(index + 1) + ".png"
+            }
 
             g.selectAll("circle")
             .style("fill", "gray")
@@ -1330,7 +1360,7 @@ function displaySortedCommands(local_commands, dists) {
     }
 }
 
-function showSuggestions(inputId, suggestionsListId) {
+function showSuggestions(inputId, suggestionsListId, imgShowId) {
     const input = document.getElementById(inputId).value.toLowerCase();
     const suggestionsList = document.getElementById(suggestionsListId);
 
@@ -1348,6 +1378,11 @@ function showSuggestions(inputId, suggestionsListId) {
             listItem.style.cursor = 'pointer';
 
             listItem.onclick = function() {
+                index = mpname.indexOf(suggestion);
+
+                const img = document.getElementById(imgShowId);
+                img.src = "map/" + padDynamicZero(index + 1) + ".png"
+                
                 onSuggestionClick(suggestion);
                 document.getElementById(inputId).value = suggestion;
                 suggestionsList.style.display = 'none';
@@ -1361,7 +1396,7 @@ function showSuggestions(inputId, suggestionsListId) {
 }
 
 document.getElementById("search-box-projection-1").addEventListener('focus', function() {
-    showSuggestions('search-box-projection-1', 'suggestions-list-1');
+    showSuggestions('search-box-projection-1', 'suggestions-list-1', 'img-3');
 });
 document.getElementById("search-box-projection-1").addEventListener('blur', function() {
     setTimeout(function() {
@@ -1370,7 +1405,7 @@ document.getElementById("search-box-projection-1").addEventListener('blur', func
 });
 
 document.getElementById("search-box-projection-2").addEventListener('focus', function() {
-    showSuggestions('search-box-projection-2', 'suggestions-list-2');
+    showSuggestions('search-box-projection-2', 'suggestions-list-2', 'img-4');
 });
 document.getElementById("search-box-projection-2").addEventListener('blur', function() {
     setTimeout(function() {
@@ -1380,7 +1415,7 @@ document.getElementById("search-box-projection-2").addEventListener('blur', func
 
 // document.addEventListener('DOMContentLoaded', showSuggestions);
 document.getElementById("search-box-single-map-projection").addEventListener('focus', function() {
-    showSuggestions('search-box-single-map-projection', 'suggestionsList');
+    showSuggestions('search-box-single-map-projection', 'suggestionsList', 'img-1');
 });
 document.getElementById("search-box-single-map-projection").addEventListener('blur', function() {
     setTimeout(function() {
@@ -1424,9 +1459,9 @@ function onSuggestionClick(selectedSuggestion) {
         .style("stroke-width", "2px")
         .style("opacity", 1)
         .attr("r", 5)
-        .on("end", function() {
-            this.dispatchEvent(event);
-        })
+        // .on("end", function() {
+        //     this.dispatchEvent(event);
+        // })
         // .node()
         // .dispatchEvent(event);
 }
@@ -1533,6 +1568,28 @@ function drawImage(img, originX, originY, minY, maxY) {
     ctx.drawImage(img, drawX, drawY, scaledWidth, scaledHeight);
 };
 
+const comparePairButton = document.querySelector('[data-tab="compare-pair"]');
+
+function updatePairButtonState() {
+    const img1 = document.getElementById('img-3');
+    const img2 = document.getElementById('img-4');
+
+    const img1Valid = img1.src.indexOf('maperr.png') === -1;
+    const img2Valid = img2.src.indexOf('maperr.png') === -1;
+    const img1Blank = img1.src.indexOf('blank.png') === -1;
+    const img2Blank = img2.src.indexOf('blank.png') === -1;
+
+    comparePairButton.disabled = !(img1Valid && img2Valid && img1Blank && img2Blank);
+}
+
+const img3 = document.getElementById('img-3');
+const img4 = document.getElementById('img-4');
+
+img3.addEventListener("load", updatePairButtonState);
+img3.addEventListener("error", updatePairButtonState);
+img4.addEventListener("load", updatePairButtonState);
+img4.addEventListener("error", updatePairButtonState);
+
 const compareButton = document.querySelector('[data-tab="compare"]');
 
 function updateButtonState() {
@@ -1542,8 +1599,10 @@ function updateButtonState() {
     const img2Visible = img2.style.display !== 'none';
     const img1Valid = img1.src.indexOf('maperr.png') === -1;
     const img2Valid = img2.src.indexOf('maperr.png') === -1;
+    const img1Blank = img1.src.indexOf('blank.png') === -1;
+    const img2Blank = img2.src.indexOf('blank.png') === -1;
 
-    compareButton.disabled = !(img2Visible && img1Valid && img2Valid);
+    compareButton.disabled = !(img2Visible && img1Valid && img2Valid && img1Blank && img2Blank);
 }
 
 const img1 = document.getElementById('img-1');
@@ -1572,7 +1631,7 @@ function compareOverlap(img1id, img2id) {
     img1.onload = () => {
         resizeCanvas();
         ctx.globalAlpha = 0.75;
-        drawImage(img1, 700, ycoords[img1id - 1], ymin[img1id - 1], ymax[img1id - 1])
+        drawImage(img1, xcoords[img1id - 1], ycoords[img1id - 1], ymin[img1id - 1], ymax[img1id - 1])
         // ctx.drawImage(img1, 0, 0);
 
         ctx.font = "30px Arial";
@@ -1584,7 +1643,7 @@ function compareOverlap(img1id, img2id) {
 
         img2.onload = () => {
             ctx.globalAlpha = 0.75;
-            drawImage(img2, 700, ycoords[img2id - 1], ymin[img2id - 1], ymax[img2id - 1])
+            drawImage(img2, xcoords[img2id - 1], ycoords[img2id - 1], ymin[img2id - 1], ymax[img2id - 1])
             // ctx.drawImage(img2, 0, 0);
 
             ctx.fillStyle = "orange";
@@ -1606,6 +1665,17 @@ function compareOverlap(img1id, img2id) {
 document.querySelector('[data-tab="compare"]').addEventListener('click', function () {
     const thumb1 = document.getElementById("img-1");
     const thumb2 = document.getElementById("img-2");
+
+    img1id = parseInt(thumb1.src.slice(thumb1.src.length - 7));
+    img2id = parseInt(thumb2.src.slice(thumb2.src.length - 7));
+
+    compareOverlap(img1id, img2id);
+
+});
+
+document.querySelector('[data-tab="compare-pair"]').addEventListener('click', function () {
+    const thumb1 = document.getElementById("img-3");
+    const thumb2 = document.getElementById("img-4");
 
     img1id = parseInt(thumb1.src.slice(thumb1.src.length - 7));
     img2id = parseInt(thumb2.src.slice(thumb2.src.length - 7));

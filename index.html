@@ -22,7 +22,7 @@
         <aside id="tab-find" class="sidebar tab-content">
             <div class="search-bar">
                 <h4>Click on a node on the right or Select a map projection from the drop-down box</h4>
-                <input type="text" placeholder="Search..." id="search-box-single-map-projection" oninput="showSuggestions('search-box-single-map-projection', 'suggestionsList')">
+                <input type="text" placeholder="Search..." id="search-box-single-map-projection" oninput="showSuggestions('search-box-single-map-projection', 'suggestionsList', 'img-1')">
                 <ul id="suggestionsList" style="border: 1px solid #ccc; display: none; list-style-type: none; padding: 0;"></ul>
                 <img id="img-1" src="blank.png" width="100%" onerror="this.src='maperr.png'"></img>
             </div>
@@ -44,14 +44,19 @@
 
         <aside id="tab-pair" class="sidebar tab-content">
             <div class="search-bar">
-                <h3>Select one map projection</h3>
-                <input type="text" placeholder="Search..." id="search-box-projection-1" oninput="showSuggestions('search-box-projection-1', 'suggestions-list-1')">
+                <h4>Click on a node on the right or Select a map projection from the drop-down box</h4>
+                <input type="text" placeholder="Search..." id="search-box-projection-1" oninput="showSuggestions('search-box-projection-1', 'suggestions-list-1', 'img-3')">
                 <ul id="suggestions-list-1" style="border: 1px solid #ccc; display: none; list-style-type: none; padding: 0;"></ul>
+                <img id="img-3" src="blank.png" width="100%" onerror="this.src='maperr.png'"></img>
             </div>
             <div class="search-bar">
-                <h3>Select another map projection to compare</h3>
-                <input type="text" placeholder="Search..." id="search-box-projection-2" oninput="showSuggestions('search-box-projection-2', 'suggestions-list-2')">
+                <h4>Select another map projection to compare</h4>
+                <input type="text" placeholder="Search..." id="search-box-projection-2" oninput="showSuggestions('search-box-projection-2', 'suggestions-list-2', 'img-4')">
                 <ul id="suggestions-list-2" style="border: 1px solid #ccc; display: none; list-style-type: none; padding: 0;"></ul>
+                <img id="img-4" src="blank.png" width="100%" onerror="this.src='maperr.png'"></img>
+            </div>
+            <div class="tab-switch">
+                <button data-tab="compare-pair" disabled>Compare them</button>
             </div>
         </aside>
 
@@ -129,7 +134,15 @@
                 
             <p>You can explore and use various features by clicking the tabs at the top. This website is still a prototype, and we are committed to continuously improving existing features, promptly fixing any bugs, and adding new functionalities as soon as possible. Thank you for your understanding and support!</p>
 
-            <p>Known bug: After clicking the "Compare" button, it may only display one projection instead of two. Please click anywhere on the page and then click the "Compare" button again to resolve this issue. We apologize, as this bug has not been fully resolved yet.</p>
+            <h5>Known bug: </h5>
+                
+            <p>After clicking the "Compare" button, it may only display one projection (in blue) instead of two (blue and orange). In some cases, this is due to slow network loading speeds—please wait a few seconds patiently, and the orange image should appear. However, there is also a bug where the orange image fails to load (see the screenshot below). Please click anywhere on the page and then click the "Compare" button again to resolve this issue. We apologize, as this bug has not yet been fully resolved.<img src="screenshots/img_missing.png" width="100%"</p>
+
+            <p>When comparing projections in blue and orange, some projections are not aligned (i.e., the pixels corresponding to latitude = 0° and longitude = 0° of both projections should overlap). However, projections such as Bonne, Bottomley, Hill Eucyclic, and Bertin-Rivière are already aligned. Other projections (if any) will require adjustments in the future. Additionally, some projections may have incorrect scaling of the x and y coordinates during display. Despite these display issues—such as misalignment or incorrect scaling—the projections are correctly aligned and scaled when calculating the pairwise distances between them.</p>
+
+            <p>The thumbnails and orange/blue images of some projections (a total of 22) cannot be displayed because G.Projector does not support these projections, making visual comparison impossible. However, the distances between these projections and others can still be calculated.</p>
+
+            <p>On certain pages, when clicking on the dropdown list, the highlighting of nodes in the diagram and the animations may not function correctly. There are also other issues related to interactions and display.</p>
 
             <h5>Instructions:</h5>
 
@@ -137,10 +150,11 @@
 
             <ol>
                 <li>When you click on any node in the graph, the interface will automatically switch to the first tab (<i>Find Similar and Compare</i>). On this page, you can either select a map projection from the drop-down list or choose a node directly from the graph. The 10 map projections closest to the selected projection will be displayed. You can then select one from the list and click the "Compare" button to initiate the comparison (see the figure below).<img src="screenshots/find_compare.png" width="100%"></img></li>
-                <li>On the <i>Pairwise Compare</i> page, you can compare any two projections (this feature is still under development).</li>
+                <li>On the <i>Pairwise Compare</i> page, you can compare any two projections. You can select the first projection from the drop-down list or by directly clicking a node in the graph. The second projection must be selected from the drop-down list (it cannot be chosen from the graph). Once selected, you can proceed with the comparison (see the image below). <img src="screenshots/pair_compare.png" width="100%"></li>
                 <li>The <i>Recommended List</i> page provides several lists of similar and dissimilar projections. You can click on two projections in the recommended tables and then click the "Compare" button to initiate the comparison (see the figure below). When you click on the distance value in the last column, the entire row (except for the last column) will be highlighted. However, if more than two projections are highlighted, comparison will not be possible.<img src="screenshots/recmd.png" width="100%"></img></li>
                 <li>You can select other datasets from the drop-down list on the right side below the tabs (see the figure below), switch the x/y axes, and use color to render the nodes (color rendering is still under development). Alternatively, if the graph is outside the display area, you can click the "Reset Zoom" button.<img src="screenshots/changedataset.png" width="100%"></img></li>
                 <li>You can also click the different radios at the bottom right of the page to hide certain polylines.</li>
+                <li>You can click anywhere on the page or press the ESC key to close the projection comparison image in blue and orange.</li>
             </ol>
         </aside>
 

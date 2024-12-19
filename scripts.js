@@ -1,31 +1,32 @@
 const datasetFiles = {
-    "Improved Distance Matrix + Global Distortions + DR (SMACOF + Isomap)": "smacof_isomap.json",
+    "Improved Distance Matrix + Global Distortions + DR (SMACOF + Isomap)": "fused_smacof_isomap.json",
+    "Improved Distance Matrix + DR (SMACOF + Isomap)": "smacof_isomap.json",
     "Original (Tobler, 1986) Distance Matrix + DR (SMACOF + Isomap)": "tobler_smacof_isomap.json",
     "Global Distortions (Global Areal Distortion + Global Angular Distortion)": "global_distortions.json",
-    "Improved Distance Matrix + Global Distortions + DR (PCA)": "pca.json",
-    "Improved Distance Matrix + Global Distortions + DR (k-PCA, cosine func.)": "kpca_cos.json",
-    "Improved Distance Matrix + Global Distortions + DR (k-PCA, RBF)": "kpca_rbf.json",
-    "Improved Distance Matrix + Global Distortions + DR (LLE, std.)": "lle_std.json",
-    "Improved Distance Matrix + Global Distortions + DR (LLE, LTSA)": "lle_ltsa.json",
-    "Improved Distance Matrix + Global Distortions + DR (MDS)": "mds.json",
-    "Improved Distance Matrix + Global Distortions + DR (SMACOF)": "smacof.json",
-    "Improved Distance Matrix + Global Distortions + DR (Fast ICA)": "fastica.json",
-    "Improved Distance Matrix + Global Distortions + DR (Isomap)": "isomap.json",
-    "Improved Distance Matrix + Global Distortions + DR (SE)": "se.json",
-    "Improved Distance Matrix + Global Distortions + DR (t-SNE)": "tsne.json",
-    "Improved Distance Matrix + Global Distortions + DR (UMAP)": "umap.json",
-    "Improved Distance Matrix + Global Distortions + DR (PHATE)": "phate.json",
-    "Improved Distance Matrix + Global Distortions + DR (ivis)": "ivis.json",
-    "Improved Distance Matrix + Global Distortions + DR (AE, 2-lys)": "ae2.json",
-    "Improved Distance Matrix + Global Distortions + DR (AE, 5-lys)": "ae5.json",
-    "Improved Distance Matrix + Global Distortions + DR (SMACOF + PCA)": "smacof_pca.json",
-    "Improved Distance Matrix + Global Distortions + DR (SMACOF + Fast ICA)": "smacof_fastica.json",
-    "Improved Distance Matrix + Global Distortions + DR (SMACOF + AE, 4-lys)": "smacof_ae4.json",
-    "Improved Distance Matrix + Global Distortions + DR (SMACOF + AE, 5-lys)": "smacof_ae5.json",
-    "Improved Distance Matrix + Global Distortions + DR (SMACOF + LLE, std.)": "smacof_lle_std.json",
-    "Improved Distance Matrix + Global Distortions + DR (SMACOF + SE)": "smacof_se.json",
-    "Improved Distance Matrix + Global Distortions + DR (MDS + Isomap)": "mds_isomap.json",
-    "Improved Distance Matrix + Global Distortions + DR (node2vec + Isomap)": "node2vec_isomap.json",
+    "Improved Distance Matrix + DR (PCA)": "pca.json",
+    "Improved Distance Matrix + DR (k-PCA, cosine func.)": "kpca_cos.json",
+    "Improved Distance Matrix + DR (k-PCA, RBF)": "kpca_rbf.json",
+    "Improved Distance Matrix + DR (LLE, std.)": "lle_std.json",
+    "Improved Distance Matrix + DR (LLE, LTSA)": "lle_ltsa.json",
+    "Improved Distance Matrix + DR (MDS)": "mds.json",
+    "Improved Distance Matrix + DR (SMACOF)": "smacof.json",
+    "Improved Distance Matrix + DR (Fast ICA)": "fastica.json",
+    "Improved Distance Matrix + DR (Isomap)": "isomap.json",
+    "Improved Distance Matrix + DR (SE)": "se.json",
+    "Improved Distance Matrix + DR (t-SNE)": "tsne.json",
+    "Improved Distance Matrix + DR (UMAP)": "umap.json",
+    "Improved Distance Matrix + DR (PHATE)": "phate.json",
+    "Improved Distance Matrix + DR (ivis)": "ivis.json",
+    "Improved Distance Matrix + DR (AE, 2-lys)": "ae2.json",
+    "Improved Distance Matrix + DR (AE, 5-lys)": "ae5.json",
+    "Improved Distance Matrix + DR (SMACOF + PCA)": "smacof_pca.json",
+    "Improved Distance Matrix + DR (SMACOF + Fast ICA)": "smacof_fastica.json",
+    "Improved Distance Matrix + DR (SMACOF + AE, 4-lys)": "smacof_ae4.json",
+    "Improved Distance Matrix + DR (SMACOF + AE, 5-lys)": "smacof_ae5.json",
+    "Improved Distance Matrix + DR (SMACOF + LLE, std.)": "smacof_lle_std.json",
+    "Improved Distance Matrix + DR (SMACOF + SE)": "smacof_se.json",
+    "Improved Distance Matrix + DR (MDS + Isomap)": "mds_isomap.json",
+    "Improved Distance Matrix + DR (node2vec + Isomap)": "node2vec_isomap.json",
 };
 
 let xcoords = Array(345).fill(700);
@@ -49,8 +50,27 @@ ycoords[16] = 410;   // "Bottomley [φ1=60◦N]",
 ycoords[17] = 421;   // "Bottomley [φ1=70◦N]",
 ycoords[18] = 427;   // "Bottomley [φ1=80◦N]",
 
+ycoords[51] = 427;   // "Equidistant Conic [φ1 = 30◦, φ2 = 60◦N]",
+ycoords[52] = 427;   // "Equidistant Conic [φ1 = 0◦, φ2 = 30◦N]",
+ycoords[53] = 427;   // "Equidistant Conic [φ1 = 0◦, φ2 = 60◦N]",
+ycoords[54] = 427;   // "Euler [φ1 = 30◦, φ2 = 60◦N]",
+ycoords[55] = 427;   // "Euler [φ1 = 0◦, φ2 = 30◦N]",
+ycoords[56] = 427;   // "Euler [φ1 = 0◦, φ2 = 60◦N]",
+
+ycoords[84] = 427;   // "Murdoch I [φ1 = 30◦, φ2 = 60◦N]",
+ycoords[85] = 427;   // "Murdoch I [φ1 = 0◦, φ2 = 30◦N]",
+ycoords[86] = 427;   // "Murdoch I [φ1 = 0◦, φ2 = 60◦N]",
+ycoords[87] = 427;   // "Murdoch III [φ1 = 30◦, φ2 = 60◦N]",
+ycoords[88] = 427;   // "Murdoch III [φ1 = 0◦, φ2 = 30◦N]",
+ycoords[89] = 427;   // "Murdoch III [φ1 = 0◦, φ2 = 60◦N]",
+
+ycoords[149] = 427;   // "Vitkovsky I [φ1 = 30◦, φ2 = 60◦N]",
+ycoords[150] = 427;   // "Vitkovsky I [φ1 = 0◦, φ2 = 30◦N]",
+ycoords[151] = 427;   // "Vitkovsky I [φ1 = 0◦, φ2 = 60◦N]",
+
 xcoords[187] = 635;    // "Bertin-Rivière",
 ycoords[187] = 519;    // "Bertin-Rivière",
+
 ycoords[254] = 543;    // "Hill Eucyclic [K=0,0]",
 ycoords[255] = 497;    // "Hill Eucyclic [K=0.2]",
 ycoords[256] = 477;    // "Hill Eucyclic [K=0.4]",
@@ -63,14 +83,15 @@ ycoords[262] = 388;    // "Hill Eucyclic [K=4.0]",
 ycoords[263] = 382;    // "Hill Eucyclic [K=5.0]",
 ycoords[264] = 378;    // "Hill Eucyclic [K=6.0]",
 
-let ymin = Array(345).fill(-314);
+ycoords[303] = 558;    // "Philbrick Sinu-Mollweide",
+
+ycoords[321] = 434;    // "Stabius-Werner III",
+
+let ymin = Array(345).fill(314);
 let ymax = Array(345).fill(314);
 
-ymin[0] = -413;  // "Arden-Close",
+ymin[0] = 413;  // "Arden-Close",
 ymax[0] = 413;  // "Arden-Close",
-
-ymin[209] = -377;  // "Compact Miller",
-ymax[209] = 377;  // "Compact Miller",
 
 ymax[2] = 314;
 ymax[3] = 365;
@@ -91,8 +112,492 @@ ymax[16] = 444;
 ymax[17] = 474;
 ymax[18] = 491;
 
-ymin[306] = -307;  // "Putniņš P3",
-ymax[306] = 307;  // "Putniņš P3",
+ymin[19] = 471;
+ymax[19] = 471;
+ymin[20] = 471;
+ymax[20] = 471;
+ymin[21] = 471;
+ymax[21] = 471;
+ymin[22] = 471;
+ymax[22] = 471;
+ymin[23] = 471;
+ymax[23] = 471;
+ymin[24] = 471;
+ymax[24] = 471;
+ymin[25] = 471;
+ymax[25] = 471;
+
+ymin[26] = 314;
+ymax[26] = 314;
+ymin[27] = 309;
+ymax[27] = 309;
+ymin[28] = 295;
+ymax[28] = 295;
+ymin[29] = 272;
+ymax[29] = 272;
+ymin[30] = 261;
+ymax[30] = 261;
+ymin[31] = 311;
+ymax[31] = 311;
+ymin[32] = 400;
+ymax[32] = 400;
+
+ymin[33] = 400;
+ymax[33] = 400;
+ymin[34] = 397;
+ymax[34] = 397;
+ymin[35] = 388;
+ymax[35] = 388;
+ymin[36] = 373;
+ymax[36] = 373;
+ymin[37] = 353;
+ymax[37] = 353;
+ymin[38] = 329;
+ymax[38] = 329;
+ymin[39] = 300;
+ymax[39] = 300;
+ymin[40] = 268;
+ymax[40] = 268;
+
+ymin[49] = 746;
+ymax[49] = 746;
+
+ymin[67] = 512;
+ymax[67] = 512;
+
+ymin[69] = 800;
+ymax[69] = 800;
+ymin[70] = 464;
+ymax[70] = 464;
+ymin[71] = 400;
+ymax[71] = 400;
+
+ymin[83] = 626;
+ymax[83] = 626;
+
+ymin[91] = 304; // "Sinucyli [α=0.2, φts=20◦]",
+ymax[91] = 304;
+ymin[92] = 271;
+ymax[92] = 271;
+ymin[93] = 304;
+ymax[93] = 304;
+ymin[94] = 536;
+ymax[94] = 536;
+
+ymin[96] = 307;
+ymax[96] = 307;
+ymin[97] = 285;
+ymax[97] = 285;
+ymin[98] = 280;
+ymax[98] = 280;
+ymin[99] = 430;
+ymax[99] = 430;
+
+ymin[101] = 310;
+ymax[101] = 310;
+ymin[102] = 296;
+ymax[102] = 296;
+ymin[103] = 269;
+ymax[103] = 269;
+ymin[104] = 365;
+ymax[104] = 365;
+
+ymin[106] = 312;
+ymax[106] = 312;
+ymin[107] = 305;
+ymax[107] = 305;
+ymin[108] = 291;
+ymax[108] = 291;
+ymin[109] = 318;
+ymax[109] = 318;
+
+ymin[111] = 306;    // "Sinucyli [reverse homotopy version, α=0.2, φts=20◦]",
+ymax[111] = 306;
+ymin[112] = 326;
+ymax[112] = 326;
+ymin[113] = 395;
+ymax[113] = 395;
+
+ymin[115] = 302;
+ymax[115] = 302;
+ymin[116] = 314;
+ymax[116] = 314;
+ymin[117] = 409;
+ymax[117] = 409;
+
+ymin[119] = 299;
+ymax[119] = 299;
+ymin[120] = 298;
+ymax[120] = 298;
+ymin[121] = 412;
+ymax[121] = 412;
+
+ymin[123] = 297;
+ymax[123] = 297;
+ymin[124] = 280;
+ymax[124] = 280;
+ymin[125] = 408;
+ymax[125] = 408;
+
+ymin[143] = 276;    // "Urmaev Flat-Polar Sinusoidal [n=0.0]",
+ymax[143] = 276;
+ymin[144] = 276;
+ymax[144] = 276;
+ymin[145] = 276;
+ymax[145] = 276;
+ymin[146] = 276;
+ymax[146] = 276;
+ymin[147] = 276;
+ymax[147] = 276;
+ymin[148] = 358;
+ymax[148] = 358;
+
+ymin[51] = 628;   // "Equidistant Conic [φ1 = 30◦, φ2 = 60◦N]",
+ymax[51] = 628;   // "Equidistant Conic [φ1 = 30◦, φ2 = 60◦N]",
+ymin[52] = 628;   // "Equidistant Conic [φ1 = 0◦, φ2 = 30◦N]",
+ymax[52] = 628;   // "Equidistant Conic [φ1 = 0◦, φ2 = 30◦N]",
+ymin[53] = 628;   // "Equidistant Conic [φ1 = 0◦, φ2 = 60◦N]",
+ymax[53] = 628;   // "Equidistant Conic [φ1 = 0◦, φ2 = 60◦N]",
+ymin[54] = 628;   // "Euler [φ1 = 30◦, φ2 = 60◦N]",
+ymax[54] = 628;   // "Euler [φ1 = 30◦, φ2 = 60◦N]",
+ymin[55] = 628;   // "Euler [φ1 = 0◦, φ2 = 30◦N]",
+ymax[55] = 628;   // "Euler [φ1 = 0◦, φ2 = 30◦N]",
+ymin[56] = 628;   // "Euler [φ1 = 0◦, φ2 = 60◦N]",
+ymax[56] = 628;   // "Euler [φ1 = 0◦, φ2 = 60◦N]",
+
+ymin[84] = 628;   // "Murdoch I [φ1 = 30◦, φ2 = 60◦N]",
+ymax[84] = 628;   // "Murdoch I [φ1 = 30◦, φ2 = 60◦N]",
+ymin[85] = 628;   // "Murdoch I [φ1 = 0◦, φ2 = 30◦N]",
+ymax[85] = 628;   // "Murdoch I [φ1 = 0◦, φ2 = 30◦N]",
+ymin[86] = 628;   // "Murdoch I [φ1 = 0◦, φ2 = 60◦N]",
+ymax[86] = 628;   // "Murdoch I [φ1 = 0◦, φ2 = 60◦N]",
+ymin[87] = 628;   // "Murdoch III [φ1 = 30◦, φ2 = 60◦N]",
+ymax[87] = 628;   // "Murdoch III [φ1 = 30◦, φ2 = 60◦N]",
+ymin[88] = 628;   // "Murdoch III [φ1 = 0◦, φ2 = 30◦N]",
+ymax[88] = 628;   // "Murdoch III [φ1 = 0◦, φ2 = 30◦N]",
+ymin[89] = 628;   // "Murdoch III [φ1 = 0◦, φ2 = 60◦N]",
+ymax[89] = 628;   // "Murdoch III [φ1 = 0◦, φ2 = 60◦N]",
+
+ymin[149] = 628;   // "Vitkovsky I [φ1 = 30◦, φ2 = 60◦N]",
+ymax[149] = 628;   // "Vitkovsky I [φ1 = 30◦, φ2 = 60◦N]",
+ymin[150] = 628;   // "Vitkovsky I [φ1 = 0◦, φ2 = 30◦N]",
+ymax[150] = 628;   // "Vitkovsky I [φ1 = 0◦, φ2 = 30◦N]",
+ymin[151] = 628;   // "Vitkovsky I [φ1 = 0◦, φ2 = 60◦N]",
+ymax[151] = 628;   // "Vitkovsky I [φ1 = 0◦, φ2 = 60◦N]",
+
+ymin[171] = 482;    // "American Polyconic",
+ymax[171] = 482;
+
+ymin[174] = 283;
+ymax[174] = 283;
+
+ymin[175] = 400;    // "Lambert Azimuthal Equal-Area",
+ymax[175] = 400;
+ymin[176] = 628;    // "Azimuthal Equidistant",
+ymax[176] = 628;
+
+ymin[178] = 444;
+ymax[178] = 444;
+
+ymin[179] = 377;
+ymax[179] = 377;
+ymin[180] = 440;
+ymax[180] = 440;
+ymin[181] = 369;
+ymax[181] = 369;
+ymin[182] = 323;
+ymax[182] = 323;
+ymin[183] = 363;
+ymax[183] = 363;
+ymin[184] = 407;
+ymax[184] = 407;
+ymin[185] = 340;
+ymax[185] = 340;
+
+ymin[187] = 284;
+ymax[187] = 284;
+
+ymin[188] = 298;
+ymax[188] = 298;
+ymin[189] = 700;
+ymax[189] = 700;
+
+ymin[190] = 214;
+ymax[190] = 214;
+
+ymin[192] = 362;
+ymax[192] = 362;
+ymin[193] = 379;
+ymax[193] = 379;
+ymin[194] = 376;
+ymax[194] = 376;
+ymin[195] = 327;
+ymax[195] = 327;
+ymin[196] = 361;
+ymax[196] = 361;
+ymin[197] = 342;
+ymax[197] = 342;
+ymin[198] = 334;
+ymax[198] = 334;
+ymin[199] = 312;
+ymax[199] = 312;
+
+ymin[200] = 271;
+ymax[200] = 271;
+ymin[201] = 282;
+ymax[201] = 282;
+ymin[202] = 319;
+ymax[202] = 319;
+ymin[203] = 286;
+ymax[203] = 286;
+ymin[204] = 293;
+ymax[204] = 293;
+ymin[205] = 263;
+ymax[205] = 263;
+ymin[206] = 262;
+ymax[206] = 262;
+ymin[207] = 262;
+ymax[207] = 262;
+ymin[208] = 274;
+ymax[208] = 274;
+
+ymin[209] = 377;  // "Compact Miller",
+ymax[209] = 377;  // "Compact Miller",
+
+ymin[210] = 307;
+ymax[210] = 307;
+ymin[211] = 269;
+ymax[211] = 269;
+
+ymin[213] = 289;
+ymax[213] = 289;
+ymin[214] = 289;
+ymax[214] = 289;
+ymin[215] = 265;
+ymax[215] = 265;
+ymin[216] = 265;
+ymax[216] = 265;
+ymin[217] = 277;
+ymax[217] = 277;
+ymin[218] = 277;
+ymax[218] = 277;
+
+ymin[219] = 306;
+ymax[219] = 306;
+
+ymin[220] = 271;
+ymax[220] = 271;
+
+ymin[221] = 302;
+ymax[221] = 302;
+ymin[222] = 364;
+ymax[222] = 364;
+ymin[223] = 354;
+ymax[223] = 354;
+
+ymin[225] = 177;
+ymax[225] = 177;
+ymin[226] = 310;
+ymax[226] = 310;
+ymin[227] = 319;
+ymax[227] = 319;
+ymin[228] = 318;
+ymax[228] = 318;
+ymin[229] = 309;
+ymax[229] = 309;
+ymin[230] = 318;
+ymax[230] = 318;
+ymin[231] = 348;
+ymax[231] = 348;
+ymin[232] = 309;
+ymax[232] = 309;
+ymin[233] = 341;
+ymax[233] = 341;
+ymin[234] = 200;
+ymax[234] = 200;
+ymin[235] = 333;
+ymax[235] = 333;
+ymin[236] = 381;
+ymax[236] = 381;
+ymin[237] = 324;
+ymax[237] = 324;
+ymin[238] = 379;
+ymax[238] = 379;
+ymin[239] = 379;
+ymax[239] = 379;
+
+ymin[241] = 174;
+ymax[241] = 174;
+ymin[242] = 197;
+ymax[242] = 197;
+ymin[243] = 205;
+ymax[243] = 205;
+ymin[244] = 369;
+ymax[244] = 369;
+
+ymin[250] = 283;
+ymax[250] = 283;
+ymin[251] = 267;
+ymax[251] = 267;
+ymin[252] = 267;
+ymax[252] = 267;
+
+ymin[254] = 277;
+ymax[254] = 277;
+ymin[255] = 283;
+ymax[255] = 283;
+ymin[256] = 282;
+ymax[256] = 282;
+ymin[257] = 280;
+ymax[257] = 280;
+ymin[258] = 279;
+ymax[258] = 279;
+ymin[259] = 278;
+ymax[259] = 278;
+ymin[260] = 275;
+ymax[260] = 275;
+ymin[261] = 272;
+ymax[261] = 272;
+ymin[262] = 271;
+ymax[262] = 271;
+ymin[263] = 270;
+ymax[263] = 270;
+ymin[264] = 270;
+ymax[264] = 270;
+
+ymin[266] = 275;
+ymax[266] = 275;
+ymin[267] = 273;
+ymax[267] = 273;
+ymin[268] = 270;
+ymax[268] = 270;
+ymin[269] = 266;
+ymax[269] = 266;
+ymin[270] = 266;
+ymax[270] = 266;
+ymin[271] = 266;
+ymax[271] = 266;
+ymin[272] = 263;
+ymax[272] = 263;
+ymin[273] = 267;
+ymax[273] = 267;
+ymin[274] = 281;
+ymax[274] = 281;
+ymin[275] = 283;
+ymax[275] = 283;
+
+ymin[277] = 518;
+ymax[277] = 518;
+ymin[278] = 393;
+ymax[278] = 393;
+ymin[279] = 393;
+ymax[279] = 393;
+ymin[280] = 393;
+ymax[280] = 393;
+
+ymin[282] = 307;
+ymax[282] = 307;
+
+ymin[286] = 291;
+ymax[286] = 291;
+ymin[287] = 294;
+ymax[287] = 294;
+ymin[288] = 288;
+ymax[288] = 288;
+ymin[289] = 288;
+ymax[289] = 288;
+ymin[290] = 280;
+ymax[290] = 280;
+ymin[291] = 461;
+ymax[291] = 461;
+ymin[292] = 395;
+ymax[292] = 395;
+ymin[293] = 341;
+ymax[293] = 341;
+ymin[294] = 283;
+ymax[294] = 283;
+ymin[295] = 284;
+ymax[295] = 284;
+ymin[296] = 285;
+ymax[296] = 285;
+
+ymin[301] = 358;
+ymax[301] = 358;
+
+ymin[303] = 299;
+ymax[303] = 299;
+ymin[304] = 298;
+ymax[304] = 298;
+ymin[305] = 298;
+ymax[305] = 298;
+ymin[306] = 307;
+ymax[306] = 307;
+ymin[307] = 307;
+ymax[307] = 307;
+ymin[308] = 275;
+ymax[308] = 275;
+ymin[309] = 318;
+ymax[309] = 318;
+ymin[310] = 318;
+ymax[310] = 318;
+ymin[311] = 318;
+ymax[311] = 318;
+ymin[312] = 279;
+ymax[312] = 279;
+
+ymin[314] = 200;
+ymax[314] = 200;
+ymin[315] = 200;
+ymax[315] = 200;
+ymin[316] = 272;
+ymax[316] = 272;
+ymin[317] = 298;
+ymax[317] = 298;
+
+ymin[319] = 277;
+ymax[319] = 277;
+ymin[320] = 311;
+ymax[320] = 311;
+ymin[321] = 414;
+ymax[321] = 414;
+
+ymin[323] = 341;
+ymax[323] = 341;
+ymin[324] = 443;
+ymax[324] = 443;
+ymin[325] = 523;
+ymax[325] = 523;
+ymin[326] = 439;
+ymax[326] = 439;
+ymin[327] = 579;
+ymax[327] = 579;
+ymin[328] = 276;
+ymax[328] = 276;
+ymin[329] = 291;
+ymax[329] = 291;
+ymin[330] = 271;
+ymax[330] = 271;
+ymin[331] = 334;
+ymax[331] = 334;
+ymin[332] = 334;
+ymax[332] = 334;
+ymin[333] = 286;
+ymax[333] = 286;
+
+ymin[335] = 289;
+ymax[335] = 289;
+ymin[336] = 305;
+ymax[336] = 305;
+ymin[337] = 325;
+ymax[337] = 325;
+ymin[338] = 305;
+ymax[338] = 305;
+ymin[339] = 352;
+ymax[339] = 352;
+ymin[340] = 360;
+ymax[340] = 360;
+ymin[341] = 400;
+ymax[341] = 400;
 
 mpname = []
 
@@ -1323,7 +1828,7 @@ function displaySortedCommands(local_commands, dists) {
 
             svg.select(`circle[name="${this.innerText.split(" (")[0]}"]`).transition()
                 .duration(500)
-                .style("fill", "dodgerblue")
+                .style("fill", "goldenrod")
                 .style("stroke", "black")
                 .style("stroke-width", "2px")
                 .style("opacity", 1)
@@ -1331,7 +1836,7 @@ function displaySortedCommands(local_commands, dists) {
                 .transition()
                 .duration(500)
                 .delay(200)
-                .style("fill", "red")
+                .style("fill", "orange")
                 .style("stroke", "black")
                 .style("stroke-width", "2px")
                 .style("opacity", 1)
@@ -1382,6 +1887,18 @@ function showSuggestions(inputId, suggestionsListId, imgShowId) {
 
                 const img = document.getElementById(imgShowId);
                 img.src = "map/" + padDynamicZero(index + 1) + ".png"
+
+                if (imgShowId == "img-1" || imgShowId == "img-3") {
+                    lastSuggestion = firstSuggestion
+                    firstSuggestion = suggestion
+                }
+                else if (imgShowId == "img-4") {
+                    lastSuggestion = secondSuggestion
+                    secondSuggestion = suggestion
+                }
+
+                // console.log(firstSuggestion)
+                // console.log(secondSuggestion)
                 
                 onSuggestionClick(suggestion);
                 document.getElementById(inputId).value = suggestion;
@@ -1427,48 +1944,114 @@ document.getElementById("search-box-single-map-projection").addEventListener('bl
 
 var event = new MouseEvent("click", { bubbles: true });
 
+lastSuggestion = ""
+firstSuggestion = ""
+secondSuggestion = ""
+
 function onSuggestionClick(selectedSuggestion) {
     const g = d3.select("g");
 
-    g.selectAll("circle")
-        .style("fill", "gray")
-        .style("stroke-width", "0px")
-        .style("opacity", 0.7)
-    
-    g.selectAll("circle")
-        .filter(function () {
+    if (lastSuggestion) {
+        svg.select(`circle[name="${lastSuggestion}"]`)
+            .style("fill", "gray")
+            .style("stroke-width", "0px")
+            .style("opacity", 0.7);
+    }
+
+    if (firstSuggestion) {
+        svg.select(`circle[name="${firstSuggestion}"]`)
+            .transition()
+            .duration(500)
+            .style("fill", "darkturquoise")
+            .style("stroke", "black")
+            .style("stroke-width", "2px")
+            .style("opacity", 1)
+            .attr("r", 30)
+            .transition()
+            .duration(500)
+            .delay(200)
+            .style("fill", "dodgerblue")
+            .style("stroke", "black")
+            .style("stroke-width", "2px")
+            .style("opacity", 1)
+            .attr("r", 5)
+
+        activeButton = document.querySelectorAll('.tab-button.active');
+        if (activeButton[0].innerText == "Find Similar and Compare") {
             index = mpname.indexOf(selectedSuggestion);
             const sortedCommands = reorderCommands(mpname, distanceMatrix, index);
             displaySortedCommands(sortedCommands.cmd.slice(1, 11), sortedCommands.dist.slice(1, 11))
-            // console.log(sortedCommands)
+        }
+    }
 
-            return d3.select(this).attr("name") === selectedSuggestion;
-        })
-        .transition()
-        .duration(500)
-        .style("fill", "dodgerblue")
-        .style("stroke", "black")
-        .style("stroke-width", "2px")
-        .style("opacity", 1)
-        .attr("r", 30)
-        .transition()
-        .duration(500)
-        .delay(200)
-        .style("fill", "red")
-        .style("stroke", "black")
-        .style("stroke-width", "2px")
-        .style("opacity", 1)
-        .attr("r", 5)
-        // .on("end", function() {
-        //     this.dispatchEvent(event);
-        // })
-        // .node()
-        // .dispatchEvent(event);
+    if (secondSuggestion) {
+        svg.select(`circle[name="${secondSuggestion}"]`)
+            .transition()
+            .duration(500)
+            .style("fill", "goldenrod")
+            .style("stroke", "black")
+            .style("stroke-width", "2px")
+            .style("opacity", 1)
+            .attr("r", 30)
+            .transition()
+            .duration(500)
+            .delay(200)
+            .style("fill", "orange")
+            .style("stroke", "black")
+            .style("stroke-width", "2px")
+            .style("opacity", 1)
+            .attr("r", 5)
+    }
+
+    // g.selectAll("circle")
+    //     .style("fill", "gray")
+    //     .style("stroke-width", "0px")
+    //     .style("opacity", 0.7)
+    
+    // g.selectAll("circle")
+    //     .filter(function () {
+    //         index = mpname.indexOf(selectedSuggestion);
+    //         const sortedCommands = reorderCommands(mpname, distanceMatrix, index);
+    //         displaySortedCommands(sortedCommands.cmd.slice(1, 11), sortedCommands.dist.slice(1, 11))
+    //         // console.log(sortedCommands)
+
+    //         return d3.select(this).attr("name") === selectedSuggestion;
+    //     })
+    //     .transition()
+    //     .duration(500)
+    //     .style("fill", "dodgerblue")
+    //     .style("stroke", "black")
+    //     .style("stroke-width", "2px")
+    //     .style("opacity", 1)
+    //     .attr("r", 30)
+    //     .transition()
+    //     .duration(500)
+    //     .delay(200)
+    //     .style("fill", "red")
+    //     .style("stroke", "black")
+    //     .style("stroke-width", "2px")
+    //     .style("opacity", 1)
+    //     .attr("r", 5)
+    //     // .on("end", function() {
+    //     //     this.dispatchEvent(event);
+    //     // })
+    //     // .node()
+    //     // .dispatchEvent(event);
 }
     
 function openTab(tabId) {
 
     newWidth = 250
+    firstSuggestion = ""
+    secondSuggestion = ""
+    lastSuggestion = ""
+
+    g.selectAll("circle")
+        .style("fill", "gray")
+        .style("stroke-width", "0px")
+        .style("opacity", 0.7)
+
+    svg.selectAll(".tooltip-group").remove();
 
     if (tabId == "tab-recmd"){
         const selectedValue = tableSelect.value;
@@ -1631,25 +2214,37 @@ function compareOverlap(img1id, img2id) {
     img1.onload = () => {
         resizeCanvas();
         ctx.globalAlpha = 0.75;
-        drawImage(img1, xcoords[img1id - 1], ycoords[img1id - 1], ymin[img1id - 1], ymax[img1id - 1])
+        drawImage(img1, xcoords[img1id - 1], ycoords[img1id - 1], -ymin[img1id - 1], ymax[img1id - 1])
         // ctx.drawImage(img1, 0, 0);
-
-        ctx.font = "30px Arial";
-
-        ctx.fillStyle = "blue";
-        ctx.textAlign = "right";
-        ctx.textBaseline = "top";
-        ctx.fillText(mpname[img1id - 1], canvas.width - mpname[img1id - 1].length, 10);
 
         img2.onload = () => {
             ctx.globalAlpha = 0.75;
-            drawImage(img2, xcoords[img2id - 1], ycoords[img2id - 1], ymin[img2id - 1], ymax[img2id - 1])
+            drawImage(img2, xcoords[img2id - 1], ycoords[img2id - 1], -ymin[img2id - 1], ymax[img2id - 1])
             // ctx.drawImage(img2, 0, 0);
 
+            ctx.font = "24px Arial";
+
+            ctx.fillStyle = "blue";
+            ctx.textAlign = "right";
+            ctx.textBaseline = "top";
+            ctx.fillText(mpname[img1id - 1], img1.width - mpname[img1id - 1].length, ycoords[img1id - 1] - ymin[img1id - 1]);
+    
             ctx.fillStyle = "orange";
             ctx.textAlign = "right";
             ctx.textBaseline = "bottom";
-            ctx.fillText(mpname[img2id - 1], canvas.width - mpname[img2id - 1].length, canvas.height - 10);
+            ctx.fillText(mpname[img2id - 1], img2.width - mpname[img2id - 1].length, ycoords[img2id - 1] + ymax[img2id - 1]);
+
+            ctx.fillStyle = "red";
+            ctx.fillText("d=" + distanceMatrix[img1id - 1][img2id - 1].toFixed(5), 1400, 369);
+
+            ctx.textBaseline = "center";
+            ctx.fillText("*", 704, 369);
+            ctx.fillText("o", 706, 363);
+
+
+            // for (i = 0; i < 800; i+=100) {
+            //     ctx.fillText(i, img2.width - mpname[img2id - 1].length, i);
+            // }
         };
 
         img2.onerror = () => {

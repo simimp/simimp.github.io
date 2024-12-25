@@ -669,6 +669,20 @@ const zoom = d3.zoom()
     .scaleExtent([0.5, 5])
     .translateExtent([[-plotWidth, -plotHeight], [plotWidth * 2, plotHeight * 2]])
     .on("zoom", (event) => {
+        const width = svg.node().getBoundingClientRect().width;
+        const height = svg.node().getBoundingClientRect().height;
+        const margin = { top: 2, right: 2, bottom: 4, left: 4 };
+        const plotWidth = width - margin.left - margin.right;
+        const plotHeight = height - margin.top - margin.bottom;
+        
+        xScale = d3.scaleLinear().domain([-1, 1]).range([0, plotWidth]);
+        yScale = d3.scaleLinear().domain([-1, 1]).range([plotHeight, 0]);
+
+        zoom.translateExtent([
+            [-plotWidth, -plotHeight],
+            [plotWidth * 2, plotHeight * 2],
+        ]);
+
         g.attr("transform", event.transform);
     });
 
@@ -1002,9 +1016,15 @@ function zoomToFit(svg, circles, plotWidth, plotHeight) {
 
 // Reset Zoom
 document.getElementById("reset-zoom").addEventListener("click", function() {
-    svg.transition().duration(200).call(zoom.transform, d3.zoomIdentity);
+    svg.transition().duration(200).call(zoom.transform, d3.zoomIdentity.scale(0.88));
 
     // let circles = g.selectAll("circle").data(data);
+
+    // const width = svg.node().getBoundingClientRect().width;
+    // const height = svg.node().getBoundingClientRect().height;
+    // const margin = { top: 2, right: 2, bottom: 4, left: 4 };
+    // const plotWidth = width - margin.left - margin.right;
+    // const plotHeight = height - margin.top - margin.bottom;
 
     // zoomToFit(svg, data, plotWidth, plotHeight);
 
@@ -1808,7 +1828,7 @@ function displaySortedCommands(local_commands, dists) {
             notSimilarCount++;
         }
 
-        listItem.addEventListener("click", function () {
+        listItem.addEventListener("click", function () {    // note: click li in the similar lists
             document.querySelectorAll("li").forEach(item => item.classList.remove("highlight"));
 
             if (lastselect) {
@@ -1817,6 +1837,15 @@ function displaySortedCommands(local_commands, dists) {
                     .style("stroke-width", "0px")
                     .style("opacity", 0.7);
             }
+
+            lastselect = this.innerText.split(" (")[0];
+            secondSuggestion = lastselect
+
+            document.getElementById('search-box-projection-2').value = lastselect;
+            const img4 = document.getElementById("img-4");
+            img4.style.display = "flex";
+            updateButtonState();
+            img4.src = "map/" + padDynamicZero(mpname.indexOf(lastselect) + 1) + ".png"
 
             const index = mpname.indexOf(this.innerText.split(" (")[0]);
             const img = document.getElementById("img-2");
@@ -1842,7 +1871,7 @@ function displaySortedCommands(local_commands, dists) {
                 .style("opacity", 1)
                 .attr("r", 5);
 
-            lastselect = this.innerText.split(" (")[0];
+            // lastselect = this.innerText.split(" (")[0];
         });
     });
 
@@ -1889,6 +1918,18 @@ function showSuggestions(inputId, suggestionsListId, imgShowId) {
                 img.src = "map/" + padDynamicZero(index + 1) + ".png"
 
                 if (imgShowId == "img-1" || imgShowId == "img-3") {
+                    if (firstSuggestion == suggestion) {
+                       return;
+                    }
+               }
+
+               if (imgShowId == "img-4") {
+                   if (secondSuggestion == suggestion) {
+                       return;
+                    }
+               }
+
+                if (imgShowId == "img-1" || imgShowId == "img-3") {
                     lastSuggestion = firstSuggestion
                     firstSuggestion = suggestion
                 }
@@ -1897,11 +1938,31 @@ function showSuggestions(inputId, suggestionsListId, imgShowId) {
                     secondSuggestion = suggestion
                 }
 
+                if (imgShowId == "img-1") {
+                    document.getElementById('img-2').style.display = 'none';
+                }
+
                 // console.log(firstSuggestion)
                 // console.log(secondSuggestion)
                 
                 onSuggestionClick(suggestion);
                 document.getElementById(inputId).value = suggestion;
+
+                if (imgShowId == "img-1") {
+                    document.getElementById('search-box-projection-1').value = suggestion;
+                    const img = document.getElementById("img-3");
+                    img.src = "map/" + padDynamicZero(index + 1) + ".png"
+                }
+
+                if (imgShowId == "img-3") {
+                    document.getElementById('search-box-single-map-projection').value = suggestion;
+                    const img = document.getElementById("img-1");
+                    img.src = "map/" + padDynamicZero(index + 1) + ".png"
+                    index = mpname.indexOf(suggestion);
+                    const sortedCommands = reorderCommands(mpname, distanceMatrix, index);
+                    displaySortedCommands(sortedCommands.cmd.slice(1, 11), sortedCommands.dist.slice(1, 11))
+                }
+
                 suggestionsList.style.display = 'none';
             };
 
@@ -2042,9 +2103,62 @@ function onSuggestionClick(selectedSuggestion) {
 function openTab(tabId) {
 
     newWidth = 250
-    firstSuggestion = ""
-    secondSuggestion = ""
-    lastSuggestion = ""
+    
+    if (tabId == "tab-recmd" || tabId == "tab-group" || tabId == "tab-full") {
+        firstSuggestion = ""
+        secondSuggestion = ""
+        lastSuggestion = ""
+    }
+
+    if (tabId == "tab-find") {
+        secondSuggestion = ""
+        lastSuggestion = ""
+    }
+
+    if (firstSuggestion) {
+        svg.select(`circle[name="${firstSuggestion}"]`)
+            .transition()
+            .duration(500)
+            .style("fill", "darkturquoise")
+            .style("stroke", "black")
+            .style("stroke-width", "2px")
+            .style("opacity", 1)
+            .attr("r", 30)
+            .transition()
+            .duration(500)
+            .delay(200)
+            .style("fill", "dodgerblue")
+            .style("stroke", "black")
+            .style("stroke-width", "2px")
+            .style("opacity", 1)
+            .attr("r", 5)
+
+        // activeButton = document.querySelectorAll('.tab-button.active');
+        // if (activeButton[0].innerText == "Find Similar and Compare") {
+        //     index = mpname.indexOf(selectedSuggestion);
+        //     const sortedCommands = reorderCommands(mpname, distanceMatrix, index);
+        //     displaySortedCommands(sortedCommands.cmd.slice(1, 11), sortedCommands.dist.slice(1, 11))
+        // }
+    }
+
+    if (secondSuggestion) {
+        svg.select(`circle[name="${secondSuggestion}"]`)
+            .transition()
+            .duration(500)
+            .style("fill", "goldenrod")
+            .style("stroke", "black")
+            .style("stroke-width", "2px")
+            .style("opacity", 1)
+            .attr("r", 30)
+            .transition()
+            .duration(500)
+            .delay(200)
+            .style("fill", "orange")
+            .style("stroke", "black")
+            .style("stroke-width", "2px")
+            .style("opacity", 1)
+            .attr("r", 5)
+    }
 
     g.selectAll("circle")
         .style("fill", "gray")
@@ -2293,25 +2407,3 @@ document.addEventListener('focusout', function(event) {
         canvas.style.display = 'none';
     }
 });
-
-function drawScaledImage(img1, ctx, canvasWidth, canvasHeight) {
-    // Calculate the image's aspect ratio
-    const aspectRatio = img1.width / img1.height;
-
-    // Calculate the maximum width and height to fit the canvas
-    let scaledWidth = canvasWidth;
-    let scaledHeight = canvasWidth / aspectRatio;
-
-    // If the scaled height exceeds the canvas height, adjust the scaling based on height
-    if (scaledHeight > canvasHeight) {
-        scaledHeight = canvasHeight;
-        scaledWidth = canvasHeight * aspectRatio;
-    }
-
-    // Calculate position to center the image
-    const offsetX = (canvasWidth - scaledWidth) / 2;
-    const offsetY = (canvasHeight - scaledHeight) / 2;
-
-    // Draw the image with the new dimensions and centered position
-    ctx.drawImage(img1, offsetX, offsetY, scaledWidth, scaledHeight);
-}

@@ -651,6 +651,11 @@ function updateThresholds() {
     thresholdSimilar = parseFloat(sliderSimilar.value);
     thresholdModerate = parseFloat(sliderModerate.value);
 
+    document.getElementById("val-range-1").innerText = sliderSimilar.value
+    document.getElementById("val-range-11").innerText = sliderSimilar.value
+    document.getElementById("val-range-2").innerText = sliderModerate.value
+    document.getElementById("val-range-3").innerText = sliderModerate.value
+
     // displaySortedCommands(local_commands, dists);
 }
 
@@ -665,6 +670,9 @@ const margin = { top: 2, right: 2, bottom: 4, left: 4 };
 const plotWidth = width - margin.left - margin.right;
 const plotHeight = height - margin.top - margin.bottom;
 
+const initialDataset = "Improved Distance Matrix + Global Distortions + DR (SMACOF + Isomap)";
+lastDatasetName = initialDataset;
+
 const zoom = d3.zoom()
     .scaleExtent([0.5, 5])
     .translateExtent([[-plotWidth, -plotHeight], [plotWidth * 2, plotHeight * 2]])
@@ -675,8 +683,17 @@ const zoom = d3.zoom()
         const plotWidth = width - margin.left - margin.right;
         const plotHeight = height - margin.top - margin.bottom;
         
-        xScale = d3.scaleLinear().domain([-1, 1]).range([0, plotWidth]);
-        yScale = d3.scaleLinear().domain([-1, 1]).range([plotHeight, 0]);
+        // Default scales for most datasets
+        const xScaleDefault = d3.scaleLinear().domain([-1, 1]).range([0, plotWidth]);
+        const yScaleDefault = d3.scaleLinear().domain([-1, 1]).range([plotHeight, 0]);
+
+        // Special scales for "global_distortions.json"
+        const xScaleSpecial = d3.scaleLinear().domain([0, 1]).range([0, plotWidth]);
+        const yScaleSpecial = d3.scaleLinear().domain([0, 1]).range([plotHeight, 0]);
+
+        // Determine scales based on dataset
+        // xScale = datasetFiles[lastDatasetName] === "global_distortions.json" ? xScaleSpecial : xScaleDefault;
+        // yScale = datasetFiles[lastDatasetName] === "global_distortions.json" ? yScaleSpecial : yScaleDefault;
 
         zoom.translateExtent([
             [-plotWidth, -plotHeight],
@@ -700,16 +717,70 @@ function padDynamicZero(num) {
     return numStr.padStart(length, '0');
 }
 
+lastToolTip = ""
+
+function drawTooltips(d) {
+    lastToolTip = d;
+
+    svg.selectAll(".tooltip-group").remove();
+
+    const tooltipGroup = d3.select("g").append("g")
+        .attr("class", "tooltip-group");
+
+    const textElement = tooltipGroup.append("text")
+        .attr("x", xScale(d.x) + d.size + 15)
+        .attr("y", yScale(d.y) - 10)
+        .attr("fill", "dodgerblue")
+        .style("font-size", "12px")
+        .text(`${d.category}`);
+    tooltipGroup.append("text")
+        .attr("x", xScale(d.x) + d.size + 15)
+        .attr("y", yScale(d.y) + 5)
+        .attr("fill", "black")
+        .style("font-size", "12px")
+        .text(`E_A: ${d.area}`);
+    tooltipGroup.append("text")
+        .attr("x", xScale(d.x) + d.size + 15)
+        .attr("y", yScale(d.y) + 20)
+        .attr("fill", "black")
+        .style("font-size", "12px")
+        .text(`E∠: ${d.angu}`);
+
+    arrowstr = "M " + (xScale(d.x) + d.size + 5) + " " + (yScale(d.y) + -5) + 
+        "L " + (xScale(d.x) + d.size + 0) + " " + (yScale(d.y) + 0) + 
+        "L " + (xScale(d.x) + d.size + 5) + " " + (yScale(d.y) + 5)
+
+    tooltipGroup.append("path")
+        .attr("d", arrowstr)
+        .attr("fill", "none")
+        .attr("stroke", "dodgerblue");
+
+    const textWidth = Math.max(textElement.node().getComputedTextLength(), 75);
+
+    const rectWidth = textWidth + 10;
+
+    tooltipGroup.append("rect")
+    .attr("x", xScale(d.x) + d.size + 10)
+    .attr("y", yScale(d.y) - 30)
+    .attr("width", rectWidth)
+    .attr("height", 60)
+    .attr("rx", 5)
+    .attr("fill", "rgba(0, 0, 0, 0.3)");
+}
+
 function updateVisualization(data) {
     let circles = g.selectAll("circle").data(data);
 
     zoomToFit(svg, data, plotWidth, plotHeight);
 
+    const scaleNode = document.getElementById("scale-node").checked;
+    const renderColor = document.getElementById("render-color").checked;
+
     circles
         .attr("cx", (d) => xScale(d.x))
         .attr("cy", (d) => yScale(d.y))
-        .attr("r", 5)
-        .style("fill", "gray")
+        .attr("r", scaleNode ? (d) => d.size : 5)
+        .style("fill", renderColor ? (d) => d.color : "gray")
         .style("opacity", 0.7);
 
     circles
@@ -717,24 +788,43 @@ function updateVisualization(data) {
         .append("circle")
         .attr("cx", (d) => xScale(d.x))
         .attr("cy", (d) => yScale(d.y))
-        .attr("r", 5)
-        .style("fill", "gray")
+        .attr("r", scaleNode ? (d) => d.size : 5)
+        .style("fill", renderColor ? (d) => d.color : "gray")
         .style("opacity", 0.7)
         .attr("name", (d) => d.category)
         .attr("data-area", (d) => d.area)
         .attr("data-angu", (d) => d.angu)
-        .on("click", (event, d) => {
+        .on("click", (event, d) => {    // note: click a node on the graph
+
+            lastSuggestion = firstSuggestion
+            firstSuggestion = d.category;
 
             activeButton = document.querySelectorAll('.tab-button.active');
             if (activeButton[0].innerText == "Readme") {
                 openTab("tab-find")
+                // svg.call(zoom);
+                // loadDataset(selectedDataset);
             }
 
             activeButton = document.querySelectorAll('.tab-button.active');
             if (activeButton[0].innerText == "Find Similar and Compare") {
                 document.getElementById("search-box-single-map-projection").value = d.category;
-            } else if (activeButton[0].innerText == "Pairwise Compare") {
                 document.getElementById("search-box-projection-1").value = d.category;
+
+                const img = document.getElementById("img-3");
+
+                index = mpname.indexOf(d.category);
+                img.src = "map/" + padDynamicZero(index + 1) + ".png"
+            } else if (activeButton[0].innerText == "Pairwise Compare") {
+                document.getElementById("search-box-single-map-projection").value = d.category;
+                document.getElementById("search-box-projection-1").value = d.category;
+
+                const img = document.getElementById("img-1");
+
+                index = mpname.indexOf(d.category);
+                img.src = "map/" + padDynamicZero(index + 1) + ".png"
+                const sortedCommands = reorderCommands(mpname, distanceMatrix, index);
+                displaySortedCommands(sortedCommands.cmd.slice(1, 11), sortedCommands.dist.slice(1, 11))
             }
 
             index = mpname.indexOf(d.category);
@@ -757,8 +847,12 @@ function updateVisualization(data) {
                 img.src = "map/" + padDynamicZero(index + 1) + ".png"
             }
 
+            const scaleNode = document.getElementById("scale-node").checked;
+            const renderColor = document.getElementById("render-color").checked;
+        
             g.selectAll("circle")
-            .style("fill", "gray")
+            .attr("r", scaleNode ? (d) => d.size : 5)
+            .style("fill", renderColor ? (d) => d.color : "gray")
             .style("stroke-width", "0px")
             .style("opacity", 0.7)
 
@@ -769,41 +863,7 @@ function updateVisualization(data) {
                 .style("opacity", 1)
 
             // alert(`Category: ${d.category}`);
-            svg.selectAll(".tooltip-group").remove();
-
-            const tooltipGroup = d3.select("g").append("g")
-                .attr("class", "tooltip-group");
-
-            const textElement = tooltipGroup.append("text")
-                .attr("x", xScale(d.x) + d.size + 15)
-                .attr("y", yScale(d.y) - 10)
-                .attr("fill", "red")
-                .style("font-size", "12px")
-                .text(`${d.category}`);
-            tooltipGroup.append("text")
-                .attr("x", xScale(d.x) + d.size + 15)
-                .attr("y", yScale(d.y) + 5)
-                .attr("fill", "black")
-                .style("font-size", "12px")
-                .text(`E_A: ${d.area}`);
-            tooltipGroup.append("text")
-                .attr("x", xScale(d.x) + d.size + 15)
-                .attr("y", yScale(d.y) + 20)
-                .attr("fill", "black")
-                .style("font-size", "12px")
-                .text(`E∠: ${d.angu}`);
-
-            const textWidth = Math.max(textElement.node().getComputedTextLength(), 75);
-
-            const rectWidth = textWidth + 10;
-
-            tooltipGroup.append("rect")
-            .attr("x", xScale(d.x) + d.size + 10)
-            .attr("y", yScale(d.y) - 30)
-            .attr("width", rectWidth)
-            .attr("height", 60)
-            .attr("rx", 5)
-            .attr("fill", "rgba(0, 0, 0, 0.3)");
+            drawTooltips(d);
 
         });
 
@@ -813,6 +873,8 @@ function updateVisualization(data) {
 dataset = [];
 
 function loadDataset(datasetName) {
+    lastDatasetName = datasetName;
+
     const fileName = "dataset/" + datasetFiles[datasetName];
     if (!fileName) {
         console.error("Dataset file not found for:", datasetName);
@@ -826,6 +888,10 @@ function loadDataset(datasetName) {
     // Special scales for "global_distortions.json"
     const xScaleSpecial = d3.scaleLinear().domain([0, 1]).range([0, plotWidth]);
     const yScaleSpecial = d3.scaleLinear().domain([0, 1]).range([plotHeight, 0]);
+
+    // Determine scales based on dataset
+    xScale = datasetFiles[datasetName] === "global_distortions.json" ? xScaleSpecial : xScaleDefault;
+    yScale = datasetFiles[datasetName] === "global_distortions.json" ? yScaleSpecial : yScaleDefault;
 
     d3.select("g").selectAll("g").remove();
 
@@ -841,10 +907,6 @@ function loadDataset(datasetName) {
         .call(d3.axisLeft(yScale).tickSize(-plotWidth).tickFormat(""))
         .selectAll("line")
         .style("stroke", "#ddd");
-
-    // Determine scales based on dataset
-    xScale = datasetFiles[datasetName] === "global_distortions.json" ? xScaleSpecial : xScaleDefault;
-    yScale = datasetFiles[datasetName] === "global_distortions.json" ? yScaleSpecial : yScaleDefault;
 
     // Get swap-coord checkbox state
     const swapCoords = document.getElementById("swap-coord").checked;
@@ -867,7 +929,7 @@ function loadDataset(datasetName) {
             .attr("y", 40)
             .attr("fill", "black")
             .style("text-anchor", "middle")
-            .text(swapCoords ? "E∠" : "E_A");
+            .text(swapCoords ? "E_A" : "E∠");
 
         svg.select("g").append("g")
             .call(yAxis)
@@ -877,7 +939,7 @@ function loadDataset(datasetName) {
             .attr("y", -40)
             .attr("fill", "black")
             .style("text-anchor", "middle")
-            .text(swapCoords ? "E_A" : "E∠");
+            .text(swapCoords ? "E∠" : "E_A");
     }
 
     d3.json(fileName)
@@ -887,10 +949,23 @@ function loadDataset(datasetName) {
                 dd = {}
                 dd.x = swapCoords ? data[obj][0] : data[obj][1];
                 dd.y = swapCoords ? data[obj][1] : data[obj][0];
-                dd.size = 5;
+                const row = distanceMatrix[obj];
+    
+                const sortedIndices = row
+                    .map((value, idx) => ({ value, idx }))
+                    .sort((a, b) => a.value - b.value)
+                    
+                dd.size = Math.min(Math.max(5 * sortedIndices[1].value, 5), 20);
+
                 dd.area = distortions[obj][0] == 0 ? 0 : distortions[obj][0].toFixed(5);
                 dd.angu = distortions[obj][1] == 0 ? 0 : distortions[obj][1].toFixed(5);
                 dd.category = mpname[obj];
+
+                const r = Math.min(1, distortions[obj][0]);
+                const g = Math.max(0, 1 - distortions[obj][0] - distortions[obj][1]);
+                const b = Math.min(1, distortions[obj][1]);
+
+                dd.color = `rgb(${r * 255}, ${g * 255}, ${b * 255})`
 
                 dataset.push({...dd});
 
@@ -899,25 +974,86 @@ function loadDataset(datasetName) {
             }
             updateVisualization(dataset);
             updateLines();
-            svg.selectAll(".tooltip-group").remove();
+            if (lastToolTip) {
+                index = mpname.indexOf(lastToolTip.category);
+                lastToolTip.x = dataset[index].x
+                lastToolTip.y = dataset[index].y
+                drawTooltips(lastToolTip);
+            }
+            // svg.selectAll(".tooltip-group").remove();
         })
         .catch((error) => {
             console.error("Error loading dataset file:", fileName, error);
         });
 }
 
-const initialDataset = "Improved Distance Matrix + Global Distortions + DR (SMACOF + Isomap)";
 loadDataset(initialDataset);
 
 document.getElementById("dataset-selector").addEventListener("change", (event) => {
     const selectedDataset = event.target.value;
+    for (let i = 1; i <= 15; i++) {
+        document.getElementById(`line-${i}`).checked = true;
+    }
     loadDataset(selectedDataset);
 });
 
-const checkbox = document.getElementById('swap-coord');
-checkbox.addEventListener('change', function() {
-    const selectedDataset = document.getElementById("dataset-selector").value;
-    loadDataset(selectedDataset);
+const swapCoord = document.getElementById('swap-coord');
+swapCoord.addEventListener('change', function() {
+    // const selectedDataset = document.getElementById("dataset-selector").value;
+    // loadDataset(selectedDataset);
+    for (obj in dataset) {
+        x_old = dataset[obj].x
+        dataset[obj].x = dataset[obj].y
+        dataset[obj].y = x_old
+    }
+    updateVisualization(dataset);
+    updateLines();
+    if (lastToolTip) {
+        index = mpname.indexOf(lastToolTip.category);
+        lastToolTip.x = dataset[index].x
+        lastToolTip.y = dataset[index].y
+        drawTooltips(lastToolTip);
+    }
+    // if (lastToolTip) {
+    //     x_old = lastToolTip.x
+    //     lastToolTip.x = lastToolTip.y
+    //     lastToolTip.y = x_old
+    //     drawTooltips(lastToolTip);
+    // }
+});
+
+const scaleNode = document.getElementById('scale-node');
+scaleNode.addEventListener('change', function() {
+    // const selectedDataset = document.getElementById("dataset-selector").value;
+    // loadDataset(selectedDataset);
+    // if (lastToolTip) {
+    //     drawTooltips(lastToolTip);
+    // }
+    updateVisualization(dataset);
+    updateLines();
+    if (lastToolTip) {
+        index = mpname.indexOf(lastToolTip.category);
+        lastToolTip.x = dataset[index].x
+        lastToolTip.y = dataset[index].y
+        drawTooltips(lastToolTip);
+    }
+});
+
+const renderColor = document.getElementById('render-color');
+renderColor.addEventListener('change', function() {
+    // const selectedDataset = document.getElementById("dataset-selector").value;
+    // loadDataset(selectedDataset);
+    // if (lastToolTip) {
+    //     drawTooltips(lastToolTip);
+    // }
+    updateVisualization(dataset);
+    updateLines();
+    if (lastToolTip) {
+        index = mpname.indexOf(lastToolTip.category);
+        lastToolTip.x = dataset[index].x
+        lastToolTip.y = dataset[index].y
+        drawTooltips(lastToolTip);
+    }
 });
 
 svg.on("click", function (event) {
@@ -962,6 +1098,16 @@ function updateLines() {
             .attr("class", `line-${index + 1}`); 
         return line;
     });
+
+    for (let i = 1; i <= 15; i++) {
+        line = svg.select(`.line-${i}`);
+        if (document.getElementById(`line-${i}`).checked) {
+            line.style("display", "inline");
+        } else {
+            line.style("display", "none");
+        }
+    }
+
 }
 
 function toggleLineVisibility(lineIndex, isVisible) {
@@ -1855,6 +2001,8 @@ function displaySortedCommands(local_commands, dists) {
 
             this.classList.add("highlight");
 
+            const scaleNode = document.getElementById("scale-node").checked;
+
             svg.select(`circle[name="${this.innerText.split(" (")[0]}"]`).transition()
                 .duration(500)
                 .style("fill", "goldenrod")
@@ -1869,7 +2017,7 @@ function displaySortedCommands(local_commands, dists) {
                 .style("stroke", "black")
                 .style("stroke-width", "2px")
                 .style("opacity", 1)
-                .attr("r", 5);
+                .attr("r", scaleNode ? (d) => d.size : 5);
 
             // lastselect = this.innerText.split(" (")[0];
         });
@@ -1911,23 +2059,24 @@ function showSuggestions(inputId, suggestionsListId, imgShowId) {
             listItem.style.padding = '8px';
             listItem.style.cursor = 'pointer';
 
-            listItem.onclick = function() {
+            listItem.addEventListener('pointerdown', function() {   // note: click an item in dropdown list
                 index = mpname.indexOf(suggestion);
 
                 const img = document.getElementById(imgShowId);
                 img.src = "map/" + padDynamicZero(index + 1) + ".png"
 
                 if (imgShowId == "img-1" || imgShowId == "img-3") {
+                    drawTooltips(dataset[index]);
                     if (firstSuggestion == suggestion) {
                        return;
                     }
-               }
+                }
 
-               if (imgShowId == "img-4") {
+                if (imgShowId == "img-4") {
                    if (secondSuggestion == suggestion) {
                        return;
                     }
-               }
+                }
 
                 if (imgShowId == "img-1" || imgShowId == "img-3") {
                     lastSuggestion = firstSuggestion
@@ -1958,13 +2107,12 @@ function showSuggestions(inputId, suggestionsListId, imgShowId) {
                     document.getElementById('search-box-single-map-projection').value = suggestion;
                     const img = document.getElementById("img-1");
                     img.src = "map/" + padDynamicZero(index + 1) + ".png"
-                    index = mpname.indexOf(suggestion);
                     const sortedCommands = reorderCommands(mpname, distanceMatrix, index);
                     displaySortedCommands(sortedCommands.cmd.slice(1, 11), sortedCommands.dist.slice(1, 11))
                 }
 
                 suggestionsList.style.display = 'none';
-            };
+            })
 
             suggestionsList.appendChild(listItem);
         });
@@ -2000,7 +2148,7 @@ document.getElementById("search-box-single-map-projection").addEventListener('bl
         if (!suggestionsList.contains(document.activeElement)) {
             suggestionsList.style.display = 'none';
         }
-    }, 100);
+    }, 200);
 });
 
 var event = new MouseEvent("click", { bubbles: true });
@@ -2019,6 +2167,8 @@ function onSuggestionClick(selectedSuggestion) {
             .style("opacity", 0.7);
     }
 
+    const scaleNode = document.getElementById("scale-node").checked;
+
     if (firstSuggestion) {
         svg.select(`circle[name="${firstSuggestion}"]`)
             .transition()
@@ -2035,7 +2185,7 @@ function onSuggestionClick(selectedSuggestion) {
             .style("stroke", "black")
             .style("stroke-width", "2px")
             .style("opacity", 1)
-            .attr("r", 5)
+            .attr("r", scaleNode ? (d) => d.size : 5)
 
         activeButton = document.querySelectorAll('.tab-button.active');
         if (activeButton[0].innerText == "Find Similar and Compare") {
@@ -2061,7 +2211,7 @@ function onSuggestionClick(selectedSuggestion) {
             .style("stroke", "black")
             .style("stroke-width", "2px")
             .style("opacity", 1)
-            .attr("r", 5)
+            .attr("r", scaleNode ? (d) => d.size : 5)
     }
 
     // g.selectAll("circle")
@@ -2103,7 +2253,11 @@ function onSuggestionClick(selectedSuggestion) {
 function openTab(tabId) {
 
     newWidth = 250
-    
+
+    if (lastToolTip) {
+        drawTooltips(lastToolTip);
+    }
+
     if (tabId == "tab-recmd" || tabId == "tab-group" || tabId == "tab-full") {
         firstSuggestion = ""
         secondSuggestion = ""
@@ -2113,7 +2267,11 @@ function openTab(tabId) {
     if (tabId == "tab-find") {
         secondSuggestion = ""
         lastSuggestion = ""
+        // const selectedDataset = document.getElementById("dataset-selector").value;
+        // loadDataset(selectedDataset);
     }
+
+    const scaleNode = document.getElementById("scale-node").checked;
 
     if (firstSuggestion) {
         svg.select(`circle[name="${firstSuggestion}"]`)
@@ -2131,7 +2289,7 @@ function openTab(tabId) {
             .style("stroke", "black")
             .style("stroke-width", "2px")
             .style("opacity", 1)
-            .attr("r", 5)
+            .attr("r", scaleNode ? (d) => d.size : 5)
 
         // activeButton = document.querySelectorAll('.tab-button.active');
         // if (activeButton[0].innerText == "Find Similar and Compare") {
@@ -2157,15 +2315,15 @@ function openTab(tabId) {
             .style("stroke", "black")
             .style("stroke-width", "2px")
             .style("opacity", 1)
-            .attr("r", 5)
+            .attr("r", scaleNode ? (d) => d.size : 5)
     }
 
-    g.selectAll("circle")
-        .style("fill", "gray")
-        .style("stroke-width", "0px")
-        .style("opacity", 0.7)
+    // g.selectAll("circle")
+    //     .style("fill", "gray")
+    //     .style("stroke-width", "0px")
+    //     .style("opacity", 0.7)
 
-    svg.selectAll(".tooltip-group").remove();
+    // svg.selectAll(".tooltip-group").remove();
 
     if (tabId == "tab-recmd"){
         const selectedValue = tableSelect.value;
@@ -2277,6 +2435,32 @@ function updatePairButtonState() {
     const img2Blank = img2.src.indexOf('blank.png') === -1;
 
     comparePairButton.disabled = !(img1Valid && img2Valid && img1Blank && img2Blank);
+
+    distance = "NaN";
+    // if (!comparePairButton.disabled) {
+    if (firstSuggestion && secondSuggestion) {
+        thumb1 = document.getElementById("img-3");
+        thumb2 = document.getElementById("img-4");
+        img1id = mpname.indexOf(firstSuggestion) + 1;
+        img2id = mpname.indexOf(secondSuggestion) + 1;
+        // img1id = parseInt(thumb1.src.slice(thumb1.src.length - 7));
+        // img2id = parseInt(thumb2.src.slice(thumb2.src.length - 7));
+        distance = distanceMatrix[img1id - 1][img2id - 1].toFixed(5);
+        document.getElementById("mpname1").innerText = mpname[img1id - 1];
+        document.getElementById("mpname2").innerText = mpname[img2id - 1];
+        if (distance < thresholdSimilar) {
+            document.getElementById("distance-stat").innerText = "Similar";
+        } else if (distance >= thresholdSimilar && distance < thresholdModerate) {
+            document.getElementById("distance-stat").innerText = "Moderate Similar";
+        } else {
+            document.getElementById("distance-stat").innerText = "No Very Similar";
+        }
+        document.getElementById("distance-show").style.display = "block";
+    } else {
+        document.getElementById("distance-show").style.display = "none";
+    }
+    
+    document.getElementById("distance-val").innerText = distance;
 }
 
 const img3 = document.getElementById('img-3');

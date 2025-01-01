@@ -21,11 +21,12 @@
     <div class="container">
         <aside id="tab-find" class="sidebar tab-content">
             <div class="search-bar">
-                <h4>Click on a node on the right or Select a map projection from the drop-down box</h4>
+                <h4>Click on <span style="color: dodgerblue;">a node</span> on the right or Select <span style="color: dodgerblue;">a map projection</span> from the drop-down box</h4>
                 <input type="text" placeholder="Search..." id="search-box-single-map-projection" oninput="showSuggestions('search-box-single-map-projection', 'suggestionsList', 'img-1')">
                 <ul id="suggestionsList" style="border: 1px solid #ccc; display: none; list-style-type: none; padding: 0;"></ul>
                 <img id="img-1" src="blank.png" width="100%" onerror="this.src='maperr.png'"></img>
             </div>
+            <hr width="100%">
             <div class="info-panel">
                 <!-- <h5>It's 10 Nearest Neighbors are</h5> -->
                 <div id="category-container">
@@ -44,18 +45,24 @@
 
         <aside id="tab-pair" class="sidebar tab-content">
             <div class="search-bar">
-                <h4>Click on a node on the right or Select a map projection from the drop-down box</h4>
+                <h4>Click on <span style="color: dodgerblue;">a node</span> on the right or Select <span style="color: dodgerblue;">a map projection</span> from the drop-down box</h4>
                 <input type="text" placeholder="Search..." id="search-box-projection-1" oninput="showSuggestions('search-box-projection-1', 'suggestions-list-1', 'img-3')">
                 <ul id="suggestions-list-1" style="border: 1px solid #ccc; display: none; list-style-type: none; padding: 0;"></ul>
                 <img id="img-3" src="blank.png" width="100%" onerror="this.src='maperr.png'"></img>
             </div>
+            <hr width="100%">
             <div class="search-bar">
-                <h4>Select another map projection to compare</h4>
+                <h4>Select <span style="color: orange;">another map projection</span> to compare</h4>
                 <input type="text" placeholder="Search..." id="search-box-projection-2" oninput="showSuggestions('search-box-projection-2', 'suggestions-list-2', 'img-4')">
                 <ul id="suggestions-list-2" style="border: 1px solid #ccc; display: none; list-style-type: none; padding: 0;"></ul>
                 <img id="img-4" src="blank.png" width="100%" onerror="this.src='maperr.png'"></img>
             </div>
             <div class="tab-switch">
+                <div id="distance-show" style="display: none;">
+                    <hr width="100%">
+                    <div>The distance between <span id="mpname1" style="color: dodgerblue;"></span> and <span id="mpname2" style="color: orange;"></span> is <span id="distance-val" style="font-weight: bold">NaN</span>.</div>
+                    <div>They are <span id="distance-stat" style="font-weight: bold">Status</span>.</div>
+                </div>
                 <button data-tab="compare-pair" disabled>Compare them</button>
             </div>
         </aside>
@@ -117,7 +124,7 @@
                     Similar Threshold:
                 </label>
                 <input type="range" id="slider-similar" min="0.5" max="2" step="0.01" value="1">
-                <span id="value-similar">1</span>
+                <span id="value-similar" style="font-weight: bold">1.00</span>
             </div>
             
             <div>
@@ -125,8 +132,14 @@
                     Moderate Threshold:
                 </label>
                 <input type="range" id="slider-moderate" min="1" max="5.0" step="0.01" value="2">
-                <span id="value-moderate">2</span>
+                <span id="value-moderate" style="font-weight: bold">2.00</span>
             </div>
+
+            <div>Map projections with a distance less than <span id="val-range-1" style="font-weight: bold">1.00</span> are considered <span style="font-weight: bold">Similar</span>.</div>
+            <div>Map projections with a distance greater than <span id="val-range-11" style="font-weight: bold">1.00</span> but less than <span id="val-range-2" style="font-weight: bold">2.00</span> are considered <span style="font-weight: bold">Moderately Similar</span>.</div>
+            <div>Map projections with a distance greater than <span id="val-range-3" style="font-weight: bold">2.00</span> are considered <span style="font-weight: bold">Not Very Similar</span>.</div>
+
+            <hr width="100%">
 
             <p>Welcome to the <b>Interactive Selection of Similar Map Projections</b> website, abbreviated as <b><i>simimp</i></b>. The original website URL (https://simimap.github.io/simimap/) currently returns a 404 error and is unavailable. The new URL is <a href="https://simimp.github.io/">https://simimp.github.io/</a>, and we will do our best to ensure its availability.</p>
 
@@ -134,19 +147,29 @@
                 
             <p>You can explore and use various features by clicking the tabs at the top. This website is still a prototype, and we are committed to continuously improving existing features, promptly fixing any bugs, and adding new functionalities as soon as possible. Thank you for your understanding and support!</p>
 
+            <hr width="100%">
+
             <h5>Known bug: </h5>
                 
             <p>After clicking the "Compare" button, it may only display one projection (in blue) instead of two (blue and orange). In some cases, this is due to slow network loading speeds—please wait a few seconds patiently, and the orange image should appear. However, there is also a bug where the orange image fails to load (see the screenshot below). Please click anywhere on the page and then click the "Compare" button again to resolve this issue. We apologize, as this bug has not yet been fully resolved.<img src="screenshots/img_missing.png" width="100%"</p>
 
-            <p>When comparing projections in blue and orange, some projections are not aligned (i.e., the pixels corresponding to latitude = 0° and longitude = 0° of both projections should overlap). However, projections such as Bonne, Bottomley, Hill Eucyclic, and Bertin-Rivière are already aligned. Other projections (if any) will require adjustments in the future. Additionally, some projections may have incorrect scaling of the x and y coordinates during display. Despite these display issues—such as misalignment or incorrect scaling—the projections are correctly aligned and scaled when calculating the pairwise distances between them.</p>
+            <p><span style="text-decoration: line-through">When comparing projections in blue and orange, some projections are not aligned (i.e., the pixels corresponding to latitude = 0° and longitude = 0° of both projections should overlap). However, projections such as Bonne, Bottomley, Hill Eucyclic, and Bertin-Rivière are already aligned. Other projections (if any) will require adjustments in the future.</span> Additionally, some projections may have incorrect scaling of the x and y coordinates during display. Despite these display issues—such as misalignment or incorrect scaling—the projections are correctly aligned and scaled when calculating the pairwise distances between them.</p>
 
             <p>The thumbnails and orange/blue images of some projections (a total of 22) cannot be displayed because G.Projector does not support these projections, making visual comparison impossible. However, the distances between these projections and others can still be calculated.</p>
 
-            <p>On certain pages, when clicking on the dropdown list, the highlighting of nodes in the diagram and the animations may not function correctly. There are also other issues related to interactions and display.</p>
+            <p style="text-decoration: line-through">The laptop's touchpad may not function correctly for selecting items in the drop-down list.</p>
+
+            <p>Some tables on certain pages are excessively long.</p>
+
+            <p>The Recommended List, Full List, and Parameters and Series pages may not function as expected.</p>
+
+            <p><span style="text-decoration: line-through">On certain pages, when clicking on the dropdown list, the highlighting of nodes in the diagram and the animations may not function correctly.</span> There are also other issues related to interactions and display.</p>
+
+            <hr width="100%">
 
             <h5>Instructions:</h5>
 
-            <p>It is recommended to use a higher desktop resolution (currently tested at 2560×1600) and press F11 to enter full-screen mode. Other resolutions are yet to be tested; we appreciate your understanding.</p>
+            <p>It is recommended to use a higher desktop resolution (currently tested at 2560×1600) and press F11 to enter full-screen mode. Other resolutions are yet to be tested; we appreciate your understanding. The page layout may not be correct on mobile devices, such as cell phones.</p>
 
             <ol>
                 <li>When you click on any node in the graph, the interface will automatically switch to the first tab (<i>Find Similar and Compare</i>). On this page, you can either select a map projection from the drop-down list or choose a node directly from the graph. The 10 map projections closest to the selected projection will be displayed. You can then select one from the list and click the "Compare" button to initiate the comparison (see the figure below).<img src="screenshots/find_compare.png" width="100%"></img></li>
@@ -195,8 +218,12 @@
                     Swap X/Y coords.
                 </label>
                 <label>
-                    <input title="Colors are defined by global distortions" type="checkbox" id="swap-coord">
-                    <span title="Colors are defined by global distortions">Render nodes by colors</span>
+                    <input title="The radius of a node is related to its distance from the nearest neighbors" type="checkbox" id="scale-node">
+                    <span title="The radius of a node is related to its distance from the nearest neighbors">Scale circles by distances</span>
+                </label>
+                <label>
+                    <input title="Colors are determined by global distortions" type="checkbox" id="render-color">
+                    <span title="Colors are determined by global distortions">Render nodes using colors</span>
                 </label>
                 <div class="zoom-buttons">
                     <!-- <button id="zoom-in">Zoom In</button> -->
@@ -204,9 +231,7 @@
                     <button id="reset-zoom">Reset Zoom</button>
                 </div>
             </div>
-            <div class="map-container">
-                <svg id="interactive-map"></svg>
-            </div>
+            <hr width="100%">
             <div class="legend">
                 &sect; <b>Equal-qrea</b>: 
                 <label>
@@ -276,6 +301,9 @@
                 </label>
                 <button onclick="toggleSelectAll(true)">Select All</button>
                 <button onclick="toggleSelectAll(false)">De-select All</button>
+            </div>
+            <div class="map-container">
+                <svg id="interactive-map"></svg>
             </div>
         </main>
     </div>
